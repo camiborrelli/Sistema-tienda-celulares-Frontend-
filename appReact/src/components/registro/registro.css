@@ -1,0 +1,92 @@
+/* Estilos simples y centrado para el login */
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --accent: #2563eb; /* azul */
+  --muted: #6b7280;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.register-container,
+.register-card {
+  width: 380px;
+  max-width: 92%;
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 6px 30px rgba(15, 23, 42, 0.08);
+  padding: 28px;
+  background-color: rgb(214, 202, 202);
+}
+.register-container h2,
+.register-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+.register-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.form-group {
+  margin-bottom: 12px;
+}
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  background: #fff;
+  box-sizing: border-box;
+}
+button.btn-primary,
+.btn-acceder {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  background-color: rgb(227, 171, 93);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.btn-primary:active,
+.btn-acceder:active {
+  transform: translateY(1px);
+}
+.footer-small {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Mensajes */
+#mensaje-global .mensaje {
+  min-width: 200px;
+}
+
+@media (max-width: 420px) {
+  .login-container {
+    padding: 18px;
+  }
+}
