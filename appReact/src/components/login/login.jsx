@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,14 +12,14 @@ const Login = () => {
     e.preventDefault();
     const usuario = userRef.current?.value;
     const password = passRef.current?.value;
-    if (usuario && password) {
-      // mock auth: store usuario and redirect to dashboard
-      localStorage.setItem("user", usuario);
-      navigate("/dashboard");
-    } else {
-      const res = document.querySelector("#resultado");
-      if (res) res.innerHTML = "Introduce usuario y contraseña";
+    if (!usuario || !password) {
+      toast.error("Completa todos los campos");
+      return;
     }
+
+    // mock login: guardar usuario y redirigir (puedes reemplazar por llamada al backend)
+    localStorage.setItem("user", usuario);
+    navigate("/dashboard");
   };
 
   return (
@@ -27,7 +28,7 @@ const Login = () => {
       <form id="formLogin" method="post" onSubmit={ingresar}>
         <div className="form-group">
           <label htmlFor="nombre">Nombre:</label>
-          <input ref={userRef} type="text" id="nombre" name="nombre" required />
+          <input ref={userRef} type="text" id="nombre" name="nombre" />
         </div>
         <div className="form-group">
           <label htmlFor="contrasenia">Contraseña:</label>
@@ -36,13 +37,12 @@ const Login = () => {
             type="password"
             id="contrasenia"
             name="contrasenia"
-            required
           />
         </div>
         <button type="submit" className="btn-acceder">
           Acceder
         </button>
-        <div id="resultado" style={{ marginTop: "8px", color: "red" }} />
+        <a href="/registro">No tienes una cuenta? Regístrate</a>
       </form>
     </div>
   );

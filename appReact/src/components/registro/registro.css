@@ -4,6 +4,7 @@
   --card: #ffffff;
   --accent: #2563eb; /* azul */
   --muted: #6b7280;
+  --naranja: rgb(214, 202, 202);
 }
 html,
 body {
@@ -25,7 +26,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 6px 30px rgba(15, 23, 42, 0.08);
   padding: 28px;
-  background-color: rgb(214, 202, 202);
+  background-color: var(--naranja);
 }
 .register-container h2,
 .register-title {
@@ -49,7 +50,8 @@ label {
   margin-bottom: 6px;
 }
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
@@ -73,6 +75,7 @@ button.btn-primary:active,
 .btn-acceder:active {
   transform: translateY(1px);
 }
+
 .footer-small {
   margin-top: 12px;
   font-size: 12px;
