@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaUser, FaLock } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,22 +23,41 @@ const Login = () => {
     navigate("/dashboard");
   };
 
+  // aplicar clase al body para forzar fondo oscuro solo en esta página
+  useEffect(() => {
+    document.body.classList.add("login-dark");
+    return () => {
+      document.body.classList.remove("login-dark");
+    };
+  }, []);
+
   return (
     <div className="login-container">
       <h2>Iniciar Sesión</h2>
       <form id="formLogin" method="post" onSubmit={ingresar}>
         <div className="form-group">
-          <label htmlFor="nombre">Nombre:</label>
-          <input ref={userRef} type="text" id="nombre" name="nombre" />
+          <div className="input-row">
+            <input
+              ref={userRef}
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Usuario"
+            />
+            <FaUser className="input-icon" aria-hidden />
+          </div>
         </div>
         <div className="form-group">
-          <label htmlFor="contrasenia">Contraseña:</label>
-          <input
-            ref={passRef}
-            type="password"
-            id="contrasenia"
-            name="contrasenia"
-          />
+          <div className="input-row">
+            <input
+              ref={passRef}
+              type="password"
+              id="contrasenia"
+              name="contrasenia"
+              placeholder="Contraseña"
+            />{" "}
+            <FaLock className="input-icon" aria-hidden />
+          </div>
         </div>
         <button type="submit" className="btn-acceder">
           Acceder

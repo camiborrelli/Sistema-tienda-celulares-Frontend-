@@ -1,5 +1,7 @@
-import "./registro.css";
+import "../login/login.css";
 import React from "react";
+import { useEffect } from "react";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -23,23 +25,42 @@ const registro = () => {
     toast.success("Registro exitoso");
     // navigate("/dashboard");
   };
+
+  useEffect(() => {
+    document.body.classList.add("login-dark");
+    return () => document.body.classList.remove("login-dark");
+  }, []);
+
   return (
-    <div className="register-container">
-      <h2>Registro</h2>
+    <div className="login-container">
+      <div className="brand">
+        <h2 className="login-title">Registro</h2>
+      </div>
       <form id="formRegistro" method="post">
         <div className="form-group">
-          <label htmlFor="nombre">Nombre:</label>
-          <input type="text" id="nombre" name="nombre" />
+          <div className="input-row">
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
+            <FaUser className="input-icon" aria-hidden />
+          </div>
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" />
+          <div className="input-row">
+            <input type="email" id="email" name="email" placeholder="Email" />
+            <FaEnvelope className="input-icon" aria-hidden />
+          </div>
         </div>
         <div className="form-group">
-          <label htmlFor="contrasenia">Contraseña:</label>
-          <input type="password" id="contrasenia" name="contrasenia" />
+          <div className="input-row">
+            <input
+              type="password"
+              id="contrasenia"
+              name="contrasenia"
+              placeholder="Contraseña"
+            />
+            <FaLock className="input-icon" aria-hidden />
+          </div>
         </div>
-        <button type="submit" className="btn-acceder" onClick={registro}>
+        <button type="submit" className="btn-acceder" onClick={registrar}>
           Registrar
         </button>
         <a href="/login">Ya tienes cuenta? Inicia sesión</a>

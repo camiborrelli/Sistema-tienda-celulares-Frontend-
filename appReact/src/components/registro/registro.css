@@ -10,30 +10,82 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-  background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+  /* dark diagonal gradient with subtle glow */
+  background: radial-gradient(
+      800px 400px at 10% 20%,
+      rgba(255, 77, 109, 0.06),
+      transparent 10%
+    ),
+    radial-gradient(
+      600px 300px at 90% 80%,
+      rgba(45, 55, 72, 0.06),
+      transparent 15%
+    ),
+    linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body.login-dark {
+  background-image: linear-gradient(
+      rgba(245, 243, 239, 0.45),
+      rgba(245, 243, 239, 0.45)
+    ),
+    radial-gradient(
+      800px 400px at 10% 20%,
+      rgba(139, 94, 60, 0.05),
+      transparent 10%
+    ),
+    radial-gradient(
+      600px 300px at 90% 80%,
+      rgba(34, 34, 34, 0.03),
+      transparent 15%
+    ),
+    url("/fondo2.jpg");
+  background-size: cover, cover, cover, cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay, normal, normal, normal;
+  color-scheme: light;
+}
+img {
+  position: background;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  object-fit: cover;
+  opacity: 0.3;
 }
 .register-container,
 .register-card {
-  width: 380px;
+  width: 420px;
   max-width: 92%;
-  background: var(--card);
-  border-radius: 12px;
-  box-shadow: 0 6px 30px rgba(15, 23, 42, 0.08);
-  padding: 28px;
-  background-color: var(--naranja);
+  height: auto;
+  /* slightly stronger card so inputs are readable */
+  background: linear-gradient(180deg, #6e4738 rgba(255, 255, 255, 0.096));
+  border-radius: 14px;
+  /* softer shadow for less heavy floating */
+  box-shadow: 0 18px 50px rgba(107, 108, 110, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  padding: 34px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px) saturate(120%);
+  text-align: center; /* center labels and heading like mock */
 }
 .register-container h2,
 .register-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   margin: 0 0 8px 0;
-  color: #0f172a;
+  color: #ffffff;
 }
 .register-sub {
   font-size: 13px;
@@ -53,11 +105,13 @@ input[type="text"],
 input[type="password"],
 input[type="email"] {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #e6e9ef;
-  background: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
   box-sizing: border-box;
+  margin: 8px;
 }
 button.btn-primary,
 .btn-acceder {
