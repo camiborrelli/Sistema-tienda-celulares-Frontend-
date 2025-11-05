@@ -1,34 +1,37 @@
 import "../login/login.css";
 import { useEffect } from "react";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
-import { Link } from "react-router";
-//import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import api from "../../data/api";
+import { useDispatch } from "react-redux";
+import { loguear } from "../../features/user.slice";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  {
-    /*  const registrar = (data) => {
-    const { nombre, email, contrasenia } = data;
-    if (!nombre && !email && !contrasenia) {
-      toast.error("Completa todos los campos");
-      return;
-    }
-    localStorage.setItem("user", nombre);
-    toast.success("Registro exitoso");
-    // navigate("/dashboard");
-  };*/
-  }
-
   const onSubmit = (data) => {
-    console.log(data);
+    api
+      .post(`/usuarios/register`, data)
+      .then((response) => {
+        toast.success(response.data.message);
+        localStorage.setItem("Token", response.data.token);
+        dispatch(loguear());
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
+
   useEffect(() => {
     document.body.classList.add("login-dark");
     return () => document.body.classList.remove("login-dark");
@@ -50,7 +53,9 @@ const Register = () => {
               {...register("username", { required: true })}
             />
           </div>
-          {errors.username && toast.error("El username es obligatorio")}
+          {errors.username && (
+            <span className="error">El username es obligatorio</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -62,7 +67,9 @@ const Register = () => {
               {...register("email", { required: true })}
             />
           </div>
-          {errors.email && toast.error("El email es obligatorio")}
+          {errors.email && (
+            <span className="error">El email es obligatorio</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -74,7 +81,25 @@ const Register = () => {
               {...register("password", { required: true })}
             />
           </div>
-          {errors.password && toast.error("El email es obligatorio")}
+          {errors.password && (
+            <span className="error">La contraseña es obligatoria</span>
+          )}
+        </div>
+        <div className="form-group">
+          <div className="input-row">
+            <FaLock className="input-icon" aria-hidden />
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Confirmar Contraseña"
+              {...register("confirmPassword", { required: true })}
+            />
+          </div>
+          {errors.confirmPassword && (
+            <span className="error">
+              La confirmación de la contraseña es obligatoria
+            </span>
+          )}
         </div>
         <button type="submit" className="btn-acceder">
           Registrar

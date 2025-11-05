@@ -5,6 +5,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { loguear } from "../../features/user.slice";
 import { toast } from "react-toastify";
+//import { api } from "../../data/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const Login = () => {
           Acceder
         </button>
         <p className="register-link">
-          ¿No tienes una cuenta? <Link to={"/registro"}>Regístrate aquí</Link>
+          ¿No tienes una cuenta? <Link to={"/register"}>Regístrate aquí</Link>
         </p>
       </form>
     </div>

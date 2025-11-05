@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Container />}>
             <Route path="/" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
+            <Route path="/register" element={<Registro />} />
             <Route path="/dashboard" element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>

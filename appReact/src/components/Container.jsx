@@ -26,15 +26,17 @@ const Container = () => {
     <>
       <header className="main-header">
         <div className="header-content">
-          <Link to={"/"} className="app-logo">
-            🌤️<span>{t("name")}</span>
-          </Link>
+          {logueado && (
+            <Link to={"/"} className="app-logo">
+              🌤️<span>{t("name")}</span>
+            </Link>
+          )}
 
-          <nav>
-            <NavLink to={"/"}>Login</NavLink>
-            <NavLink to={"/register"}>Registrarse</NavLink>
-            <NavLink to={"/dashboard"}>Dashboard</NavLink>
-          </nav>
+          {logueado && (
+            <nav>
+              <NavLink to={"/dashboard"}>Dashboard</NavLink>
+            </nav>
+          )}
 
           {/* Select para cambiar el idioma de la aplicacion */}
           <select onChange={changeLenguage} defaultValue={actualLenguage}>
@@ -48,7 +50,7 @@ const Container = () => {
               onClick={cerrarSesion}
               title="Cerrar sesión"
             >
-              <i className="fas fa-sign-out-alt"></i>
+              <i className="fas fa-sign-out-alt">🔙</i>
             </button>
           )}
         </div>
