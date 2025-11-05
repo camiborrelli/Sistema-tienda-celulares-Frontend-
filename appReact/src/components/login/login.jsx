@@ -1,26 +1,29 @@
-import React, { useRef, useState, useEffect } from "react";
-import "./login.css";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useRef, useEffect } from "react";
+import "./Login.css";
+import { useNavigate, NavLink, Link } from "react-router";
 import { FaUser, FaLock } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { loguear } from "../../features/user.slice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
   const userRef = useRef(null);
   const passRef = useRef(null);
+  const dispatch = useDispatch();
 
   const ingresar = (e) => {
     e.preventDefault();
-    const usuario = userRef.current?.value;
-    const password = passRef.current?.value;
+    const usuario = userRef.current.value;
+    const password = passRef.current.value;
+
     if (!usuario || !password) {
       toast.error("Completa todos los campos");
-      return;
+    } else {
+      localStorage.setItem("user", usuario);
+      dispatch(loguear());
+      navigate("/dashboard");
     }
-
-    // mock login: guardar usuario y redirigir (puedes reemplazar por llamada al backend)
-    localStorage.setItem("user", usuario);
-    navigate("/dashboard");
   };
 
   // aplicar clase al body para forzar fondo oscuro solo en esta página
@@ -33,10 +36,11 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Iniciar Sesión</h2>
-      <form id="formLogin" method="post" onSubmit={ingresar}>
+      <h2>Login</h2>
+      <form id="formLogin" method="post">
         <div className="form-group">
           <div className="input-row">
+            <FaUser className="input-icon" aria-hidden />
             <input
               ref={userRef}
               type="text"
@@ -44,11 +48,11 @@ const Login = () => {
               name="nombre"
               placeholder="Usuario"
             />
-            <FaUser className="input-icon" aria-hidden />
           </div>
         </div>
         <div className="form-group">
           <div className="input-row">
+            <FaLock className="input-icon" aria-hidden />
             <input
               ref={passRef}
               type="password"
@@ -56,13 +60,14 @@ const Login = () => {
               name="contrasenia"
               placeholder="Contraseña"
             />{" "}
-            <FaLock className="input-icon" aria-hidden />
           </div>
         </div>
-        <button type="submit" className="btn-acceder">
+        <button type="submit" className="btn-acceder" onClick={ingresar}>
           Acceder
         </button>
-        <a href="/registro">No tienes una cuenta? Regístrate</a>
+        <p className="register-link">
+          ¿No tienes una cuenta? <Link to={"/registro"}>Regístrate aquí</Link>
+        </p>
       </form>
     </div>
   );

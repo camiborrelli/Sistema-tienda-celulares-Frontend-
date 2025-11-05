@@ -1,21 +1,20 @@
 import "../login/login.css";
-import React from "react";
 import { useEffect } from "react";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Link } from "react-router";
+//import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-const registro = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate();
-
-  const registrar = (data) => {
+  {
+    /*  const registrar = (data) => {
     const { nombre, email, contrasenia } = data;
     if (!nombre && !email && !contrasenia) {
       toast.error("Completa todos los campos");
@@ -24,8 +23,12 @@ const registro = () => {
     localStorage.setItem("user", nombre);
     toast.success("Registro exitoso");
     // navigate("/dashboard");
-  };
+  };*/
+  }
 
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   useEffect(() => {
     document.body.classList.add("login-dark");
     return () => document.body.classList.remove("login-dark");
@@ -36,37 +39,52 @@ const registro = () => {
       <div className="brand">
         <h2 className="login-title">Registro</h2>
       </div>
-      <form id="formRegistro" method="post">
+      <form id="formRegistro" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
           <div className="input-row">
-            <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
             <FaUser className="input-icon" aria-hidden />
+            <input
+              type="text"
+              id="username"
+              placeholder="Nombre"
+              {...register("username", { required: true })}
+            />
           </div>
+          {errors.username && toast.error("El username es obligatorio")}
         </div>
         <div className="form-group">
           <div className="input-row">
-            <input type="email" id="email" name="email" placeholder="Email" />
             <FaEnvelope className="input-icon" aria-hidden />
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              {...register("email", { required: true })}
+            />
           </div>
+          {errors.email && toast.error("El email es obligatorio")}
         </div>
         <div className="form-group">
           <div className="input-row">
+            <FaLock className="input-icon" aria-hidden />
             <input
               type="password"
               id="contrasenia"
-              name="contrasenia"
               placeholder="Contraseña"
+              {...register("password", { required: true })}
             />
-            <FaLock className="input-icon" aria-hidden />
           </div>
+          {errors.password && toast.error("El email es obligatorio")}
         </div>
-        <button type="submit" className="btn-acceder" onClick={registrar}>
+        <button type="submit" className="btn-acceder">
           Registrar
         </button>
-        <a href="/login">Ya tienes cuenta? Inicia sesión</a>
+        <p className="login-link">
+          ¿Ya tienes cuenta? <Link to={"/"}>Inicia sesión</Link>
+        </p>
       </form>
     </div>
   );
 };
 
-export default registro;
+export default Register;
