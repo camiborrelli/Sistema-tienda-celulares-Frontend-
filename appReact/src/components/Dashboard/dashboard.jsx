@@ -2,13 +2,7 @@ import "./dashboard.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { desloguear } from "../../features/user.slice";
-import {
-  createPhone,
-  listar,
-  fetchPhones,
-  selectPhones,
-  selectPhoneStatus,
-} from "../../features/phone.slice";
+import { createPhone, listar, selectPhones } from "../../features/phone.slice";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 
@@ -20,13 +14,6 @@ const DashboardAdmin = () => {
 
   // phones from redux
   const phones = useSelector(selectPhones);
-  const phonesStatus = useSelector(selectPhoneStatus);
-
-  useEffect(() => {
-    if (phonesStatus === "idle") {
-      dispatch(fetchPhones());
-    }
-  }, [phonesStatus, dispatch]);
 
   const cerrarSesion = () => {
     localStorage.clear();
@@ -38,7 +25,6 @@ const DashboardAdmin = () => {
     try {
       const response = await api.post("/celulares", data);
       dispatch(createPhone(response.data));
-      dispatch(listar(response.data));
       if (response.data && response.data.id) {
         localStorage.setItem("celularId", JSON.stringify(response.data.id));
       }
@@ -74,6 +60,12 @@ const DashboardAdmin = () => {
       dispatch(listar(celulares));
     });
   };
+
+  // fetch list once on mount (simple approach)
+  useEffect(() => {
+    listarCelulares();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="dashboard-layout">
@@ -241,7 +233,7 @@ const DashboardAdmin = () => {
                   <button
                     className="btn btn-outline-primary"
                     id="btn-refresh-celulares"
-                    onClick={() => dispatch(fetchPhones())}
+                    onClick={listarCelulares}
                   >
                     Refrescar
                   </button>
