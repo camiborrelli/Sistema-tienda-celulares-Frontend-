@@ -22,43 +22,7 @@ const Container = () => {
     localStorage.setItem("lenguage", e.target.value);
   };
 
-  return (
-    <>
-      <header className="main-header">
-        <div className="header-content">
-          {logueado && (
-            <Link to={"/"} className="app-logo">
-              🌤️<span>{t("name")}</span>
-            </Link>
-          )}
-
-          {logueado && (
-            <nav>
-              <NavLink to={"/dashboard"}>Dashboard</NavLink>
-            </nav>
-          )}
-
-          {/* Select para cambiar el idioma de la aplicacion */}
-          <select onChange={changeLenguage} defaultValue={actualLenguage}>
-            <option value="en">English</option>
-            <option value="es">Español</option>
-          </select>
-
-          {logueado && (
-            <button
-              className="logout-btn"
-              onClick={cerrarSesion}
-              title="Cerrar sesión"
-            >
-              <i className="fas fa-sign-out-alt">🔙</i>
-            </button>
-          )}
-        </div>
-      </header>
-
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 
 export default Container;

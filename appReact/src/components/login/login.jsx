@@ -41,19 +41,18 @@ const Login = () => {
       <form id="formLogin" method="post">
         <div className="form-group">
           <div className="input-row">
-            <FaUser className="input-icon" aria-hidden />
             <input
               ref={userRef}
               type="text"
               id="nombre"
               name="nombre"
               placeholder="Usuario"
-            />
+            />{" "}
+            <FaUser className="input-icon" aria-hidden />
           </div>
         </div>
         <div className="form-group">
           <div className="input-row">
-            <FaLock className="input-icon" aria-hidden />
             <input
               ref={passRef}
               type="password"
@@ -61,6 +60,7 @@ const Login = () => {
               name="contrasenia"
               placeholder="Contraseña"
             />{" "}
+            <FaLock className="input-icon" aria-hidden />
           </div>
         </div>
         <button type="submit" className="btn-acceder" onClick={ingresar}>

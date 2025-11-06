@@ -25,6 +25,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+
       <ToastContainer
         position="bottom-right"
         autoClose={5000}

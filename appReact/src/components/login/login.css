@@ -26,6 +26,11 @@ body.login-dark {
   color-scheme: dark;
 }
 
+/* ensure login view content is pushed below the fixed transparent header */
+body.login-dark {
+  padding-top: calc(var(--app-header-height) + 20px);
+}
+
 body {
   margin: 0;
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;

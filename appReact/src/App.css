@@ -40,3 +40,81 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Global header styles used by `Header.jsx` (and legacy header classes) */
+:root {
+  /* altura del header: se usa en otros componentes para compensar el espacio */
+  --app-header-height: 64px;
+}
+
+.main-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--app-header-height);
+  background: linear-gradient(90deg, #ffffff, #f8fafc);
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(2, 6, 23, 0.08);
+  z-index: 1000;
+}
+
+.main-header .header-content {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #111827;
+  text-decoration: none;
+}
+
+.app-logo span {
+  font-size: 1rem;
+}
+
+.main-header nav a {
+  color: #0f172a;
+  text-decoration: none;
+  margin-right: 0.75rem;
+}
+
+.main-header select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(2, 6, 23, 0.08);
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+/* ensure the main page content doesn't sit under the fixed header by default
+   Individual pages/components can use --app-header-height for finer control */
+body {
+  padding-top: var(--app-header-height);
+}
+
+@media (max-width: 576px) {
+  :root {
+    --app-header-height: 72px;
+  }
+  .main-header .header-content {
+    padding: 0 0.75rem;
+  }
+}
