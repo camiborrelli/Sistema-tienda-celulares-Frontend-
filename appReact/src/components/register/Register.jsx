@@ -17,6 +17,7 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -30,6 +31,7 @@ const Register = () => {
       })
       .catch((error) => {
         toast.error(error.response.data.error);
+        reset();
       });
   };
 

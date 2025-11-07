@@ -3,22 +3,10 @@ import { createPhone, listar } from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
+import { toast } from "react-toastify";
 
 const AltaCelular = () => {
-  const handleCreateCelular = async (data) => {
-    try {
-      const response = await api.post("/celulares", data);
-      dispatch(createPhone(response.data));
-      if (response.data && response.data.id) {
-        localStorage.setItem("celularId", JSON.stringify(response.data.id));
-      }
-      reset();
-    } catch (error) {
-      console.error(error);
-      const msg = error?.response?.data?.message || error?.message || "Error creando celular";
-      throw error;
-    }
-  };
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -27,17 +15,23 @@ const AltaCelular = () => {
     reset,
   } = useForm();
 
-  const handleResetCelular = () => {
+  const onSumbit = (data) => {
+    api
+      .post(`celulares/`, data)
+      .then((response) => {
+        console.log(data);
+        toast.success(response.data.mensaje);
+        dispatch(createPhone(data));
+      })
+      .catch((error) => {
+        toast.error(error.response.data.error);
+      });
     reset();
-  };
-
-  const onSubmitCelular = (data) => {
-    handleCreateCelular(data);
   };
 
   return (
     <div className="col-12">
-      <form id="form-celular" className="card card-body mb-3" onSubmit={handleSubmit(onSubmitCelular)}>
+      <form id="form-celular" className="card card-body mb-3" onSubmit={handleSubmit(onSumbit)}>
         <h5>Crear</h5>
         <input type="hidden" id="celular-id" />
         <div className="mb-2">
@@ -61,7 +55,8 @@ const AltaCelular = () => {
         <div className="mb-2">
           <input
             id="celular-modelo"
-            {...register("modelo", { required: true })}
+            {...register("modelo", { required: true, valueAsNumber: true })}
+            type="number"
             className="form-control"
             placeholder="Modelo"
           />
@@ -81,17 +76,25 @@ const AltaCelular = () => {
           {errors.precio && <small className="text-danger">El precio es obligatorio</small>}
         </div>
         <div className="mb-2">
-          <label className="form-label">Accesorios compatibles</label>
-          <select id="celular-accesorios" className="form-select" {...register("accesorios")}>
-            <option value="">Seleccione un accesorio</option>
-          </select>
-          {errors.accesorios && <small className="text-danger">Seleccione un accesorio</small>}
+          <input
+            id="celular-accesorios-compatibles"
+            {...register("accesoriosCompatibles", {
+              required: true,
+              valueAsNumber: true,
+            })}
+            type="number"
+            className="form-control"
+            placeholder="Precio"
+          />
+          {errors.accesoriosCompatibles && (
+            <small className="text-danger">La cantidad de accesorios compatibles es obligatoria</small>
+          )}
         </div>
         <div className="d-flex gap-2">
-          <button className="btn btn-success" id="btn-save-celular" type="submit" disabled={isSubmitting}>
+          <button className="btn btn-success" type="submit" disabled={isSubmitting}>
             Guardar
           </button>
-          <button className="btn btn-secondary" id="btn-reset-celular" type="button" onClick={handleResetCelular}>
+          <button className="btn btn-secondary" type="button" onClick={() => reset()}>
             Limpiar
           </button>
         </div>
@@ -101,3 +104,12 @@ const AltaCelular = () => {
 };
 
 export default AltaCelular;
+{
+  /*
+  <label className="form-label">Accesorios compatibles</label>
+          <select id="celular-accesorios" className="form-select" {...register("accesorios")}>
+            <option value="">Seleccione un accesorio</option>
+          </select>
+          {errors.accesorios && <small className="text-danger">Seleccione un accesorio</small>}
+  */
+}

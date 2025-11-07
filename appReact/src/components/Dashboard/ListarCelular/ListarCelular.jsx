@@ -26,6 +26,7 @@ const ListarCelular = () => {
 
   useEffect(() => {
     setPhone(phones.map((p) => p));
+    console.log(phone);
   }, [phones]);
 
   const borrarCelular = (id) => {
@@ -33,7 +34,7 @@ const ListarCelular = () => {
       .delete(`celulares/${id}`)
       .then((response) => {
         dispatch(deletePhone(id));
-        toast.success(response.data.message);
+        toast.success(response.data.mensaje);
       })
       .catch((error) => console.log(error));
   };
@@ -45,6 +46,7 @@ const ListarCelular = () => {
         <table className="table table-sm" id="table-celulares">
           <thead>
             <tr>
+              <th>Nombre</th>
               <th>Marca</th>
               <th>Modelo</th>
               <th>Precio</th>
@@ -55,6 +57,7 @@ const ListarCelular = () => {
             {phone.length > 0 ? (
               phone.map((celular) => (
                 <tr key={celular._id}>
+                  <td>{celular.nombre}</td>
                   <td>{celular.marca}</td>
                   <td>{celular.modelo}</td>
                   <td>{celular.precio}</td>

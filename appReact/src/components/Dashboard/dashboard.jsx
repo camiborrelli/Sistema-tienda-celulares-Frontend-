@@ -4,23 +4,38 @@ import { desloguear } from "../../features/user.slice";
 import { useNavigate } from "react-router";
 import ListarCelular from "./ListarCelular/ListarCelular";
 import AltaCelular from "./AltaCelular/AltaCelular";
+import { useTranslation } from "react-i18next";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const actualLenguage = localStorage.getItem("lenguage");
 
   const cerrarSesion = () => {
-    localStorage.clear();
     dispatch(desloguear());
     navigate("/");
   };
 
-
+  const changeLenguage = (e) => {
+    i18n.changeLanguage(e.target.value);
+    localStorage.setItem("lenguage", e.target.value);
+  };
 
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
-        <div className="sidebar-brand">Mi App</div>
+        <div
+          className="sidebar-header"
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}
+        >
+          <div className="sidebar-brand">Mi App</div>
+          <select onChange={changeLenguage} defaultValue={actualLenguage} style={{ maxWidth: 140 }}>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
+
         <ul className="sidebar-nav">
           <li>
             <a href="#section-celulares">Inicio</a>

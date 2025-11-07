@@ -34,6 +34,12 @@ const Login = () => {
   // aplicar clase al body para forzar fondo oscuro solo en esta página
   useEffect(() => {
     document.body.classList.add("login-dark");
+
+    if (localStorage.getItem("Token") != null) {
+      dispatch(loguear(localStorage.getItem("Token")));
+      navigate("/dashboard");
+    }
+
     return () => {
       document.body.classList.remove("login-dark");
     };
