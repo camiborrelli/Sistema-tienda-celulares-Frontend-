@@ -62,9 +62,6 @@ const ListarCelular = () => {
             )}
           </tbody>
         </table>
-        <button className="btn btn-outline-primary" id="btn-refresh-celulares" onClick={listarCelulares}>
-          Refrescar
-        </button>
       </div>
     </div>
   );

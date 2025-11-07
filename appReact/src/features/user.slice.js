@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  logged: false,
+  usuario: null,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loguear: (state) => {
-      state.logged = true;
+    loguear: (state, action) => {
+      state.usuario = action.payload;
+      localStorage.setItem("Token", action.payload);
     },
     desloguear: (state) => {
-      state.logged = false;
+      state.usuario = null;
+      localStorage.clear();
     },
   },
 });

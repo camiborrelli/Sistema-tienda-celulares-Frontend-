@@ -10,9 +10,8 @@ const phoneSlice = createSlice({
     error: null,
   },
   reducers: {
-    // add created phone to the start of the list
     createPhone(state, action) {
-      state.phones.unshift(action.payload);
+      state.phones.push(action.payload);
     },
     listar(state, action) {
       state.phones = action.payload;
