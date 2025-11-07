@@ -1,19 +1,17 @@
 import "./dashboard.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { desloguear } from "../../features/user.slice";
-import { createPhone, listar, selectPhones } from "../../features/phone.slice";
+import { createPhone, listar } from "../../features/phone.slice";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 
 import api from "../../data/api";
+import ListarCelular from "./ListarCelular/ListarCelular";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // phones from redux
-  const phones = useSelector(selectPhones);
 
   const cerrarSesion = () => {
     localStorage.clear();
@@ -31,10 +29,7 @@ const DashboardAdmin = () => {
       reset();
     } catch (error) {
       console.error(error);
-      const msg =
-        error?.response?.data?.message ||
-        error?.message ||
-        "Error creando celular";
+      const msg = error?.response?.data?.message || error?.message || "Error creando celular";
       throw error;
     }
   };
@@ -53,19 +48,6 @@ const DashboardAdmin = () => {
   const onSubmitCelular = (data) => {
     handleCreateCelular(data);
   };
-
-  const listarCelulares = () => {
-    api.get("/celulares").then((response) => {
-      const celulares = response.data;
-      dispatch(listar(celulares));
-    });
-  };
-
-  // fetch list once on mount (simple approach)
-  useEffect(() => {
-    listarCelulares();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="dashboard-layout">
@@ -94,11 +76,7 @@ const DashboardAdmin = () => {
             <h2>Celulares</h2>
             <div className="row">
               <div className="col-12">
-                <form
-                  id="form-celular"
-                  className="card card-body mb-3"
-                  onSubmit={handleSubmit(onSubmitCelular)}
-                >
+                <form id="form-celular" className="card card-body mb-3" onSubmit={handleSubmit(onSubmitCelular)}>
                   <h5>Crear</h5>
                   <input type="hidden" id="celular-id" />
                   <div className="mb-2">
@@ -108,11 +86,7 @@ const DashboardAdmin = () => {
                       className="form-control"
                       placeholder="Nombre"
                     />
-                    {errors.nombre && (
-                      <small className="text-danger">
-                        El nombre es obligatorio
-                      </small>
-                    )}
+                    {errors.nombre && <small className="text-danger">El nombre es obligatorio</small>}
                   </div>
                   <div className="mb-2">
                     <input
@@ -121,11 +95,7 @@ const DashboardAdmin = () => {
                       className="form-control"
                       placeholder="Marca"
                     />
-                    {errors.marca && (
-                      <small className="text-danger">
-                        La marca es obligatoria
-                      </small>
-                    )}
+                    {errors.marca && <small className="text-danger">La marca es obligatoria</small>}
                   </div>
                   <div className="mb-2">
                     <input
@@ -134,11 +104,7 @@ const DashboardAdmin = () => {
                       className="form-control"
                       placeholder="Modelo"
                     />
-                    {errors.modelo && (
-                      <small className="text-danger">
-                        El modelo es obligatorio
-                      </small>
-                    )}
+                    {errors.modelo && <small className="text-danger">El modelo es obligatorio</small>}
                   </div>
                   <div className="mb-2">
                     <input
@@ -151,94 +117,26 @@ const DashboardAdmin = () => {
                       className="form-control"
                       placeholder="Precio"
                     />
-                    {errors.precio && (
-                      <small className="text-danger">
-                        El precio es obligatorio
-                      </small>
-                    )}
+                    {errors.precio && <small className="text-danger">El precio es obligatorio</small>}
                   </div>
                   <div className="mb-2">
                     <label className="form-label">Accesorios compatibles</label>
-                    <select
-                      id="celular-accesorios"
-                      className="form-select"
-                      {...register("accesorios")}
-                    >
+                    <select id="celular-accesorios" className="form-select" {...register("accesorios")}>
                       <option value="">Seleccione un accesorio</option>
                     </select>
-                    {errors.accesorios && (
-                      <small className="text-danger">
-                        Seleccione un accesorio
-                      </small>
-                    )}
+                    {errors.accesorios && <small className="text-danger">Seleccione un accesorio</small>}
                   </div>
                   <div className="d-flex gap-2">
-                    <button
-                      className="btn btn-success"
-                      id="btn-save-celular"
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
+                    <button className="btn btn-success" id="btn-save-celular" type="submit" disabled={isSubmitting}>
                       Guardar
                     </button>
-                    <button
-                      className="btn btn-secondary"
-                      id="btn-reset-celular"
-                      type="button"
-                      onClick={handleResetCelular}
-                    >
+                    <button className="btn btn-secondary" id="btn-reset-celular" type="button" onClick={handleResetCelular}>
                       Limpiar
                     </button>
                   </div>
                 </form>
               </div>
-              <div className="col-12">
-                <div className="card card-body">
-                  <h5>Lista de Celulares</h5>
-                  <table className="table table-sm" id="table-celulares">
-                    <thead>
-                      <tr>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Array.isArray(phones) && phones.length > 0 ? (
-                        phones.map((p, idx) => (
-                          <tr key={p._id || p.id || idx}>
-                            <td>{p.marca || p.brand || "-"}</td>
-                            <td>{p.modelo || p.model || "-"}</td>
-                            <td>{p.precio ?? p.price ?? "-"}</td>
-                            <td>
-                              <button className="btn btn-sm btn-primary me-2">
-                                Editar
-                              </button>
-                              <button className="btn btn-sm btn-danger">
-                                Borrar
-                              </button>
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan={4} className="text-center text-muted">
-                            No hay celulares disponibles
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                  <button
-                    className="btn btn-outline-primary"
-                    id="btn-refresh-celulares"
-                    onClick={listarCelulares}
-                  >
-                    Refrescar
-                  </button>
-                </div>
-              </div>
+              <ListarCelular />
             </div>
           </section>
           {/* Accesorios */}
@@ -254,11 +152,7 @@ const DashboardAdmin = () => {
                   </div>
                   <div className="mb-2">
                     <label className="form-label">Precio</label>
-                    <input
-                      id="accesorio-precio"
-                      type="number"
-                      className="form-control"
-                    />
+                    <input id="accesorio-precio" type="number" className="form-control" />
                   </div>
                   <button className="btn btn-success">Crear</button>
                 </form>
@@ -267,10 +161,7 @@ const DashboardAdmin = () => {
                 <div className="card card-body">
                   <h5>Lista de Accesorios</h5>
                   <ul className="list-group" id="list-accesorios" />
-                  <button
-                    className="btn btn-outline-primary mt-2"
-                    id="btn-refresh-accesorios"
-                  >
+                  <button className="btn btn-outline-primary mt-2" id="btn-refresh-accesorios">
                     Refrescar
                   </button>
                 </div>
@@ -285,10 +176,7 @@ const DashboardAdmin = () => {
                 <div className="card card-body">
                   <h5>Usuarios (lista)</h5>
                   <ul className="list-group" id="list-usuarios" />
-                  <button
-                    className="btn btn-outline-primary mt-2"
-                    id="btn-refresh-usuarios"
-                  >
+                  <button className="btn btn-outline-primary mt-2" id="btn-refresh-usuarios">
                     Refrescar
                   </button>
                 </div>
@@ -296,9 +184,7 @@ const DashboardAdmin = () => {
             </div>
           </section>
         </div>
-        <footer className="text-center py-3 bg-light">
-          Panel de pruebas - front estático
-        </footer>
+        <footer className="text-center py-3 bg-light">Panel de pruebas - front estático</footer>
       </main>
     </div>
   );
