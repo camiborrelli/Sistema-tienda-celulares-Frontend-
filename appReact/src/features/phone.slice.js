@@ -16,9 +16,12 @@ const phoneSlice = createSlice({
     listar(state, action) {
       state.phones = action.payload;
     },
+    deletePhone(state, action) {
+      state.phones = state.phones.filter((phone) => phone._id !== action.payload);
+    },
   },
 });
 
-export const { createPhone, listar } = phoneSlice.actions;
+export const { createPhone, listar, deletePhone } = phoneSlice.actions;
 
 export default phoneSlice.reducer;

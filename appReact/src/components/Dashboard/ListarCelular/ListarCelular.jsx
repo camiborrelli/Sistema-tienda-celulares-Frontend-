@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import { listar, getPhones } from "../../../features/phone.slice";
+import { listar, getPhones, deletePhone } from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ListarCelular = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,16 @@ const ListarCelular = () => {
     setPhone(phones.map((p) => p));
   }, [phones]);
 
+  const borrarCelular = (id) => {
+    api
+      .delete(`celulares/${id}`)
+      .then((response) => {
+        dispatch(deletePhone(id));
+        toast.success(response.data.message);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="col-12">
       <div className="card card-body">
@@ -49,7 +60,9 @@ const ListarCelular = () => {
                   <td>{celular.precio}</td>
                   <td>
                     <button className="btn btn-sm btn-primary me-2">Editar</button>
-                    <button className="btn btn-sm btn-danger">Borrar</button>
+                    <button className="btn btn-sm btn-danger" onClick={() => borrarCelular(celular._id)}>
+                      Borrar
+                    </button>
                   </td>
                 </tr>
               ))
