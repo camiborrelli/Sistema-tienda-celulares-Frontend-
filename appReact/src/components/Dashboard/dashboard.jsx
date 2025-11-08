@@ -2,14 +2,14 @@ import "./dashboard.css";
 import { useDispatch } from "react-redux";
 import { desloguear } from "../../features/user.slice";
 import { useNavigate } from "react-router-dom";
-import ListarCelular from "./ListarCelular/ListarCelular";
-import AltaCelular from "./AltaCelular/AltaCelular";
+import ListarCelular from "./Celular/ListarCelular";
+import AltaCelular from "./Celular/AltaCelular";
 import { useTranslation } from "react-i18next";
 import ListarAccesorio from "./Accesorio/ListarAccesorio";
 import CrearAccesorio from "./Accesorio/CrearAccesorio";
 import EditarAccesorio from "./Accesorio/EditarAccesorio";
-import EditarCelular from "./EditarCelular/EditarCelular";
-import ListarUsuarios from "./ListarUsuarios/ListarUsuarios";
+import EditarCelular from "./Celular/EditarCelular";
+import ListarUsuario from "./Usuario/ListarUsuario";
 import { useEffect } from "react";
 
 const DashboardAdmin = () => {
@@ -136,7 +136,7 @@ const DashboardAdmin = () => {
           <section id="section-usuarios" className="mb-5">
             <h2>Usuarios</h2>
             <div className="row"></div>
-            <ListarUsuarios />
+            <ListarUsuario />
           </section>
         </div>
         <footer className="text-center py-3 bg-light">

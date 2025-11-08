@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
 import { listarUsuarios, getUsers } from "../../../features/user.slice";
 
-const ListarUsuarios = () => {
+const ListarUsuario = () => {
   const dispatch = useDispatch();
   const usuarios = useSelector(getUsers) ?? [];
 
@@ -31,11 +31,7 @@ const ListarUsuarios = () => {
             </li>
           ))}
         </ul>
-        <button
-          className="btn btn-outline-primary mt-2"
-          id="btn-refresh-usuarios"
-          onClick={fetchUsuarios}
-        >
+        <button className="btn btn-outline-primary mt-2" id="btn-refresh-usuarios" onClick={fetchUsuarios}>
           Refrescar
         </button>
       </div>
@@ -43,4 +39,4 @@ const ListarUsuarios = () => {
   );
 };
 
-export default ListarUsuarios;
+export default ListarUsuario;

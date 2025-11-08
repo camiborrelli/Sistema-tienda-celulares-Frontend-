@@ -1,11 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import {
-  listar,
-  getPhones,
-  deletePhone,
-  setCurrent,
-} from "../../../features/phone.slice";
+import { listar, getPhones, deletePhone, setCurrent } from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -18,7 +13,11 @@ const ListarCelular = () => {
       .then((response) => {
         dispatch(listar(response.data.celulares));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        if (error.response.data.error !== "No hay celulares disponibles") {
+          console.log(error);
+        }
+      });
   };
 
   useEffect(() => {
@@ -31,7 +30,6 @@ const ListarCelular = () => {
 
   useEffect(() => {
     setPhone(phones.map((p) => p));
-    console.log(phone);
   }, [phones]);
 
   const borrarCelular = (id) => {
@@ -42,6 +40,17 @@ const ListarCelular = () => {
         toast.success(response.data.mensaje);
       })
       .catch((error) => console.log(error));
+  };
+
+  const [sortAsc, setSortAsc] = useState(true);
+
+  const ordenarFechaCreacion = () => {
+    console.log("Ordenar por fecha de creacion a implementar");
+    if (sortAsc) {
+      setSortAsc(false);
+    } else {
+      setSortAsc(true);
+    }
   };
 
   return (
@@ -55,17 +64,19 @@ const ListarCelular = () => {
               <th>Marca</th>
               <th>Modelo</th>
               <th>Precio</th>
+              <th>Fecha Creacion</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {phone.length > 0 ? (
               phone.map((celular) => (
-                <tr key={celular._id}>
+                <tr key={celular._id || celular.nombre}>
                   <td>{celular.nombre}</td>
                   <td>{celular.marca}</td>
                   <td>{celular.modelo}</td>
                   <td>{celular.precio}</td>
+                  <td>{celular.fechaCreacion}</td>
                   <td>
                     <button
                       className="btn btn-sm btn-primary me-2"
@@ -73,17 +84,12 @@ const ListarCelular = () => {
                         dispatch(setCurrent(celular));
                         // small delay so the Editar form can reset/populate before scrolling
                         setTimeout(() => {
-                          const container =
-                            document.querySelector(".dashboard-root");
+                          const container = document.querySelector(".dashboard-root");
                           const el = document.getElementById("form-celular");
                           if (el && container) {
-                            const containerRect =
-                              container.getBoundingClientRect();
+                            const containerRect = container.getBoundingClientRect();
                             const targetRect = el.getBoundingClientRect();
-                            const top =
-                              targetRect.top -
-                              containerRect.top +
-                              container.scrollTop;
+                            const top = targetRect.top - containerRect.top + container.scrollTop;
                             container.scrollTop;
                             container.scrollTo({ top, behavior: "smooth" });
                           } else if (el) {
@@ -96,13 +102,10 @@ const ListarCelular = () => {
                         }, 60);
                       }}
                     >
-                      Editar
+                      📝
                     </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => borrarCelular(celular._id)}
-                    >
-                      Borrar
+                    <button className="btn btn-sm btn-danger" onClick={() => borrarCelular(celular._id)}>
+                      🗑️
                     </button>
                   </td>
                 </tr>
@@ -116,13 +119,23 @@ const ListarCelular = () => {
             )}
           </tbody>
         </table>
-        <button
-          className="btn btn-outline-primary mt-2"
-          id="btn-refresh-celulares"
-          onClick={listarCelulares}
-        >
-          Refrescar
-        </button>
+        {/* Botones de acciones: ahora alineados horizontalmente */}
+        <div className="d-flex gap-2 mt-2 w-100">
+          <button
+            type="button"
+            className="btn btn-outline-primary flex-fill d-flex align-items-center justify-content-center text-center"
+            onClick={listarCelulares}
+          >
+            Refrescar 🔃
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-secondary flex-fill d-flex align-items-center justify-content-center text-center"
+            onClick={ordenarFechaCreacion}
+          >
+            {sortAsc ? "Ordenar ↑" : "Ordenar ↓"}
+          </button>
+        </div>
       </div>
     </div>
   );
