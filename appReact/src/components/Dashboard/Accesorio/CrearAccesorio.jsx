@@ -38,6 +38,14 @@ const CrearAccesorio = () => {
         dispatch(createAccesory(created));
         toast.success(response.data?.mensaje || "Accesorio creado");
         reset();
+        api
+          .get("/accesorios")
+          .then((response) => {
+            dispatch(list(response.data.accesorios));
+          })
+          .catch((error) => {
+            console.error("Error al listar accesorios:", error);
+          });
       })
       .catch((error) => {
         console.error("Error al crear accesorio:", error);

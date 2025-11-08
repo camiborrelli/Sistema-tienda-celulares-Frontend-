@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import ListarAccesorio from "./Accesorio/ListarAccesorio";
 import CrearAccesorio from "./Accesorio/CrearAccesorio";
 import EditarAccesorio from "./Accesorio/EditarAccesorio";
+import EditarCelular from "./EditarCelular/EditarCelular";
 import { useEffect } from "react";
 
 const DashboardAdmin = () => {
@@ -109,6 +110,9 @@ const DashboardAdmin = () => {
               </div>
               <div className="col-md-8 col-12">
                 <ListarCelular />
+              </div>
+              <div className="col-md-12 col-12">
+                <EditarCelular />
               </div>
             </div>
           </section>

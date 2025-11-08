@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import { listar, getPhones, deletePhone } from "../../../features/phone.slice";
+import {
+  listar,
+  getPhones,
+  deletePhone,
+  setCurrent,
+} from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -62,8 +67,41 @@ const ListarCelular = () => {
                   <td>{celular.modelo}</td>
                   <td>{celular.precio}</td>
                   <td>
-                    <button className="btn btn-sm btn-primary me-2">Editar</button>
-                    <button className="btn btn-sm btn-danger" onClick={() => borrarCelular(celular._id)}>
+                    <button
+                      className="btn btn-sm btn-primary me-2"
+                      onClick={() => {
+                        dispatch(setCurrent(celular));
+                        // small delay so the Editar form can reset/populate before scrolling
+                        setTimeout(() => {
+                          const container =
+                            document.querySelector(".dashboard-root");
+                          const el = document.getElementById("form-celular");
+                          if (el && container) {
+                            const containerRect =
+                              container.getBoundingClientRect();
+                            const targetRect = el.getBoundingClientRect();
+                            const top =
+                              targetRect.top -
+                              containerRect.top +
+                              container.scrollTop;
+                            container.scrollTop;
+                            container.scrollTo({ top, behavior: "smooth" });
+                          } else if (el) {
+                            // fallback to scrollIntoView if container not found
+                            el.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                          }
+                        }, 60);
+                      }}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => borrarCelular(celular._id)}
+                    >
                       Borrar
                     </button>
                   </td>
@@ -78,6 +116,13 @@ const ListarCelular = () => {
             )}
           </tbody>
         </table>
+        <button
+          className="btn btn-outline-primary mt-2"
+          id="btn-refresh-celulares"
+          onClick={listarCelulares}
+        >
+          Refrescar
+        </button>
       </div>
     </div>
   );

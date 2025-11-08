@@ -60,6 +60,15 @@ const EditarAccesorio = () => {
         dispatch(updateAccesory(updated));
         dispatch(setCurrent(null));
         toast.success(response.data?.mensaje || "Accesorio actualizado");
+        api
+          .get("/accesorios")
+          .then((response) => {
+            dispatch(list(response.data.accesorios));
+          })
+          .catch((error) => {
+            console.error("Error al listar accesorios:", error);
+          });
+
         reset();
       })
       .catch((error) => {

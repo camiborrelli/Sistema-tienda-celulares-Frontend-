@@ -1,11 +1,16 @@
+import React from "react";
 import { useForm } from "react-hook-form";
-import { createPhone, listar } from "../../../features/phone.slice";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
+import {
+  listar,
+  updatePhone,
+  setCurrent,
+  getCurrentCelular,
+} from "../../../features/phone.slice";
 import { toast } from "react-toastify";
 
-const AltaCelular = () => {
+const EditarCelular = () => {
   const dispatch = useDispatch();
 
   const {
@@ -15,18 +20,70 @@ const AltaCelular = () => {
     reset,
   } = useForm();
 
-  const onSumbit = (data) => {
+  const current = useSelector(getCurrentCelular);
+
+  React.useEffect(() => {
+    if (current) {
+      reset({
+        id: current.id ?? current._id,
+        nombre: current.nombre,
+        marca: current.marca,
+        modelo: current.modelo,
+        precio: current.precio,
+        accesoriosCompatibles: current.accesoriosCompatibles,
+      });
+    }
+  }, [current, reset]);
+
+  // Scroll the form into view when a current celular is selected.
+  React.useEffect(() => {
+    if (!current) return;
+    // small timeout to ensure layout/reset has been applied
+    const t = setTimeout(() => {
+      const el = document.getElementById("form-celular");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [current]);
+
+  const onSubmit = (data) => {
+    const payload = {
+      nombre: data.nombre,
+      marca: data.marca,
+      modelo: data.modelo,
+      precio: data.precio,
+      accesoriosCompatibles: data.accesoriosCompatibles,
+    };
+    const id = data.id ?? data._id;
+    if (id == null) {
+      console.error("EditarCelular: id faltante en datos del form", data);
+      toast.error("ID del celular ausente. No se puede actualizar.");
+      return;
+    }
     api
-      .post(`celulares/`, data)
+      .patch(`celulares/${id}`, payload)
       .then((response) => {
-        console.log(data);
-        toast.success(response.data.mensaje);
-        dispatch(createPhone(data));
+        const updated = response.data?.celular ?? response.data;
+        dispatch(updatePhone(updated));
+        dispatch(setCurrent(null));
+        toast.success(response.data?.mensaje || "Celular actualizado");
+
+        api
+          .get("/celulares")
+          .then((response) => {
+            dispatch(listar(response.data.celulares));
+          })
+          .catch((error) => console.log(error));
+        reset();
       })
       .catch((error) => {
-        toast.error(error.response.data.error);
+        console.error("Error al actualizar celular:", error);
+        const msg =
+          error?.response?.data?.error ||
+          error?.response?.data?.mensaje ||
+          error.message;
+        toast.error(msg || "Error al actualizar celular");
       });
-    reset();
   };
 
   return (
@@ -34,10 +91,11 @@ const AltaCelular = () => {
       <form
         id="form-celular"
         className="card card-body mb-3"
-        onSubmit={handleSubmit(onSumbit)}
+        style={{ marginTop: "1.5rem" }}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <h5>Crear</h5>
-        <input type="hidden" id="celular-id" />
+        <h5>Editar celular</h5>
+        <input type="hidden" id="celular-id" {...register("id")} />
         <div className="mb-2">
           <input
             id="celular-nombre"
@@ -96,7 +154,7 @@ const AltaCelular = () => {
             })}
             type="number"
             className="form-control"
-            placeholder="Cantidad de accesorios compatibles"
+            placeholder="Precio"
           />
           {errors.accesoriosCompatibles && (
             <small className="text-danger">
@@ -125,13 +183,4 @@ const AltaCelular = () => {
   );
 };
 
-export default AltaCelular;
-{
-  /*
-  <label className="form-label">Accesorios compatibles</label>
-          <select id="celular-accesorios" className="form-select" {...register("accesorios")}>
-            <option value="">Seleccione un accesorio</option>
-          </select>
-          {errors.accesorios && <small className="text-danger">Seleccione un accesorio</small>}
-  */
-}
+export default EditarCelular;
