@@ -1,10 +1,13 @@
 import "./dashboard.css";
 import { useDispatch } from "react-redux";
 import { desloguear } from "../../features/user.slice";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ListarCelular from "./ListarCelular/ListarCelular";
 import AltaCelular from "./AltaCelular/AltaCelular";
 import { useTranslation } from "react-i18next";
+import ListarAccesorio from "./Accesorio/ListarAccesorio";
+import CrearAccesorio from "./Accesorio/CrearAccesorio";
+import { useEffect } from "react";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
@@ -22,15 +25,57 @@ const DashboardAdmin = () => {
     localStorage.setItem("lenguage", e.target.value);
   };
 
+  // Smooth scrolling behavior for sidebar anchors — scrolls the .dashboard-root container
+  useEffect(() => {
+    const container = document.querySelector(".dashboard-root");
+    if (!container) return;
+
+    const links = Array.from(
+      document.querySelectorAll(".sidebar-nav a[href^='#']")
+    );
+    const onClick = (e) => {
+      e.preventDefault();
+      const href = e.currentTarget.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+      const id = href.slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const top = targetRect.top - containerRect.top + container.scrollTop;
+
+      container.scrollTo({ top, behavior: "smooth" });
+      // update hash without default jump
+      try {
+        history.replaceState(null, "", `#${id}`);
+      } catch (err) {
+        /* ignore */
+      }
+    };
+
+    links.forEach((l) => l.addEventListener("click", onClick));
+    return () => links.forEach((l) => l.removeEventListener("click", onClick));
+  }, []);
+
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
         <div
           className="sidebar-header"
-          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "0.5rem",
+          }}
         >
           <div className="sidebar-brand">Mi App</div>
-          <select onChange={changeLenguage} defaultValue={actualLenguage} style={{ maxWidth: 140 }}>
+          <select
+            onChange={changeLenguage}
+            defaultValue={actualLenguage}
+            style={{ maxWidth: 140 }}
+          >
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>
@@ -58,36 +103,23 @@ const DashboardAdmin = () => {
           <section id="section-celulares" className="mb-5">
             <h2>Celulares</h2>
             <div className="row">
-              <AltaCelular />
-              <ListarCelular />
+              <div className="col-md-4 col-12">
+                <AltaCelular />
+              </div>
+              <div className="col-md-8 col-12">
+                <ListarCelular />
+              </div>
             </div>
           </section>
           {/* Accesorios */}
           <section id="section-accesorios" className="mb-5">
             <h2>Accesorios</h2>
             <div className="row">
-              <div className="col-12">
-                <form id="form-accesorio" className="card card-body mb-3">
-                  <h5>Crear accesorio</h5>
-                  <div className="mb-2">
-                    <label className="form-label">Nombre</label>
-                    <input id="accesorio-nombre" className="form-control" />
-                  </div>
-                  <div className="mb-2">
-                    <label className="form-label">Precio</label>
-                    <input id="accesorio-precio" type="number" className="form-control" />
-                  </div>
-                  <button className="btn btn-success">Crear</button>
-                </form>
+              <div className="col-md-4 col-12">
+                <CrearAccesorio />
               </div>
-              <div className="col-12">
-                <div className="card card-body">
-                  <h5>Lista de Accesorios</h5>
-                  <ul className="list-group" id="list-accesorios" />
-                  <button className="btn btn-outline-primary mt-2" id="btn-refresh-accesorios">
-                    Refrescar
-                  </button>
-                </div>
+              <div className="col-md-8 col-12">
+                <ListarAccesorio />
               </div>
             </div>
           </section>
@@ -99,7 +131,10 @@ const DashboardAdmin = () => {
                 <div className="card card-body">
                   <h5>Usuarios (lista)</h5>
                   <ul className="list-group" id="list-usuarios" />
-                  <button className="btn btn-outline-primary mt-2" id="btn-refresh-usuarios">
+                  <button
+                    className="btn btn-outline-primary mt-2"
+                    id="btn-refresh-usuarios"
+                  >
                     Refrescar
                   </button>
                 </div>
@@ -107,7 +142,9 @@ const DashboardAdmin = () => {
             </div>
           </section>
         </div>
-        <footer className="text-center py-3 bg-light">Panel de pruebas - front estático</footer>
+        <footer className="text-center py-3 bg-light">
+          Panel de pruebas - front estático
+        </footer>
       </main>
     </div>
   );

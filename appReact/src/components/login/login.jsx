@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import "./Login.css";
-import { useNavigate, NavLink, Link } from "react-router";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { loguear } from "../../features/user.slice";

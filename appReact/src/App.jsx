@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/login/login";
 import Registro from "./components/register/Register";
 import { ToastContainer } from "react-toastify";

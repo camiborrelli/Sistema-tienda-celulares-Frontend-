@@ -1,7 +1,7 @@
 import "../login/login.css";
 import { useEffect, useState } from "react";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import api from "../../data/api";
