@@ -45,20 +45,33 @@ const EditarAccesorio = () => {
       modeloCompatible: data.modeloCompatible || "",
       categoria: data.categoria || "",
     };
-
+    const id = data.id ?? data._id;
+    if (!id) {
+      console.error("EditarAccesorio: id faltante en datos del form", data);
+      toast.error(
+        "Id de accesorio faltante. Seleccione el accesorio a editar desde la lista."
+      );
+      return;
+    }
     api
-      .put(`accesorios/${data.id}`, payload)
+      .patch(`accesorios/${id}`, payload)
       .then((response) => {
         const updated = response.data?.accesorio ?? response.data;
         dispatch(updateAccesory(updated));
         dispatch(setCurrent(null));
-        dispatch(list());
         toast.success(response.data?.mensaje || "Accesorio actualizado");
         reset();
       })
       .catch((error) => {
         console.error("Error al actualizar accesorio:", error);
-        toast.error(error.response.data.error);
+        const serverData = error?.response?.data;
+        const msg =
+          serverData?.message ||
+          (typeof serverData === "string"
+            ? serverData
+            : JSON.stringify(serverData)) ||
+          error.message;
+        toast.error(msg);
       });
   };
   return (
