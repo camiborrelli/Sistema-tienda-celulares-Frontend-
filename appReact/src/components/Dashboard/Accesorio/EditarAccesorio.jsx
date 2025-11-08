@@ -1,10 +1,16 @@
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCurrentAccesory,
+  list,
+  setCurrent,
+} from "../../../features/accesory.slice";
 import api from "../../../data/api";
-import { createAccesory } from "../../../features/accesory.slice";
+import { updateAccesory } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 
-const CrearAccesorio = () => {
+const EditarAccesorio = () => {
   const dispatch = useDispatch();
 
   const {
@@ -13,6 +19,22 @@ const CrearAccesorio = () => {
     formState: { errors, isSubmitting },
     reset,
   } = useForm();
+
+  const current = useSelector(getCurrentAccesory);
+
+  React.useEffect(() => {
+    if (current) {
+      reset({
+        id: current.id ?? current._id,
+        nombre: current.nombre,
+        descripcion: current.descripcion,
+        precio: current.precio,
+        stock: current.stock,
+        modeloCompatible: current.modeloCompatible,
+        categoria: current.categoria,
+      });
+    }
+  }, [current, reset]);
 
   const onSubmit = (data) => {
     const payload = {
@@ -25,34 +47,29 @@ const CrearAccesorio = () => {
     };
 
     api
-      .post("accesorios", payload)
+      .put(`accesorios/${data.id}`, payload)
       .then((response) => {
-        const created = response.data?.accesorio ?? response.data;
-        localStorage.setItem(
-          "accesorioId",
-          response.data?.accesorio?._id ??
-            response.data?.accesorio?.id ??
-            response.data?.id ??
-            response.data?._id
-        );
-        dispatch(createAccesory(created));
-        toast.success(response.data?.mensaje || "Accesorio creado");
+        const updated = response.data?.accesorio ?? response.data;
+        dispatch(updateAccesory(updated));
+        dispatch(setCurrent(null));
+        dispatch(list());
+        toast.success(response.data?.mensaje || "Accesorio actualizado");
         reset();
       })
       .catch((error) => {
-        console.error("Error al crear accesorio:", error);
+        console.error("Error al actualizar accesorio:", error);
         toast.error(error.response.data.error);
       });
   };
-
   return (
     <div className="col-12">
       <form
-        id="form-accesorio"
+        id="form-accesorio-editar"
         className="card card-body mb-3"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h5>Crear accesorio</h5>
+        <h5>Editar accesorio</h5>
+        <input type="hidden" id="accesorio-id" {...register("id")} />
         <div className="mb-2">
           <label className="form-label">Nombre</label>
           <input
@@ -70,11 +87,7 @@ const CrearAccesorio = () => {
             {...register("descripcion", { required: true })}
             placeholder="Descripción del accesorio"
           />
-          {errors.descripcion && (
-            <small className="text-danger">La descripción es obligatoria</small>
-          )}
         </div>
-
         <div className="mb-2">
           <label className="form-label">Precio</label>
           <input
@@ -84,11 +97,7 @@ const CrearAccesorio = () => {
             {...register("precio", { required: true, valueAsNumber: true })}
             placeholder="0"
           />
-          {errors.precio && (
-            <small className="text-danger">El precio es obligatorio</small>
-          )}
         </div>
-
         <div className="mb-2">
           <label className="form-label">Stock</label>
           <input
@@ -98,51 +107,31 @@ const CrearAccesorio = () => {
             {...register("stock", { required: true, valueAsNumber: true })}
             placeholder="0"
           />
-          {errors.stock && (
-            <small className="text-danger">El stock es obligatorio</small>
-          )}
         </div>
-
         <div className="mb-2">
           <label className="form-label">Modelo Compatible</label>
           <input
-            id="accesorio-modeloCompatible"
+            id="accesorio-modelo-compatible"
             className="form-control"
             {...register("modeloCompatible", { required: true })}
-            placeholder="Ej: iPhone 12"
+            placeholder="Modelo compatible"
           />
-          {errors.modeloCompatible && (
-            <small className="text-danger">
-              El modelo compatible es obligatorio
-            </small>
-          )}
         </div>
-
         <div className="mb-2">
           <label className="form-label">Categoría</label>
-          <select
+          <input
             id="accesorio-categoria"
-            className="form-select"
+            className="form-control"
             {...register("categoria", { required: true })}
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Seleccione una categoría
-            </option>
-            <option value="cargador">cargador</option>
-            <option value="funda">funda</option>
-            <option value="audifonos">audífonos</option>
-            <option value="otros">otros</option>
-          </select>
-          {errors.categoria && (
-            <small className="text-danger">La categoría es obligatoria</small>
-          )}
+            placeholder="Categoría"
+          />
         </div>
 
-        <button className="btn btn-success">Crear</button>
+        <button disabled={isSubmitting} className="btn btn-primary">
+          Guardar cambios
+        </button>
       </form>
     </div>
   );
 };
-
-export default CrearAccesorio;
+export default EditarAccesorio;

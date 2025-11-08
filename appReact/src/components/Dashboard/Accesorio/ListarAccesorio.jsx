@@ -1,25 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
+import React, { useEffect } from "react";
 import {
   list,
   getAccesories,
   deleteAccesorio,
+  setCurrent,
 } from "../../../features/accesory.slice";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const ListarAccesorio = () => {
   const dispatch = useDispatch();
+  const accesorios = useSelector(getAccesories) ?? [];
 
   const listarAccesorios = () => {
     api
       .get("/accesorios")
       .then((response) => {
-        // Ensure we dispatch an array. Backend may return { accesorios: [...] } or an array directly
-        const payload = Array.isArray(response.data)
-          ? response.data
-          : response.data?.accesorios ?? [];
-        dispatch(list(payload));
+        dispatch(list(response.data.accesorios));
       })
       .catch((error) => {
         console.error("Error al listar accesorios:", error);
@@ -30,9 +28,8 @@ const ListarAccesorio = () => {
     listarAccesorios();
   }, []);
 
-  const accesorios = useSelector(getAccesories) ?? [];
-
   const borrarAccesorio = (id) => {
+    if (!id) return;
     api
       .delete(`accesorios/${id}`)
       .then((res) => {
@@ -53,7 +50,7 @@ const ListarAccesorio = () => {
     <div className="col-12">
       <div className="card card-body">
         <h5>Lista de Accesorios</h5>
-        <table>
+        <table className="table table-sm">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -69,6 +66,22 @@ const ListarAccesorio = () => {
                   <td>{accesorio.precio || accesorio.price}</td>
                   <td>
                     <button
+                      className="btn btn-sm btn-primary me-2"
+                      onClick={() => {
+                        dispatch(setCurrent(accesorio));
+                        const el = document.getElementById(
+                          "form-accesorio-editar"
+                        );
+                        if (el)
+                          el.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                          });
+                      }}
+                    >
+                      Editar
+                    </button>
+                    <button
                       className="btn btn-sm btn-outline-danger"
                       onClick={() =>
                         borrarAccesorio(accesorio._id || accesorio.id)
@@ -81,7 +94,7 @@ const ListarAccesorio = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="2" className="text-muted text-center">
+                <td colSpan={3} className="text-center text-muted">
                   No hay accesorios
                 </td>
               </tr>

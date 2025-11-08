@@ -7,6 +7,7 @@ import AltaCelular from "./AltaCelular/AltaCelular";
 import { useTranslation } from "react-i18next";
 import ListarAccesorio from "./Accesorio/ListarAccesorio";
 import CrearAccesorio from "./Accesorio/CrearAccesorio";
+import EditarAccesorio from "./Accesorio/EditarAccesorio";
 import { useEffect } from "react";
 
 const DashboardAdmin = () => {
@@ -120,6 +121,9 @@ const DashboardAdmin = () => {
               </div>
               <div className="col-md-8 col-12">
                 <ListarAccesorio />
+              </div>
+              <div className="col-md-12 col-12">
+                <EditarAccesorio />
               </div>
             </div>
           </section>
