@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+export const getUsers = (state) => state.user.usuarios ?? [];
 
 const initialState = {
   usuario: null,
+  usuarios: [],
 };
 
 const userSlice = createSlice({
@@ -16,9 +18,12 @@ const userSlice = createSlice({
       state.usuario = null;
       localStorage.clear();
     },
+    listarUsuarios: (state, action) => {
+      state.usuarios = action.payload;
+    },
   },
 });
 
-export const { loguear, desloguear } = userSlice.actions;
+export const { loguear, desloguear, listarUsuarios } = userSlice.actions;
 
 export default userSlice.reducer;

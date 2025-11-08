@@ -9,6 +9,7 @@ import ListarAccesorio from "./Accesorio/ListarAccesorio";
 import CrearAccesorio from "./Accesorio/CrearAccesorio";
 import EditarAccesorio from "./Accesorio/EditarAccesorio";
 import EditarCelular from "./EditarCelular/EditarCelular";
+import ListarUsuarios from "./ListarUsuarios/ListarUsuarios";
 import { useEffect } from "react";
 
 const DashboardAdmin = () => {
@@ -134,20 +135,8 @@ const DashboardAdmin = () => {
           {/* Usuarios */}
           <section id="section-usuarios" className="mb-5">
             <h2>Usuarios</h2>
-            <div className="row">
-              <div className="col-12">
-                <div className="card card-body">
-                  <h5>Usuarios (lista)</h5>
-                  <ul className="list-group" id="list-usuarios" />
-                  <button
-                    className="btn btn-outline-primary mt-2"
-                    id="btn-refresh-usuarios"
-                  >
-                    Refrescar
-                  </button>
-                </div>
-              </div>
-            </div>
+            <div className="row"></div>
+            <ListarUsuarios />
           </section>
         </div>
         <footer className="text-center py-3 bg-light">
