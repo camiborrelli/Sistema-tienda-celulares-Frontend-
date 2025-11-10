@@ -7,10 +7,12 @@ import { desloguear, loguear } from "../../features/user.slice";
 import { toast } from "react-toastify";
 import api from "../../data/api";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -58,7 +60,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>{t("login")}</h2>
       <form id="formLogin" onSubmit={handleSubmit(ingresar)}>
         <div className="form-group">
           <div className="input-row">
@@ -72,7 +74,7 @@ const Login = () => {
             <FaUser className="input-icon" aria-hidden />
           </div>
           {errors.username && (
-            <span className="error">El username es obligatorio</span>
+            <span className="error">{t("usernameRequired")}</span>
           )}
         </div>
         <div className="form-group">
@@ -87,14 +89,15 @@ const Login = () => {
             <FaLock className="input-icon" aria-hidden />
           </div>
           {errors.password && (
-            <span className="error">La contraseña es obligatoria</span>
+            <span className="error">{t("passwordRequired")}</span>
           )}
         </div>
         <button type="submit" className="btn-acceder">
-          Acceder
+          <span>{t("login")}</span>
         </button>
         <p className="register-link">
-          ¿No tienes una cuenta? <Link to={"/register"}>Regístrate aquí</Link>
+          {t("noAccount")}
+          <Link to={"/register"}>{t("registerHere")}</Link>
         </p>
       </form>
     </div>

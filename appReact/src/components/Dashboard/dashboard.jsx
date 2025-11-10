@@ -11,6 +11,7 @@ import ListarAccesorio from "./Accesorio/ListarAccesorio";
 import CrearAccesorio from "./Accesorio/CrearAccesorio";
 import EditarAccesorio from "./Accesorio/EditarAccesorio";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const DashboardAdmin = () => {
   const actualLenguage = localStorage.getItem("lenguage");
 
   const cerrarSesion = () => {
+    toast.success(<span>{t("logoutSuccess")}</span>);
     dispatch(desloguear());
     navigate("/");
   };
@@ -55,6 +57,7 @@ const DashboardAdmin = () => {
       try {
         history.replaceState(null, "", `#${id}`);
       } catch (err) {
+        console.log(err);
         /* ignore */
       }
     };
@@ -92,7 +95,7 @@ const DashboardAdmin = () => {
             gap: "0.5rem",
           }}
         >
-          <div className="sidebar-brand">Mi App</div>
+          <div className="sidebar-brand">{t("title")}</div>
           <select
             onChange={changeLenguage}
             defaultValue={actualLenguage}
@@ -130,7 +133,7 @@ const DashboardAdmin = () => {
         </ul>
         <div className="sidebar-footer">
           <button className="btn btn-danger btn-sm" onClick={cerrarSesion}>
-            Cerrar sesión
+            {t("logout")}
           </button>
         </div>
       </aside>
@@ -169,9 +172,6 @@ const DashboardAdmin = () => {
             <Outlet />
           )}
         </div>
-        <footer className="text-center py-3 bg-light">
-          Panel de pruebas - front estático
-        </footer>
       </main>
     </div>
   );
