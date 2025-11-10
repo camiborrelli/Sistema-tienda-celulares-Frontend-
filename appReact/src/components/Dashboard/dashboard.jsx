@@ -1,15 +1,15 @@
 import "./dashboard.css";
 import { useDispatch } from "react-redux";
 import { desloguear } from "../../features/user.slice";
-import { useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import ListarCelular from "./Celular/ListarCelular";
 import AltaCelular from "./Celular/AltaCelular";
 import { useTranslation } from "react-i18next";
+import EditarCelular from "./Celular/EditarCelular";
+import ListarUsuario from "./Usuario/ListarUsuario";
 import ListarAccesorio from "./Accesorio/ListarAccesorio";
 import CrearAccesorio from "./Accesorio/CrearAccesorio";
 import EditarAccesorio from "./Accesorio/EditarAccesorio";
-import EditarCelular from "./Celular/EditarCelular";
-import ListarUsuario from "./Usuario/ListarUsuario";
 import { useEffect } from "react";
 
 const DashboardAdmin = () => {
@@ -27,6 +27,8 @@ const DashboardAdmin = () => {
     i18n.changeLanguage(e.target.value);
     localStorage.setItem("lenguage", e.target.value);
   };
+
+  const location = useLocation();
 
   // Smooth scrolling behavior for sidebar anchors — scrolls the .dashboard-root container
   useEffect(() => {
@@ -61,6 +63,23 @@ const DashboardAdmin = () => {
     return () => links.forEach((l) => l.removeEventListener("click", onClick));
   }, []);
 
+  // compute if we are at the base dashboard route (show inline sections) or at a child route
+  const pathname = location.pathname.replace(/\/+$/g, "");
+  const hash = location.hash || "";
+  const isDashboardRoot = pathname === "/dashboard" || pathname === "";
+
+  // active link helpers
+  const isCelularesActive =
+    pathname === "/dashboard" ||
+    pathname === "/dashboard/celulares" ||
+    (isDashboardRoot && hash === "#section-celulares");
+  const isAccesoriosActive =
+    pathname === "/dashboard/accesorios" ||
+    (isDashboardRoot && hash === "#section-accesorios");
+  const isUsuariosActive =
+    pathname === "/dashboard/usuarios" ||
+    (isDashboardRoot && hash === "#section-usuarios");
+
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
@@ -86,10 +105,27 @@ const DashboardAdmin = () => {
 
         <ul className="sidebar-nav">
           <li>
-            <a href="#section-celulares">Inicio</a>
-            <a href="#section-celulares">Celulares</a>
-            <a href="#section-accesorios">Accesorios</a>
-            <a href="#section-usuarios">Usuarios</a>
+            <Link className={isCelularesActive ? "active" : ""} to="/dashboard">
+              Inicio
+            </Link>
+            <Link
+              className={isCelularesActive ? "active" : ""}
+              to="/dashboard/celulares"
+            >
+              Celulares
+            </Link>
+            <Link
+              className={isAccesoriosActive ? "active" : ""}
+              to="/dashboard/accesorios"
+            >
+              Accesorios
+            </Link>
+            <Link
+              className={isUsuariosActive ? "active" : ""}
+              to="/dashboard/usuarios"
+            >
+              Usuarios
+            </Link>
           </li>
         </ul>
         <div className="sidebar-footer">
@@ -101,43 +137,37 @@ const DashboardAdmin = () => {
 
       <main className="dashboard-main">
         <div className="dashboard-root container mb-5">
-          <div id="alerts" />
-          {/* Celulares */}
-          <section id="section-celulares" className="mb-5">
-            <h2>Celulares</h2>
-            <div className="row">
-              <div className="col-md-4 col-12">
-                <AltaCelular />
-              </div>
-              <div className="col-md-8 col-12">
-                <ListarCelular />
-              </div>
-              <div className="col-md-12 col-12">
-                <EditarCelular />
-              </div>
-            </div>
-          </section>
-          {/* Accesorios */}
-          <section id="section-accesorios" className="mb-5">
-            <h2>Accesorios</h2>
-            <div className="row">
-              <div className="col-md-4 col-12">
-                <CrearAccesorio />
-              </div>
-              <div className="col-md-8 col-12">
-                <ListarAccesorio />
-              </div>
-              <div className="col-md-12 col-12">
-                <EditarAccesorio />
-              </div>
-            </div>
-          </section>
-          {/* Usuarios */}
-          <section id="section-usuarios" className="mb-5">
-            <h2>Usuarios</h2>
-            <div className="row"></div>
-            <ListarUsuario />
-          </section>
+          {isDashboardRoot ? (
+            <>
+              <div id="alerts" />
+
+              {/* Celulares */}
+              <section id="section-celulares" className="mb-5">
+                <h2>Celulares</h2>
+                <div className="row">
+                  <div className="col-md-4 col-12">
+                    <AltaCelular />
+                  </div>
+                  <div className="col-md-8 col-12">
+                    <ListarCelular />
+                  </div>
+                  <div className="col-md-12 col-12">
+                    <EditarCelular />
+                  </div>
+                </div>
+              </section>
+
+              {/* Usuarios */}
+              <section id="section-usuarios" className="mb-5">
+                <h2>Usuarios</h2>
+                <div className="row"></div>
+                <ListarUsuario />
+              </section>
+            </>
+          ) : (
+            /* render child routes such as /dashboard/accesorios */
+            <Outlet />
+          )}
         </div>
         <footer className="text-center py-3 bg-light">
           Panel de pruebas - front estático

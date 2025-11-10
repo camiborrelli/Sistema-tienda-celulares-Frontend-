@@ -23,7 +23,6 @@ const ListarUsuario = () => {
   return (
     <div className="col-12">
       <div className="card card-body">
-        <h5>Lista de usuarios</h5>
         <ul className="list-group" id="list-usuarios">
           {usuarios.map((usuario) => (
             <li className="list-group-item" key={usuario._id}>
@@ -31,7 +30,11 @@ const ListarUsuario = () => {
             </li>
           ))}
         </ul>
-        <button className="btn btn-outline-primary mt-2" id="btn-refresh-usuarios" onClick={fetchUsuarios}>
+        <button
+          className="btn btn-outline-primary mt-2"
+          id="btn-refresh-usuarios"
+          onClick={fetchUsuarios}
+        >
           Refrescar
         </button>
       </div>

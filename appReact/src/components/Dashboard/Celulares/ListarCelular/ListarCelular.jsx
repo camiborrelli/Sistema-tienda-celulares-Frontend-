@@ -5,6 +5,12 @@ import {
   getPhones,
   deletePhone,
   setCurrent,
+} from "../../../../features/phone.slice";
+import {
+  listar,
+  getPhones,
+  deletePhone,
+  setCurrent,
 } from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -19,7 +25,7 @@ const ListarCelular = () => {
         dispatch(listar(response.data.celulares));
       })
       .catch((error) => {
-        if (error.response?.data?.error !== "No hay celulares disponibles") {
+        if (error.response.data.error !== "No hay celulares disponibles") {
           console.log(error);
         }
       });
@@ -51,7 +57,11 @@ const ListarCelular = () => {
 
   const ordenarFechaCreacion = () => {
     console.log("Ordenar por fecha de creacion a implementar");
-    setSortAsc((s) => !s);
+    if (sortAsc) {
+      setSortAsc(false);
+    } else {
+      setSortAsc(true);
+    }
   };
 
   return (
@@ -83,13 +93,12 @@ const ListarCelular = () => {
                       className="btn btn-sm btn-primary me-2"
                       onClick={() => {
                         dispatch(setCurrent(celular));
+                        // small delay so the Editar form can reset/populate before scrolling
                         setTimeout(() => {
                           const container =
                             document.querySelector(".dashboard-root");
                           const el = document.getElementById("form-celular");
-                          if (!el) return;
-
-                          if (container) {
+                          if (el && container) {
                             const containerRect =
                               container.getBoundingClientRect();
                             const targetRect = el.getBoundingClientRect();
@@ -97,14 +106,16 @@ const ListarCelular = () => {
                               targetRect.top -
                               containerRect.top +
                               container.scrollTop;
+                            container.scrollTop;
                             container.scrollTo({ top, behavior: "smooth" });
-                          } else {
+                          } else if (el) {
+                            // fallback to scrollIntoView if container not found
                             el.scrollIntoView({
                               behavior: "smooth",
                               block: "center",
                             });
                           }
-                        }, 80);
+                        }, 60);
                       }}
                     >
                       📝
@@ -120,7 +131,7 @@ const ListarCelular = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center text-muted">
+                <td colSpan={4} className="text-center text-muted">
                   No hay celulares disponibles
                 </td>
               </tr>

@@ -15,7 +15,7 @@ const ListarAccesorio = () => {
 
   const listarAccesorios = () => {
     api
-      .get("/accesorios")
+      .get("/accesorios/creados")
       .then((response) => {
         dispatch(list(response.data.accesorios));
       })

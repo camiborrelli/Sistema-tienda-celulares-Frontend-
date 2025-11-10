@@ -9,6 +9,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { store } from "./store/store";
 import NotFound from "./components/NotFound";
 import Container from "./components/Container";
+import Accesorios from "./components/Dashboard/Accesorio/Accesorios";
+import Celulares from "./components/Dashboard/Celular/Celulares";
+import Usuarios from "./components/Dashboard/Usuario/Usuarios";
 
 function App() {
   return (
@@ -18,8 +21,12 @@ function App() {
           <Route path="/" element={<Container />}>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Registro />} />
-            <Route path="/dashboard" element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route path="accesorios" element={<Accesorios />} />
+                <Route path="celulares" element={<Celulares />} />
+                <Route path="usuarios" element={<Usuarios />} />
+              </Route>
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
