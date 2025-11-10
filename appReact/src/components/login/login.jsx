@@ -1,9 +1,9 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import "./Login.css";
 import { useNavigate, NavLink, Link } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { loguear } from "../../features/user.slice";
+import { desloguear, loguear } from "../../features/user.slice";
 import { toast } from "react-toastify";
 import api from "../../data/api";
 import { useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors /*isSubmitting*/ },
   } = useForm();
 
   const ingresar = (data) => {
@@ -31,13 +31,24 @@ const Login = () => {
       });
   };
 
-  // aplicar clase al body para forzar fondo oscuro solo en esta página
+  const validarTokenUsuario = () => {
+    api
+      .post("usuarios/token")
+      .then(() => {
+        dispatch(loguear(localStorage.getItem("Token")));
+        navigate("/dashboard");
+      })
+      .catch(() => {
+        dispatch(desloguear());
+        navigate("/");
+      });
+  };
+
   useEffect(() => {
     document.body.classList.add("login-dark");
 
     if (localStorage.getItem("Token") != null) {
-      dispatch(loguear(localStorage.getItem("Token")));
-      navigate("/dashboard");
+      validarTokenUsuario();
     }
 
     return () => {
@@ -60,7 +71,9 @@ const Login = () => {
             />
             <FaUser className="input-icon" aria-hidden />
           </div>
-          {errors.username && <span className="error">El username es obligatorio</span>}
+          {errors.username && (
+            <span className="error">El username es obligatorio</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -73,7 +86,9 @@ const Login = () => {
             />
             <FaLock className="input-icon" aria-hidden />
           </div>
-          {errors.password && <span className="error">La contraseña es obligatoria</span>}
+          {errors.password && (
+            <span className="error">La contraseña es obligatoria</span>
+          )}
         </div>
         <button type="submit" className="btn-acceder">
           Acceder

@@ -16,6 +16,7 @@ const userSlice = createSlice({
     },
     desloguear: (state) => {
       state.usuario = null;
+      state.token = null;
       localStorage.clear();
     },
     listarUsuarios: (state, action) => {
