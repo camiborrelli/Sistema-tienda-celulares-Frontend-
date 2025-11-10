@@ -11,6 +11,7 @@ import EditarAccesorio from "./Accesorio/EditarAccesorio";
 import EditarCelular from "./Celular/EditarCelular";
 import ListarUsuario from "./Usuario/ListarUsuario";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const DashboardAdmin = () => {
   const actualLenguage = localStorage.getItem("lenguage");
 
   const cerrarSesion = () => {
+    toast.success(<span>{t("logoutSuccess")}</span>);
     dispatch(desloguear());
     navigate("/");
   };
@@ -53,6 +55,7 @@ const DashboardAdmin = () => {
       try {
         history.replaceState(null, "", `#${id}`);
       } catch (err) {
+        console.log(err);
         /* ignore */
       }
     };
@@ -73,7 +76,7 @@ const DashboardAdmin = () => {
             gap: "0.5rem",
           }}
         >
-          <div className="sidebar-brand">Mi App</div>
+          <div className="sidebar-brand">{t("title")}</div>
           <select
             onChange={changeLenguage}
             defaultValue={actualLenguage}
@@ -86,15 +89,15 @@ const DashboardAdmin = () => {
 
         <ul className="sidebar-nav">
           <li>
-            <a href="#section-celulares">Inicio</a>
-            <a href="#section-celulares">Celulares</a>
-            <a href="#section-accesorios">Accesorios</a>
-            <a href="#section-usuarios">Usuarios</a>
+            <a href="#section-celulares">{t("homepage")}</a>
+            <a href="#section-celulares">{t("cellphones")}</a>
+            <a href="#section-accesorios">{t("accesories")}</a>
+            <a href="#section-usuarios">{t("Users")}</a>
           </li>
         </ul>
         <div className="sidebar-footer">
           <button className="btn btn-danger btn-sm" onClick={cerrarSesion}>
-            Cerrar sesión
+            {t("logout")}
           </button>
         </div>
       </aside>
@@ -104,7 +107,7 @@ const DashboardAdmin = () => {
           <div id="alerts" />
           {/* Celulares */}
           <section id="section-celulares" className="mb-5">
-            <h2>Celulares</h2>
+            <h2>{t("cellphones")}</h2>
             <div className="row">
               <div className="col-md-4 col-12">
                 <AltaCelular />
@@ -119,7 +122,7 @@ const DashboardAdmin = () => {
           </section>
           {/* Accesorios */}
           <section id="section-accesorios" className="mb-5">
-            <h2>Accesorios</h2>
+            <h2>{t("accesories")}</h2>
             <div className="row">
               <div className="col-md-4 col-12">
                 <CrearAccesorio />
@@ -134,14 +137,11 @@ const DashboardAdmin = () => {
           </section>
           {/* Usuarios */}
           <section id="section-usuarios" className="mb-5">
-            <h2>Usuarios</h2>
+            <h2>{t("users")}</h2>
             <div className="row"></div>
             <ListarUsuario />
           </section>
         </div>
-        <footer className="text-center py-3 bg-light">
-          Panel de pruebas - front estático
-        </footer>
       </main>
     </div>
   );

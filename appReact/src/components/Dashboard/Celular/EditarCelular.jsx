@@ -9,9 +9,11 @@ import {
   getCurrentCelular,
 } from "../../../features/phone.slice";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const EditarCelular = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -94,17 +96,17 @@ const EditarCelular = () => {
         style={{ marginTop: "1.5rem" }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h5>Editar celular</h5>
+        <h5>{t("editCellPhone")}</h5>
         <input type="hidden" id="celular-id" {...register("id")} />
         <div className="mb-2">
           <input
             id="celular-nombre"
             {...register("nombre", { required: true })}
             className="form-control"
-            placeholder="Nombre"
+            placeholder={t("name")}
           />
           {errors.nombre && (
-            <small className="text-danger">El nombre es obligatorio</small>
+            <small className="text-danger">{t("nameRequired")}</small>
           )}
         </div>
         <div className="mb-2">
@@ -112,10 +114,10 @@ const EditarCelular = () => {
             id="celular-marca"
             {...register("marca", { required: true })}
             className="form-control"
-            placeholder="Marca"
+            placeholder={t("brand")}
           />
           {errors.marca && (
-            <small className="text-danger">La marca es obligatoria</small>
+            <small className="text-danger">{t("brandRequired")}</small>
           )}
         </div>
         <div className="mb-2">
@@ -124,10 +126,10 @@ const EditarCelular = () => {
             {...register("modelo", { required: true, valueAsNumber: true })}
             type="number"
             className="form-control"
-            placeholder="Modelo"
+            placeholder={t("model")}
           />
           {errors.modelo && (
-            <small className="text-danger">El modelo es obligatorio</small>
+            <small className="text-danger">{t("modelRequired")}</small>
           )}
         </div>
         <div className="mb-2">
@@ -139,10 +141,10 @@ const EditarCelular = () => {
             })}
             type="number"
             className="form-control"
-            placeholder="Precio"
+            placeholder={t("price")}
           />
           {errors.precio && (
-            <small className="text-danger">El precio es obligatorio</small>
+            <small className="text-danger">{t("priceRequired")}</small>
           )}
         </div>
         <div className="mb-2">
@@ -154,12 +156,10 @@ const EditarCelular = () => {
             })}
             type="number"
             className="form-control"
-            placeholder="Precio"
+            placeholder={t("accesoryNumber")}
           />
           {errors.accesoriosCompatibles && (
-            <small className="text-danger">
-              La cantidad de accesorios compatibles es obligatoria
-            </small>
+            <small className="text-danger">{t("accesoryNumberRequired")}</small>
           )}
         </div>
         <div className="d-flex gap-2">
@@ -168,14 +168,14 @@ const EditarCelular = () => {
             type="submit"
             disabled={isSubmitting}
           >
-            Guardar
+            {t("save")}
           </button>
           <button
             className="btn btn-secondary"
             type="button"
             onClick={() => reset()}
           >
-            Limpiar
+            {t("clean")}
           </button>
         </div>
       </form>

@@ -1,11 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import { listar, getPhones, deletePhone, setCurrent } from "../../../features/phone.slice";
+import {
+  listar,
+  getPhones,
+  deletePhone,
+  setCurrent,
+} from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const ListarCelular = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const listarCelulares = () => {
     api
@@ -56,16 +63,15 @@ const ListarCelular = () => {
   return (
     <div className="col-12">
       <div className="card card-body">
-        <h5>Lista de Celulares</h5>
         <table className="table table-sm" id="table-celulares">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>Precio</th>
-              <th>Fecha Creacion</th>
-              <th>Acciones</th>
+              <th>{t("name")}</th>
+              <th>{t("brand")}</th>
+              <th>{t("model")}</th>
+              <th>{t("price")}</th>
+              <th>{t("creationDate")}</th>
+              <th>{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -84,12 +90,17 @@ const ListarCelular = () => {
                         dispatch(setCurrent(celular));
                         // small delay so the Editar form can reset/populate before scrolling
                         setTimeout(() => {
-                          const container = document.querySelector(".dashboard-root");
+                          const container =
+                            document.querySelector(".dashboard-root");
                           const el = document.getElementById("form-celular");
                           if (el && container) {
-                            const containerRect = container.getBoundingClientRect();
+                            const containerRect =
+                              container.getBoundingClientRect();
                             const targetRect = el.getBoundingClientRect();
-                            const top = targetRect.top - containerRect.top + container.scrollTop;
+                            const top =
+                              targetRect.top -
+                              containerRect.top +
+                              container.scrollTop;
                             container.scrollTop;
                             container.scrollTo({ top, behavior: "smooth" });
                           } else if (el) {
@@ -104,7 +115,10 @@ const ListarCelular = () => {
                     >
                       📝
                     </button>
-                    <button className="btn btn-sm btn-danger" onClick={() => borrarCelular(celular._id)}>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => borrarCelular(celular._id)}
+                    >
                       🗑️
                     </button>
                   </td>
@@ -113,7 +127,7 @@ const ListarCelular = () => {
             ) : (
               <tr>
                 <td colSpan={4} className="text-center text-muted">
-                  No hay celulares disponibles
+                  {t("noCellPhones")}
                 </td>
               </tr>
             )}
@@ -126,14 +140,14 @@ const ListarCelular = () => {
             className="btn btn-outline-primary flex-fill d-flex align-items-center justify-content-center text-center"
             onClick={listarCelulares}
           >
-            Refrescar 🔃
+            {t("refresh")} 🔃
           </button>
           <button
             type="button"
             className="btn btn-outline-secondary flex-fill d-flex align-items-center justify-content-center text-center"
             onClick={ordenarFechaCreacion}
           >
-            {sortAsc ? "Ordenar ↑" : "Ordenar ↓"}
+            {sortAsc ? t("orderbyUp") : t("orderbyDown")}
           </button>
         </div>
       </div>
