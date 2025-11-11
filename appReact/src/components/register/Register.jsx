@@ -26,8 +26,8 @@ const Register = () => {
       .then((response) => {
         toast.success(response.data.message);
         localStorage.setItem("Token", response.data.token);
-        dispatch(loguear());
-        navigate("/dashboard");
+        dispatch(loguear(response.data.token));
+        navigate("/dashboard/celulares");
       })
       .catch((error) => {
         toast.error(error.response.data.error);
@@ -49,23 +49,44 @@ const Register = () => {
         <div className="form-group">
           <div className="input-row">
             <FaUser className="input-icon" aria-hidden />
-            <input type="text" id="username" placeholder="Nombre" {...register("username", { required: true })} />
+            <input
+              type="text"
+              id="username"
+              placeholder="Nombre"
+              {...register("username", { required: true })}
+            />
           </div>
-          {errors.username && <span className="error">El username es obligatorio</span>}
+          {errors.username && (
+            <span className="error">El username es obligatorio</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
             <FaEnvelope className="input-icon" aria-hidden />
-            <input type="email" id="email" placeholder="Email" {...register("email", { required: true })} />
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              {...register("email", { required: true })}
+            />
           </div>
-          {errors.email && <span className="error">El email es obligatorio</span>}
+          {errors.email && (
+            <span className="error">El email es obligatorio</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
             <FaLock className="input-icon" aria-hidden />
-            <input type="password" id="contrasenia" placeholder="Contraseña" {...register("password", { required: true })} />
+            <input
+              type="password"
+              id="contrasenia"
+              placeholder="Contraseña"
+              {...register("password", { required: true })}
+            />
           </div>
-          {errors.password && <span className="error">La contraseña es obligatoria</span>}
+          {errors.password && (
+            <span className="error">La contraseña es obligatoria</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -77,7 +98,11 @@ const Register = () => {
               {...register("confirmPassword", { required: true })}
             />
           </div>
-          {errors.confirmPassword && <span className="error">La confirmación de la contraseña es obligatoria</span>}
+          {errors.confirmPassword && (
+            <span className="error">
+              La confirmación de la contraseña es obligatoria
+            </span>
+          )}
         </div>
         <button disabled={isSubmitting || loading} className="btn-acceder">
           {loading ? <i /> : "Registrar"}
