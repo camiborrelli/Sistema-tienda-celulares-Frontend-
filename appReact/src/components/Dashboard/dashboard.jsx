@@ -2,11 +2,9 @@ import "./dashboard.css";
 import { useDispatch } from "react-redux";
 import { desloguear } from "../../features/user.slice";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import ListarCelular from "./Celular/ListarCelular";
-import AltaCelular from "./Celular/AltaCelular";
+
 import { useTranslation } from "react-i18next";
-import EditarCelular from "./Celular/EditarCelular";
-import ListarUsuario from "./Usuario/ListarUsuario";
+
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import Celulares from "./Celular/Celulares";
@@ -35,7 +33,9 @@ const DashboardAdmin = () => {
     const container = document.querySelector(".dashboard-root");
     if (!container) return;
 
-    const links = Array.from(document.querySelectorAll(".sidebar-nav a[href^='#']"));
+    const links = Array.from(
+      document.querySelectorAll(".sidebar-nav a[href^='#']")
+    );
     const onClick = (e) => {
       e.preventDefault();
       const href = e.currentTarget.getAttribute("href");
@@ -69,16 +69,29 @@ const DashboardAdmin = () => {
 
   // active link helpers
   const isCelularesActive =
-    pathname === "/dashboard" || pathname === "/dashboard/celulares" || (isDashboardRoot && hash === "#section-celulares");
-  const isAccesoriosActive = pathname === "/dashboard/accesorios" || (isDashboardRoot && hash === "#section-accesorios");
-  const isUsuariosActive = pathname === "/dashboard/usuarios" || (isDashboardRoot && hash === "#section-usuarios");
+    pathname === "/dashboard" ||
+    pathname === "/dashboard/celulares" ||
+    (isDashboardRoot && hash === "#section-celulares");
+  const isAccesoriosActive =
+    pathname === "/dashboard/accesorios" ||
+    (isDashboardRoot && hash === "#section-accesorios");
+  const isUsuariosActive =
+    pathname === "/dashboard/usuarios" ||
+    (isDashboardRoot && hash === "#section-usuarios");
+  const isPerfilActive =
+    pathname === "/dashboard/perfil" ||
+    (isDashboardRoot && hash === "#section-perfil");
 
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
         <div className="sidebar-header">
           <div className="sidebar-brand">{t("title")}</div>
-          <select onChange={changeLenguage} defaultValue={actualLenguage} className="language-select">
+          <select
+            onChange={changeLenguage}
+            defaultValue={actualLenguage}
+            className="language-select"
+          >
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>
@@ -86,14 +99,31 @@ const DashboardAdmin = () => {
 
         <ul className="sidebar-nav">
           <li>
-            <Link className={isCelularesActive ? "active" : ""} to="/dashboard/celulares">
+            <Link
+              className={isCelularesActive ? "active" : ""}
+              to="/dashboard/celulares"
+            >
               {t("cellphones")}
             </Link>
-            <Link className={isAccesoriosActive ? "active" : ""} to="/dashboard/accesorios">
+            <Link
+              className={isAccesoriosActive ? "active" : ""}
+              to="/dashboard/accesorios"
+            >
               {t("accessories")}
             </Link>
-            <Link className={isUsuariosActive ? "active" : ""} to="/dashboard/usuarios">
+            <Link
+              className={isUsuariosActive ? "active" : ""}
+              to="/dashboard/usuarios"
+            >
               {t("users")}
+            </Link>
+          </li>
+          <li>
+            <Link
+              className={isUsuariosActive ? "active" : ""}
+              to="/dashboard/perfil"
+            >
+              {t("profile")}
             </Link>
           </li>
         </ul>

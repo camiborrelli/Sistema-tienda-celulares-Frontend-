@@ -12,6 +12,7 @@ import Container from "./components/Container";
 import Accesorios from "./components/Dashboard/Accesorio/Accesorios";
 import Celulares from "./components/Dashboard/Celular/Celulares";
 import Usuarios from "./components/Dashboard/Usuario/Usuarios";
+import Perfil from "./components/Dashboard/Usuario/Perfil";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="accesorios" element={<Accesorios />} />
                 <Route path="celulares" element={<Celulares />} />
                 <Route path="usuarios" element={<Usuarios />} />
+                <Route path="perfil" element={<Perfil />} />
               </Route>
             </Route>
           </Route>
