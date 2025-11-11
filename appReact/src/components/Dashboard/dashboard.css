@@ -60,44 +60,50 @@ body {
   top: 0;
   z-index: 1000;
   border-right: 1px solid #4a5568;
+  overflow: hidden;           /* el scroll queda en .sidebar-nav */
 }
 
 .sidebar-brand {
-  padding: 1.5rem;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  border-bottom: 1px solid #4a5568;
-  text-align: center;
   color: var(--text-inverse);
-  justify-content: center;
 }
 
+/* Header del sidebar */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #4a5568;
+  position: sticky;           /* se pega arriba dentro del sidebar */
+  top: 0;
+  z-index: 5;                 /* sobre los links */
+  background: var(--bg-sidebar);
+}
+
+/* Navegación del sidebar */
 .sidebar-nav {
   flex: 1;
-  padding: 1rem 0;
+  padding: 1rem 0; /* elimina indentación por defecto en UL */
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;            /* scroll solo en la navegación */
+  -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
 }
 
 .sidebar-nav li {
-  list-style: none;
+  list-style: none; /* sin viñetas */
+  margin: 0;
+  padding: 0;
 }
-
 .sidebar-nav a {
   color: var(--text-inverse);
   text-decoration: none;
   padding: 0.875rem 1.5rem;
   display: block;
   transition: all 0.2s ease;
-  .sidebar-header {
-    position: relative;
-  }
-  .sidebar-header .sidebar-brand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0.5rem 1rem;
-  }
   border-left: 3px solid transparent;
   opacity: 0.8;
 }
@@ -117,6 +123,79 @@ body {
 .sidebar-footer {
   padding: 1.5rem;
   border-top: 1px solid #4a5568;
+}
+
+/* Select de cambio de idioma en el header del sidebar */
+/* Estilo acorde al sidebar oscuro */
+.language-select {
+  max-width: 160px;
+  width: auto;
+  padding: 0.45rem 2rem 0.45rem 0.6rem; /* espacio para la flecha */
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--text-inverse);
+  border: 1px solid #4a5568;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.875rem;
+  line-height: 1.2;
+  outline: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e2e8f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 12px 12px;
+}
+
+.language-select option {
+  background: #2d3748; /* mismo color base del sidebar */
+  color: var(--text-inverse);
+  padding: 0.4rem 0.6rem; /* no todos los navegadores respetan, pero se intenta */
+  font-size: 0.875rem;
+}
+
+.language-select option:hover,
+.language-select option:focus,
+.language-select option:checked {
+  background: #4a5568; /* tono ligeramente más claro al seleccionar */
+  color: var(--text-inverse);
+}
+
+.language-select:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.language-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.25);
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Responsivo: ajustar header y select en pantallas angostas */
+@media (max-width: 520px) {
+  .sidebar-header {
+    flex-wrap: wrap;
+    align-items: stretch; /* para que los hijos ocupen ancho completo si lo necesitan */
+    gap: 0.75rem;
+    padding: 0.75rem 0.75rem;
+  }
+  .sidebar-brand {
+    flex: 1 1 100%;
+    font-size: 1.1rem;
+    text-align: left;
+  }
+  .language-select {
+    width: 100%;
+    max-width: none;
+    font-size: 0.85rem;
+    padding: 0.5rem 2rem 0.5rem 0.6rem;
+    order: -1; /* mover el select arriba del título cuando la pantalla es angosta */
+  }
+  .sidebar-nav a {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
 }
 
 /* Contenido principal */
@@ -244,6 +323,13 @@ body {
   font-weight: 600;
 }
 
+/* Offset opcional para alinear formularios Crear/Editar en desktop */
+@media (min-width: 768px) {
+  .form-offset-top {
+    margin-top: 1.5rem;
+  }
+}
+
 /* Contenido de forms mejorado */
 .form-content {
   padding: 1.25rem;
@@ -302,6 +388,24 @@ body {
   border-top: 1px solid var(--border-light);
 }
 
+/* Centrado más claro para botones de acciones en forms */
+.form-actions-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;            /* espacios más chicos entre botones */
+  margin-top: 0.5rem;     /* aún más compacto */
+  padding-top: 0.25rem;   /* separación más sutil */
+  /* border-top eliminado a pedido del usuario */
+}
+
+/* Ajuste de títulos de formularios (h5) para que no queden muy abajo */
+.card.card-body > h5 {
+  margin-top: -0.5rem;     /* súbelo un poco más respecto al borde del card */
+  margin-bottom: 0.5rem;   /* compacto respecto a los campos */
+  line-height: 1.25;
+}
+
 /* Tablas mejoradas */
 .table-container {
   overflow: auto;
@@ -324,6 +428,7 @@ body {
   border-bottom: 2px solid var(--border-light);
   position: sticky;
   top: 0;
+  text-align: left !important;       /* alinear consistente y vencer estilos de framework */
 }
 
 .table td {
@@ -332,12 +437,65 @@ body {
   color: var(--text-secondary);
 }
 
+/* Alineación consistente para la tabla de celulares */
+#table-celulares th,
+#table-celulares td {
+  text-align: left !important;
+}
+
 .table tbody tr {
   transition: all 0.2s ease;
 }
 
 .table tbody tr:hover {
   background: var(--bg-primary);
+}
+
+/* Tabla de celulares: fuerza ancho mínimo para permitir scroll horizontal en móviles */
+#table-celulares {
+  min-width: 680px;
+}
+
+/* Transformar tabla a tarjetas en pantallas chicas para evitar scroll horizontal */
+@media (max-width: 640px) {
+  #table-celulares {
+    min-width: 0; /* cancelar ancho mínimo */
+  }
+  #table-celulares thead {
+    display: none;
+  }
+  #table-celulares,
+  #table-celulares tbody,
+  #table-celulares tr,
+  #table-celulares td {
+    display: block;
+    width: 100%;
+  }
+  #table-celulares tr {
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 0.75rem;
+    padding: 0.25rem 0.75rem 0.5rem;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-sm);
+  }
+  #table-celulares td {
+    padding: 0.5rem 0;
+    border: none;
+    color: var(--text-secondary);
+  }
+  #table-celulares td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+  }
+  #table-celulares td.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+  }
 }
 
 /* Botones mejorados */

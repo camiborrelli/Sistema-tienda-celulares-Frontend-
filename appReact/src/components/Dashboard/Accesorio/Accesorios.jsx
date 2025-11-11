@@ -1,20 +1,23 @@
 import ListarAccesorio from "./ListarAccesorio";
 import CrearAccesorio from "./CrearAccesorio";
 import EditarAccesorio from "./EditarAccesorio";
+import { useTranslation } from "react-i18next";
 
 const Accesorios = () => {
+  const { t } = useTranslation();
+
   return (
     <section id="accesorios" className="mb-5">
-      <h2>Accesorios</h2>
+      <h2>{t("accessories")}</h2>
       <div className="row">
-        <div className="col-md-4 col-12">
+        <div className="col-md-6 col-12">
           <CrearAccesorio />
         </div>
-        <div className="col-md-8 col-12">
-          <ListarAccesorio />
+        <div className="col-md-6 col-12">
+          <EditarAccesorio />
         </div>
         <div className="col-md-12 col-12">
-          <EditarAccesorio />
+          <ListarAccesorio />
         </div>
       </div>
     </section>

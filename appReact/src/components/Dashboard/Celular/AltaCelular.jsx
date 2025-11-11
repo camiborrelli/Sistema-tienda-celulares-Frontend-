@@ -33,8 +33,8 @@ const AltaCelular = () => {
   return (
     <div className="col-12">
       <form
-        id="form-celular"
-        className="card card-body mb-3"
+        id="form-celular-create"
+        className="card card-body mb-3 form-offset-top"
         onSubmit={handleSubmit(onSumbit)}
       >
         <h5>{t("create")}</h5>
@@ -103,7 +103,7 @@ const AltaCelular = () => {
             <small className="text-danger">{t("accesoryNumberRequired")}</small>
           )}
         </div>
-        <div className="d-flex gap-2">
+        <div className="form-actions-centered">
           <button
             className="btn btn-success"
             type="submit"

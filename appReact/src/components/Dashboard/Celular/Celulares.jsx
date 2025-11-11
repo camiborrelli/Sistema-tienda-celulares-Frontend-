@@ -1,20 +1,22 @@
 import ListarCelular from "./ListarCelular";
 import AltaCelular from "./AltaCelular";
 import EditarCelular from "./EditarCelular";
+import { useTranslation } from "react-i18next";
 
 const Celulares = () => {
+  const { t } = useTranslation();
   return (
-    <section id="celulares" className="mb-5">
-      <h2>Celulares</h2>
+    <section id="section-celulares" className="mb-5">
+      <h2>{t("cellphones")}</h2>
       <div className="row">
-        <div className="col-md-4 col-12">
+        <div className="col-md-6 col-12">
           <AltaCelular />
         </div>
-        <div className="col-md-8 col-12">
-          <ListarCelular />
+        <div className="col-md-6 col-12">
+          <EditarCelular />
         </div>
         <div className="col-md-12 col-12">
-          <EditarCelular />
+          <ListarCelular />
         </div>
       </div>
     </section>

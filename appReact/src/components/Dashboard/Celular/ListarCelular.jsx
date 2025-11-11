@@ -1,11 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import {
-  listar,
-  getPhones,
-  deletePhone,
-  setCurrent,
-} from "../../../features/phone.slice";
+import { listar, getPhones, deletePhone, setCurrent } from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -59,76 +54,70 @@ const ListarCelular = () => {
   return (
     <div className="col-12">
       <div className="card card-body">
-        <table className="table table-sm" id="table-celulares">
-          <thead>
-            <tr>
-              <th>{t("Nombre")}</th>
-              <th>{t("Marca")}</th>
-              <th>{t("Modelo")}</th>
-              <th>{t("Precio")}</th>
-              <th>{t("Fecha de Creación")}</th>
-              <th>{t("Acciones")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {phone.length > 0 ? (
-              phone.map((celular) => (
-                <tr key={celular._id || celular.nombre}>
-                  <td>{celular.nombre}</td>
-                  <td>{celular.marca}</td>
-                  <td>{celular.modelo}</td>
-                  <td>{celular.precio}</td>
-                  <td>{celular.fechaCreacion}</td>
-                  <td>
-                    <button
-                      className="btn btn-sm btn-primary me-2"
-                      onClick={() => {
-                        dispatch(setCurrent(celular));
-                        setTimeout(() => {
-                          const container =
-                            document.querySelector(".dashboard-root");
-                          const el = document.getElementById("form-celular");
-                          if (!el) return;
+        <div className="table-container">
+          <table className="table table-sm" id="table-celulares">
+            <thead>
+              <tr>
+                <th>{t("name")}</th>
+                <th>{t("brand")}</th>
+                <th>{t("model")}</th>
+                <th>{t("price")}</th>
+                <th>{t("creationDate")}</th>
+                <th>{t("actions")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {phone.length > 0 ? (
+                phone.map((celular) => (
+                  <tr key={celular._id || celular.nombre}>
+                    <td data-label={t("name")}>{celular.nombre}</td>
+                    <td data-label={t("brand")}>{celular.marca}</td>
+                    <td data-label={t("model")}>{celular.modelo}</td>
+                    <td data-label={t("price")}>{celular.precio}</td>
+                    <td data-label={t("creationDate")}>{celular.fechaCreacion}</td>
+                    <td className="actions" data-label={t("actions")}>
+                      <button
+                        className="btn btn-sm btn-primary me-2"
+                        onClick={() => {
+                          dispatch(setCurrent(celular));
+                          setTimeout(() => {
+                            const container = document.querySelector(".dashboard-root");
+                            const el = document.getElementById("form-celular-edit");
+                            if (!el) return;
 
-                          if (container) {
-                            const containerRect =
-                              container.getBoundingClientRect();
-                            const targetRect = el.getBoundingClientRect();
-                            const top =
-                              targetRect.top -
-                              containerRect.top +
-                              container.scrollTop;
-                            // use correct scrollTo API
-                            container.scrollTo({ top, behavior: "smooth" });
-                          } else {
-                            el.scrollIntoView({
-                              behavior: "smooth",
-                              block: "center",
-                            });
-                          }
-                        }, 80);
-                      }}
-                    >
-                      📝
-                    </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => borrarCelular(celular._id)}
-                    >
-                      🗑️
-                    </button>
+                            if (container) {
+                              const containerRect = container.getBoundingClientRect();
+                              const targetRect = el.getBoundingClientRect();
+                              const top = targetRect.top - containerRect.top + container.scrollTop;
+                              // use correct scrollTo API
+                              container.scrollTo({ top, behavior: "smooth" });
+                            } else {
+                              el.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                              });
+                            }
+                          }, 80);
+                        }}
+                      >
+                        📝
+                      </button>
+                      <button className="btn btn-sm btn-danger" onClick={() => borrarCelular(celular._id)}>
+                        🗑️
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="text-center text-muted">
+                    {t("noCellPhones")}
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} className="text-center text-muted">
-                  No hay celulares disponibles
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
         <div className="d-flex gap-2 mt-2 w-100">
           <button
             type="button"

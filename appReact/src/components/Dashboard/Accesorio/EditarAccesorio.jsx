@@ -1,17 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCurrentAccesory,
-  list,
-  setCurrent,
-} from "../../../features/accesory.slice";
+import { getCurrentAccesory, list, setCurrent } from "../../../features/accesory.slice";
 import api from "../../../data/api";
 import { updateAccesory } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const EditarAccesorio = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -48,9 +46,7 @@ const EditarAccesorio = () => {
     const id = data.id ?? data._id;
     if (!id) {
       console.error("EditarAccesorio: id faltante en datos del form", data);
-      toast.error(
-        "Id de accesorio faltante. Seleccione el accesorio a editar desde la lista."
-      );
+      toast.error("Id de accesorio faltante. Seleccione el accesorio a editar desde la lista.");
       return;
     }
     api
@@ -75,33 +71,25 @@ const EditarAccesorio = () => {
         console.error("Error al actualizar accesorio:", error);
         const serverData = error?.response?.data;
         const msg =
-          serverData?.message ||
-          (typeof serverData === "string"
-            ? serverData
-            : JSON.stringify(serverData)) ||
-          error.message;
+          serverData?.message || (typeof serverData === "string" ? serverData : JSON.stringify(serverData)) || error.message;
         toast.error(msg);
       });
   };
+
   return (
     <div className="col-12">
-      <form
-        id="form-accesorio-editar"
-        className="card card-body mb-3"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <h5>Editar accesorio</h5>
+      <form id="form-accesorio-editar" className="card card-body mb-3" onSubmit={handleSubmit(onSubmit)}>
+        <h5>{t("editAccessory")}</h5>
         <input type="hidden" id="accesorio-id" {...register("id")} />
         <div className="mb-2">
-          <label className="form-label">Nombre</label>
           <input
             id="accesorio-nombre"
             className="form-control"
+            placeholder={t("namePlaceholder")}
             {...register("nombre", { required: true })}
           />
         </div>
         <div className="mb-2">
-          <label className="form-label">Descripción</label>
           <textarea
             id="accesorio-descripcion"
             className="form-control"

@@ -3,14 +3,16 @@ import { useDispatch } from "react-redux";
 import api from "../../../data/api";
 import { createAccesory } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const CrearAccesorio = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors /* isSubmitting */ },
     reset,
   } = useForm();
 
@@ -30,10 +32,7 @@ const CrearAccesorio = () => {
         const created = response.data?.accesorio ?? response.data;
         localStorage.setItem(
           "accesorioId",
-          response.data?.accesorio?._id ??
-            response.data?.accesorio?.id ??
-            response.data?.id ??
-            response.data?._id
+          response.data?.accesorio?._id ?? response.data?.accesorio?.id ?? response.data?.id ?? response.data?._id
         );
         dispatch(createAccesory(created));
         toast.success(response.data?.mensaje || "Accesorio creado");
@@ -55,79 +54,60 @@ const CrearAccesorio = () => {
 
   return (
     <div className="col-12">
-      <form
-        id="form-accesorio"
-        className="card card-body mb-3"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <h5>Crear accesorio</h5>
+      <form id="form-accesorio" className="card card-body mb-3" onSubmit={handleSubmit(onSubmit)}>
+        <h5>{t("createAccessory")}</h5>
         <div className="mb-2">
-          <label className="form-label">Nombre</label>
           <input
             id="accesorio-nombre"
             className="form-control"
+            placeholder={t("namePlaceholder")}
             {...register("nombre", { required: true })}
           />
         </div>
         <div className="mb-2">
-          <label className="form-label">Descripción</label>
           <textarea
             id="accesorio-descripcion"
             className="form-control"
             rows={3}
             {...register("descripcion", { required: true })}
-            placeholder="Descripción del accesorio"
+            placeholder={t("descriptionPlaceholder")}
           />
-          {errors.descripcion && (
-            <small className="text-danger">La descripción es obligatoria</small>
-          )}
+          {errors.descripcion && <small className="text-danger">{t("descriptionRequired")}</small>}
         </div>
 
         <div className="mb-2">
-          <label className="form-label">Precio</label>
           <input
             id="accesorio-precio"
             type="number"
             className="form-control"
             {...register("precio", { required: true, valueAsNumber: true })}
-            placeholder="$0"
+            placeholder={t("pricePlaceholder")}
           />
-          {errors.precio && (
-            <small className="text-danger">El precio es obligatorio</small>
-          )}
+          {errors.precio && <small className="text-danger">{t("priceRequired")}</small>}
         </div>
 
         <div className="mb-2">
-          <label className="form-label">Stock</label>
           <input
             id="accesorio-stock"
             type="number"
             className="form-control"
             {...register("stock", { required: true, valueAsNumber: true })}
-            placeholder="0"
+            placeholder={t("stockPlaceholder")}
           />
-          {errors.stock && (
-            <small className="text-danger">El stock es obligatorio</small>
-          )}
+          {errors.stock && <small className="text-danger">{t("stockRequired")}</small>}
         </div>
 
         <div className="mb-2">
-          <label className="form-label">Modelo Compatible</label>
           <input
             id="accesorio-modeloCompatible"
             className="form-control"
             {...register("modeloCompatible", { required: true })}
-            placeholder="Ej: iPhone 12"
+            placeholder={t("compatibleModelPlaceholder")}
           />
-          {errors.modeloCompatible && (
-            <small className="text-danger">
-              El modelo compatible es obligatorio
-            </small>
-          )}
+          {errors.modeloCompatible && <small className="text-danger">{t("compatibleModelRequired")}</small>}
         </div>
 
         <div className="mb-2">
-          <label className="form-label">Categoría</label>
           <select
             id="accesorio-categoria"
             className="form-select"
@@ -135,19 +115,17 @@ const CrearAccesorio = () => {
             defaultValue=""
           >
             <option value="" disabled>
-              Seleccione una categoría
+              {t("selectCategoryPlaceholder")}
             </option>
             <option value="cargador">cargador</option>
             <option value="funda">funda</option>
             <option value="audifonos">audífonos</option>
             <option value="otros">otros</option>
           </select>
-          {errors.categoria && (
-            <small className="text-danger">La categoría es obligatoria</small>
-          )}
+          {errors.categoria && <small className="text-danger">La categoría es obligatoria</small>}
         </div>
 
-        <button className="btn btn-success">Crear</button>
+        <button className="btn btn-success">{t("create")}</button>
       </form>
     </div>
   );
