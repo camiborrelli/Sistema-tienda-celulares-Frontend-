@@ -1,5 +1,5 @@
 import ListarUsuario from "./ListarUsuario";
-import VerPlan from "./VerPlan";
+import VerPlan from "./Plan";
 
 const Usuarios = () => (
   <section id="usuarios" className="mb-5">
