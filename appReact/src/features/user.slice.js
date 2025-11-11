@@ -27,10 +27,23 @@ const userSlice = createSlice({
     cambiarPlan: (state, action) => {
       state.usuario = action.payload;
     },
+    verPerfil: (state, action) => {
+      state.usuario = action.payload;
+    },
+    setPerfil: (state, action) => {
+      state.usuario = action.payload;
+    },
   },
 });
 
-export const { loguear, desloguear, listarUsuarios, verPlan, cambiarPlan } =
-  userSlice.actions;
+export const {
+  loguear,
+  desloguear,
+  listarUsuarios,
+  verPlan,
+  cambiarPlan,
+  verPerfil,
+  setPerfil,
+} = userSlice.actions;
 
 export default userSlice.reducer;

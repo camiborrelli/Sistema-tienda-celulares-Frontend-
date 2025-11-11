@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { verPlan, cambiarPlan } from "../../../features/user.slice";
+import { verPlan, cambiarPlan, setPerfil } from "../../../features/user.slice";
 import api from "../../../data/api";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import "./Perfil.css";
+import { useForm } from "react-hook-form";
+import { FaUser, FaEnvelope, FaCheck } from "react-icons/fa";
 
 const VerPlan = () => {
   const dispatch = useDispatch();
@@ -35,9 +37,13 @@ const VerPlan = () => {
     }
   };
 
-  useEffect(() => {
-    getPlan();
-  }, []);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { isSubmitting },
+  } = useForm();
 
   const changeToPremium = async (e) => {
     e.preventDefault();
@@ -79,6 +85,48 @@ const VerPlan = () => {
       });
   }, []);
 
+  const editarPerfil = async (data) => {
+    try {
+      const response = await api.patch("/usuarios/modificar", data);
+      toast.success(
+        response.data.mensaje || "Perfil actualizado correctamente"
+      );
+      if (response?.data?.usuario) {
+        dispatch(setPerfil(response.data.usuario));
+      }
+      reset({
+        username: data.username,
+        email: data.email,
+        password: "",
+      });
+    } catch (error) {
+      console.error("Error al editar perfil:", error);
+      toast.error(
+        error?.response?.data?.error || "No se pudo editar el perfil"
+      );
+    }
+  };
+
+  const datosUsuario = async () => {
+    try {
+      const res = await api.get("/usuarios/perfil");
+      const payload = res?.data?.usuario ?? res?.data?.user ?? res?.data;
+      if (payload) {
+        dispatch(setPerfil(payload));
+        setValue("username", payload.username ?? payload.nombre ?? "");
+        setValue("email", payload.email ?? "");
+      }
+    } catch (err) {
+      console.error("Error obteniendo perfil:", err);
+      toast.error("No se pudo cargar el perfil del usuario");
+    }
+  };
+
+  useEffect(() => {
+    getPlan();
+    datosUsuario();
+  }, []);
+
   const maxRegistros = isPremium ? null : 10;
   const porcentaje = isPremium
     ? 100
@@ -93,18 +141,53 @@ const VerPlan = () => {
 
   return (
     <section id="perfil" className="mb-5">
+      <div className="editar-perfil-container">
+        <h5>{t("Editar Perfil")}</h5>
+        <form id="formProfile" onSubmit={handleSubmit(editarPerfil)}>
+          <div className="form-group">
+            <div className="input-row">
+              <FaUser className="input-icon" aria-hidden />
+              <input
+                type="text"
+                id="username"
+                {...register("username")}
+                disabled={true}
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <div className="input-row">
+              <FaEnvelope className="input-icon" aria-hidden />
+              <input
+                type="text"
+                id="email"
+                {...register("email")}
+                placeholder={t("Correo electrónico")}
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? t("Guardando...") : t("Guardar Cambios")}
+            {!isSubmitting && <FaCheck style={{ marginLeft: "10px" }} />}
+          </button>
+        </form>
+      </div>
       <div className="ver-plan-container">
         <div className="plan-header">
-          <h5>{t("Mi Plan")}</h5>
-
           {fetchingPlan ? (
             <p className="loading-text">{t("Cargando plan...")}</p>
           ) : (
             <>
-              <p className="current-plan">
+              <h5 className="current-plan">
                 {t("Tu plan actual es")}{" "}
                 <span className="plan-badge">{currentPlanLabel}</span>
-              </p>
+              </h5>
 
               {!isPremium ? (
                 <button
