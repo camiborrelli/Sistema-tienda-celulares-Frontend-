@@ -120,7 +120,7 @@ const DashboardAdmin = () => {
           </li>
           <li>
             <Link
-              className={isUsuariosActive ? "active" : ""}
+              className={isPerfilActive ? "active" : ""}
               to="/dashboard/perfil"
             >
               {t("profile")}

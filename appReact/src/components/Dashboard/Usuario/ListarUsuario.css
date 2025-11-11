@@ -1,0 +1,73 @@
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.user-table thead th {
+  background: var(--bs-light, #f8f9fa);
+  color: #222;
+  font-weight: 600;
+  padding: 0.75rem 0.9rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* increase specificity to override other table defaults (Bootstrap) */
+.card .user-table thead th {
+  text-align: center !important;
+}
+
+.user-table tbody td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  vertical-align: middle;
+}
+
+.user-table tbody tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.user-table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Plan badge */
+.plan-badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.plan-badge.premium {
+  background: #198754;
+} /* green */
+.plan-badge.plus {
+  background: #0d6efd;
+} /* blue */
+.plan-badge.basico,
+.plan-badge.basico {
+  background: #6c757d;
+} /* gray */
+
+/* empty state */
+.user-table .text-muted {
+  padding: 2.5rem 0;
+}
+
+/* small helpers */
+.ver-plan-container .plan-header {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 576px) {
+  .user-table thead th,
+  .user-table tbody td {
+    padding: 0.5rem 0.6rem;
+  }
+}

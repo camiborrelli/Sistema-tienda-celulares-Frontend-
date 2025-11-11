@@ -47,6 +47,10 @@ const EditarAccesorio = () => {
       modeloCompatible: data.modeloCompatible || "",
       categoria: data.categoria || "",
     };
+    if (data == null) {
+      toast.error("No hay datos para actualizar.");
+      return;
+    }
     const id = data.id ?? data._id;
     if (!id) {
       console.error("EditarAccesorio: id faltante en datos del form", data);
