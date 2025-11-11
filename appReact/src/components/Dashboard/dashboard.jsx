@@ -9,6 +9,7 @@ import EditarCelular from "./Celular/EditarCelular";
 import ListarUsuario from "./Usuario/ListarUsuario";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import Celulares from "./Celular/Celulares";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
@@ -34,9 +35,7 @@ const DashboardAdmin = () => {
     const container = document.querySelector(".dashboard-root");
     if (!container) return;
 
-    const links = Array.from(
-      document.querySelectorAll(".sidebar-nav a[href^='#']")
-    );
+    const links = Array.from(document.querySelectorAll(".sidebar-nav a[href^='#']"));
     const onClick = (e) => {
       e.preventDefault();
       const href = e.currentTarget.getAttribute("href");
@@ -70,34 +69,16 @@ const DashboardAdmin = () => {
 
   // active link helpers
   const isCelularesActive =
-    pathname === "/dashboard" ||
-    pathname === "/dashboard/celulares" ||
-    (isDashboardRoot && hash === "#section-celulares");
-  const isAccesoriosActive =
-    pathname === "/dashboard/accesorios" ||
-    (isDashboardRoot && hash === "#section-accesorios");
-  const isUsuariosActive =
-    pathname === "/dashboard/usuarios" ||
-    (isDashboardRoot && hash === "#section-usuarios");
+    pathname === "/dashboard" || pathname === "/dashboard/celulares" || (isDashboardRoot && hash === "#section-celulares");
+  const isAccesoriosActive = pathname === "/dashboard/accesorios" || (isDashboardRoot && hash === "#section-accesorios");
+  const isUsuariosActive = pathname === "/dashboard/usuarios" || (isDashboardRoot && hash === "#section-usuarios");
 
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
-        <div
-          className="sidebar-header"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "0.5rem",
-          }}
-        >
-          <div className="sidebar-brand">ObligatorioFS2</div>
-          <select
-            onChange={changeLenguage}
-            defaultValue={actualLenguage}
-            style={{ maxWidth: 140 }}
-          >
+        <div className="sidebar-header">
+          <div className="sidebar-brand">{t("title")}</div>
+          <select onChange={changeLenguage} defaultValue={actualLenguage} className="language-select">
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>
@@ -105,29 +86,14 @@ const DashboardAdmin = () => {
 
         <ul className="sidebar-nav">
           <li>
-            <Link
-              className={isCelularesActive ? "active" : ""}
-              to="/dashboard/celulares"
-            >
-              Inicio
+            <Link className={isCelularesActive ? "active" : ""} to="/dashboard/celulares">
+              {t("cellphones")}
             </Link>
-            <Link
-              className={isCelularesActive ? "active" : ""}
-              to="/dashboard/celulares"
-            >
-              Celulares
+            <Link className={isAccesoriosActive ? "active" : ""} to="/dashboard/accesorios">
+              {t("accessories")}
             </Link>
-            <Link
-              className={isAccesoriosActive ? "active" : ""}
-              to="/dashboard/accesorios"
-            >
-              Accesorios
-            </Link>
-            <Link
-              className={isUsuariosActive ? "active" : ""}
-              to="/dashboard/usuarios"
-            >
-              Usuarios
+            <Link className={isUsuariosActive ? "active" : ""} to="/dashboard/usuarios">
+              {t("users")}
             </Link>
           </li>
         </ul>
@@ -145,27 +111,7 @@ const DashboardAdmin = () => {
               <div id="alerts" />
 
               {/* Celulares */}
-              <section id="section-celulares" className="mb-5">
-                <h2>Celulares</h2>
-                <div className="row">
-                  <div className="col-md-4 col-12">
-                    <AltaCelular />
-                  </div>
-                  <div className="col-md-8 col-12">
-                    <ListarCelular />
-                  </div>
-                  <div className="col-md-12 col-12">
-                    <EditarCelular />
-                  </div>
-                </div>
-              </section>
-
-              {/* Usuarios */}
-              <section id="section-usuarios" className="mb-5">
-                <h2>Usuarios</h2>
-                <div className="row"></div>
-                <ListarUsuario />
-              </section>
+              <Celulares />
             </>
           ) : (
             <Outlet />
