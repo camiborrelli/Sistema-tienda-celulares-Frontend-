@@ -21,9 +21,16 @@ const userSlice = createSlice({
     listarUsuarios: (state, action) => {
       state.usuarios = action.payload;
     },
+    verPlan: (state, action) => {
+      state.usuario = action.payload;
+    },
+    cambiarPlan: (state, action) => {
+      state.usuario = action.payload;
+    },
   },
 });
 
-export const { loguear, desloguear, listarUsuarios } = userSlice.actions;
+export const { loguear, desloguear, listarUsuarios, verPlan, cambiarPlan } =
+  userSlice.actions;
 
 export default userSlice.reducer;

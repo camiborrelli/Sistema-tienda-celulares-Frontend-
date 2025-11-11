@@ -90,7 +90,7 @@ const CrearAccesorio = () => {
             type="number"
             className="form-control"
             {...register("precio", { required: true, valueAsNumber: true })}
-            placeholder="0"
+            placeholder="$0"
           />
           {errors.precio && (
             <small className="text-danger">El precio es obligatorio</small>

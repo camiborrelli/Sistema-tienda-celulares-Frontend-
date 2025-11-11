@@ -6,12 +6,6 @@ import {
   deletePhone,
   setCurrent,
 } from "../../../features/phone.slice";
-import {
-  listar,
-  getPhones,
-  deletePhone,
-  setCurrent,
-} from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -42,7 +36,7 @@ const ListarCelular = () => {
   const [phone, setPhone] = useState([]);
 
   useEffect(() => {
-    setPhone(phones.map((p) => p));
+    setPhone(Array.isArray(phones) ? phones : []);
   }, [phones]);
 
   const borrarCelular = (id) => {
@@ -68,12 +62,12 @@ const ListarCelular = () => {
         <table className="table table-sm" id="table-celulares">
           <thead>
             <tr>
-              <th>{t("name")}</th>
-              <th>{t("brand")}</th>
-              <th>{t("model")}</th>
-              <th>{t("price")}</th>
-              <th>{t("creationDate")}</th>
-              <th>{t("actions")}</th>
+              <th>{t("Nombre")}</th>
+              <th>{t("Marca")}</th>
+              <th>{t("Modelo")}</th>
+              <th>{t("Precio")}</th>
+              <th>{t("Fecha de Creación")}</th>
+              <th>{t("Acciones")}</th>
             </tr>
           </thead>
           <tbody>
@@ -93,12 +87,7 @@ const ListarCelular = () => {
                         setTimeout(() => {
                           const container =
                             document.querySelector(".dashboard-root");
-                          const container =
-                            document.querySelector(".dashboard-root");
                           const el = document.getElementById("form-celular");
-                          if (el && container) {
-                            const containerRect =
-                              container.getBoundingClientRect();
                           if (!el) return;
 
                           if (container) {
@@ -109,11 +98,7 @@ const ListarCelular = () => {
                               targetRect.top -
                               containerRect.top +
                               container.scrollTop;
-                            container.scrollTop;
-                            const top =
-                              targetRect.top -
-                              containerRect.top +
-                              container.scrollTop;
+                            // use correct scrollTo API
                             container.scrollTo({ top, behavior: "smooth" });
                           } else {
                             el.scrollIntoView({
@@ -126,10 +111,6 @@ const ListarCelular = () => {
                     >
                       📝
                     </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => borrarCelular(celular._id)}
-                    >
                     <button
                       className="btn btn-sm btn-danger"
                       onClick={() => borrarCelular(celular._id)}
@@ -148,7 +129,6 @@ const ListarCelular = () => {
             )}
           </tbody>
         </table>
-        {/* Botones de acciones: ahora alineados horizontalmente */}
         <div className="d-flex gap-2 mt-2 w-100">
           <button
             type="button"

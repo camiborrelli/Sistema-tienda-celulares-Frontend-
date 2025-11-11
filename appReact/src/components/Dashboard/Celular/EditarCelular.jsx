@@ -96,7 +96,7 @@ const EditarCelular = () => {
         style={{ marginTop: "1.5rem" }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h5>{t("editCellPhone")}</h5>
+        <h5>Editar celular</h5>
         <input type="hidden" id="celular-id" {...register("id")} />
         <div className="mb-2">
           <input

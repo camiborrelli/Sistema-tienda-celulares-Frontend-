@@ -7,9 +7,6 @@ import AltaCelular from "./Celular/AltaCelular";
 import { useTranslation } from "react-i18next";
 import EditarCelular from "./Celular/EditarCelular";
 import ListarUsuario from "./Usuario/ListarUsuario";
-import ListarAccesorio from "./Accesorio/ListarAccesorio";
-import CrearAccesorio from "./Accesorio/CrearAccesorio";
-import EditarAccesorio from "./Accesorio/EditarAccesorio";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -95,7 +92,7 @@ const DashboardAdmin = () => {
             gap: "0.5rem",
           }}
         >
-          <div className="sidebar-brand">{t("title")}</div>
+          <div className="sidebar-brand">ObligatorioFS2</div>
           <select
             onChange={changeLenguage}
             defaultValue={actualLenguage}
@@ -108,7 +105,10 @@ const DashboardAdmin = () => {
 
         <ul className="sidebar-nav">
           <li>
-            <Link className={isCelularesActive ? "active" : ""} to="/dashboard">
+            <Link
+              className={isCelularesActive ? "active" : ""}
+              to="/dashboard/celulares"
+            >
               Inicio
             </Link>
             <Link
@@ -168,7 +168,6 @@ const DashboardAdmin = () => {
               </section>
             </>
           ) : (
-            /* render child routes such as /dashboard/accesorios */
             <Outlet />
           )}
         </div>
