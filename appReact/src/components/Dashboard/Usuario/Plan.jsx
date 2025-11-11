@@ -4,6 +4,7 @@ import api from "../../../data/api";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
+import "./Plan.css";
 
 const VerPlan = () => {
   const dispatch = useDispatch();
@@ -57,34 +58,58 @@ const VerPlan = () => {
   };
 
   return (
-    <div className="col-12">
-      <div className="card card-body mb-3 text-center">
-        <h5 className="mb-3">{t("Mi Plan")}</h5>
+    <div className="ver-plan-container">
+      {/* Tarjeta del plan actual con fondo claro */}
+      <div className="plan-header">
+        <h5>{t("Mi Plan")}</h5>
 
         {fetchingPlan ? (
-          <p className="text-muted">{t("Cargando plan...")}</p>
+          <p className="loading-text">{t("Cargando plan...")}</p>
         ) : (
           <>
-            <p>
+            <p className="current-plan">
               {t("Tu plan actual es")}{" "}
-              <strong className="text-primary">{currentPlanLabel}</strong>
+              <span className="plan-badge">{currentPlanLabel}</span>
             </p>
 
             {currentPlanLabel?.toLowerCase() !== "premium" ? (
               <button
-                className="btn btn-primary mt-2"
+                className="btn btn-premium"
                 onClick={changeToPremium}
                 disabled={loading}
               >
                 {loading ? t("Procesando...") : t("Cambiar a Premium")}
               </button>
             ) : (
-              <div className="alert alert-success mt-3">
+              <div className="alert alert-success">
                 {t("Ya estás en el plan Premium 🎉")}
               </div>
             )}
           </>
         )}
+      </div>
+
+      {/* Beneficios uno al lado del otro con flex */}
+      <div className="benefits-container">
+        <div className="plan-section plus">
+          <h6>{t("Beneficios del Plan Plus")}</h6>
+          <ul>
+            <li>{t("Acceso limitado a funciones básicas")}</li>
+            <li>{t("Soporte comunitario")}</li>
+            <li>{t("Actualizaciones regulares")}</li>
+            <li>{t("Maximo 10 registros de celulares y accesorios")}</li>
+          </ul>
+        </div>
+
+        <div className="plan-section premium">
+          <h6>{t("Beneficios del Plan Premium")}</h6>
+          <ul>
+            <li>{t("Acceso ilimitado a todas las funciones")}</li>
+            <li>{t("Soporte prioritario 24/7")}</li>
+            <li>{t("Actualizaciones y novedades anticipadas")}</li>
+            <li>{t("Registros ilimitados de celulares y accesorios")}</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
