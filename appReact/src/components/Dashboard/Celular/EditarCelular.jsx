@@ -37,12 +37,12 @@ const EditarCelular = () => {
     }
   }, [current, reset]);
 
-  // Scroll the edit form into view when a current celular is selected.
+  // Scroll the form into view when a current celular is selected.
   React.useEffect(() => {
     if (!current) return;
     // small timeout to ensure layout/reset has been applied
     const t = setTimeout(() => {
-      const el = document.getElementById("form-celular-edit");
+      const el = document.getElementById("form-celular");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 50);
     return () => clearTimeout(t);
@@ -60,6 +60,10 @@ const EditarCelular = () => {
     if (id == null) {
       console.error("EditarCelular: id faltante en datos del form", data);
       toast.error("ID del celular ausente. No se puede actualizar.");
+      return;
+    }
+    if (data == null) {
+      toast.error("No hay datos para actualizar.");
       return;
     }
     api
@@ -91,11 +95,12 @@ const EditarCelular = () => {
   return (
     <div className="col-12">
       <form
-        id="form-celular-edit"
-        className="card card-body mb-3 form-offset-top"
+        id="form-celular"
+        className="card card-body mb-3"
+        style={{ marginTop: "1.5rem" }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h5>{t("editCellphone")}</h5>
+        <h5>Editar celular</h5>
         <input type="hidden" id="celular-id" {...register("id")} />
         <div className="mb-2">
           <input
@@ -161,7 +166,7 @@ const EditarCelular = () => {
             <small className="text-danger">{t("accesoryNumberRequired")}</small>
           )}
         </div>
-        <div className="form-actions-centered">
+        <div className="d-flex gap-2">
           <button
             className="btn btn-success"
             type="submit"

@@ -1,7 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentAccesory, list, setCurrent } from "../../../features/accesory.slice";
+import {
+  getCurrentAccesory,
+  list,
+  setCurrent,
+} from "../../../features/accesory.slice";
 import api from "../../../data/api";
 import { updateAccesory } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
@@ -46,7 +50,9 @@ const EditarAccesorio = () => {
     const id = data.id ?? data._id;
     if (!id) {
       console.error("EditarAccesorio: id faltante en datos del form", data);
-      toast.error("Id de accesorio faltante. Seleccione el accesorio a editar desde la lista.");
+      toast.error(
+        "Id de accesorio faltante. Seleccione el accesorio a editar desde la lista."
+      );
       return;
     }
     api
@@ -71,14 +77,22 @@ const EditarAccesorio = () => {
         console.error("Error al actualizar accesorio:", error);
         const serverData = error?.response?.data;
         const msg =
-          serverData?.message || (typeof serverData === "string" ? serverData : JSON.stringify(serverData)) || error.message;
+          serverData?.message ||
+          (typeof serverData === "string"
+            ? serverData
+            : JSON.stringify(serverData)) ||
+          error.message;
         toast.error(msg);
       });
   };
 
   return (
     <div className="col-12">
-      <form id="form-accesorio-editar" className="card card-body mb-3" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        id="form-accesorio-editar"
+        className="card card-body mb-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h5>{t("editAccessory")}</h5>
         <input type="hidden" id="accesorio-id" {...register("id")} />
         <div className="mb-2">

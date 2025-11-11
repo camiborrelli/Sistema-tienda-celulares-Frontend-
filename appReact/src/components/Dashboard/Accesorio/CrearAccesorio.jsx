@@ -32,7 +32,10 @@ const CrearAccesorio = () => {
         const created = response.data?.accesorio ?? response.data;
         localStorage.setItem(
           "accesorioId",
-          response.data?.accesorio?._id ?? response.data?.accesorio?.id ?? response.data?.id ?? response.data?._id
+          response.data?.accesorio?._id ??
+            response.data?.accesorio?.id ??
+            response.data?.id ??
+            response.data?._id
         );
         dispatch(createAccesory(created));
         toast.success(response.data?.mensaje || "Accesorio creado");
@@ -54,7 +57,11 @@ const CrearAccesorio = () => {
 
   return (
     <div className="col-12">
-      <form id="form-accesorio" className="card card-body mb-3" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        id="form-accesorio"
+        className="card card-body mb-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h5>{t("createAccessory")}</h5>
         <div className="mb-2">
           <input
@@ -63,6 +70,9 @@ const CrearAccesorio = () => {
             placeholder={t("namePlaceholder")}
             {...register("nombre", { required: true })}
           />
+          {errors.nombre && (
+            <small className="text-danger">{t("usernameRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <textarea
@@ -72,7 +82,9 @@ const CrearAccesorio = () => {
             {...register("descripcion", { required: true })}
             placeholder={t("descriptionPlaceholder")}
           />
-          {errors.descripcion && <small className="text-danger">{t("descriptionRequired")}</small>}
+          {errors.descripcion && (
+            <small className="text-danger">{t("descriptionRequired")}</small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -83,7 +95,9 @@ const CrearAccesorio = () => {
             {...register("precio", { required: true, valueAsNumber: true })}
             placeholder={t("pricePlaceholder")}
           />
-          {errors.precio && <small className="text-danger">{t("priceRequired")}</small>}
+          {errors.precio && (
+            <small className="text-danger">{t("priceRequired")}</small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -94,7 +108,9 @@ const CrearAccesorio = () => {
             {...register("stock", { required: true, valueAsNumber: true })}
             placeholder={t("stockPlaceholder")}
           />
-          {errors.stock && <small className="text-danger">{t("stockRequired")}</small>}
+          {errors.stock && (
+            <small className="text-danger">{t("stockRequired")}</small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -104,7 +120,11 @@ const CrearAccesorio = () => {
             {...register("modeloCompatible", { required: true })}
             placeholder={t("compatibleModelPlaceholder")}
           />
-          {errors.modeloCompatible && <small className="text-danger">{t("compatibleModelRequired")}</small>}
+          {errors.modeloCompatible && (
+            <small className="text-danger">
+              {t("compatibleModelRequired")}
+            </small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -122,7 +142,9 @@ const CrearAccesorio = () => {
             <option value="audifonos">audífonos</option>
             <option value="otros">otros</option>
           </select>
-          {errors.categoria && <small className="text-danger">La categoría es obligatoria</small>}
+          {errors.categoria && (
+            <small className="text-danger">La categoría es obligatoria</small>
+          )}
         </div>
 
         <button className="btn btn-success">{t("create")}</button>
