@@ -8,10 +8,13 @@ import {
   setCurrent,
 } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+import "./ListarAccesorio.css";
 
 const ListarAccesorio = () => {
   const dispatch = useDispatch();
   const accesorios = useSelector(getAccesories) ?? [];
+  const { t } = useTranslation();
 
   const listarAccesorios = () => {
     api
