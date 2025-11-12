@@ -158,15 +158,23 @@ const EditarAccesorio = () => {
             <span className="text-danger">{t("compatibleModelRequired")}</span>
           )}
         </div>
-        <div className="mb-2">
-          <input
+          <div className="mb-2">
+          <select
             id="accesorio-categoria"
-            className="form-control"
+            className="form-select"
             {...register("categoria", { required: true })}
-            placeholder={t("categoryPlaceholder")}
-          />
+            defaultValue=""
+          >
+            <option value="" disabled>
+              {t("selectCategoryPlaceholder")}
+            </option>
+            <option value="cargador">cargador</option>
+            <option value="funda">funda</option>
+            <option value="audifonos">audífonos</option>
+            <option value="otros">otros</option>
+          </select>
           {errors.categoria && (
-            <span className="text-danger">{t("categoryRequired")}</span>
+            <small className="text-danger">La categoría es obligatoria</small>
           )}
         </div>
 

@@ -115,6 +115,18 @@ const AltaCelular = () => {
             <small className="text-danger">{t("modelRequired")}</small>
           )}
         </div>
+         <div className="mb-2">
+          <input
+            id="celular-stock"
+            {...register("stock", { required: true, valueAsNumber: true })}
+            type="number"
+            className="form-control"
+            placeholder={t("stock")}
+          />
+          {errors.modelo && (
+            <small className="text-danger">{t("stockRequired")}</small>
+          )}
+        </div>
         <div className="mb-2">
           <input
             id="celular-precio"
