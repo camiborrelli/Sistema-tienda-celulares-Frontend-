@@ -11,6 +11,7 @@ import { altaCelularSchema } from "../../../validators/celular.validator";
 const AltaCelular = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  // Suponiendo que esta función obtiene las categorías disponibles 
 
   const {
     register,
