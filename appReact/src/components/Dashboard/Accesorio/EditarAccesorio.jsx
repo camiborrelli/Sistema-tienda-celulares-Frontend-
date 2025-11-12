@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,6 +10,7 @@ import api from "../../../data/api";
 import { updateAccesory } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import "./Accesorio.css";
 
 const EditarAccesorio = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const EditarAccesorio = () => {
 
   const current = useSelector(getCurrentAccesory);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (current) {
       reset({
         id: current.id ?? current._id,
@@ -106,6 +107,9 @@ const EditarAccesorio = () => {
             placeholder={t("namePlaceholder")}
             {...register("nombre", { required: true })}
           />
+          {errors.nombre && (
+            <span className="text-danger">{t("nameRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
           <textarea
@@ -113,51 +117,76 @@ const EditarAccesorio = () => {
             className="form-control"
             rows={3}
             {...register("descripcion", { required: true })}
-            placeholder="Descripción del accesorio"
+            placeholder={t("descriptionPlaceholder")}
           />
+          {errors.descripcion && (
+            <span className="text-danger">{t("descriptionRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
-          <label className="form-label">Precio</label>
           <input
             id="accesorio-precio"
             type="number"
             className="form-control"
             {...register("precio", { required: true, valueAsNumber: true })}
-            placeholder="0"
+            placeholder={t("pricePlaceholder")}
           />
+          {errors.precio && (
+            <span className="text-danger">{t("priceRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
-          <label className="form-label">Stock</label>
           <input
             id="accesorio-stock"
             type="number"
             className="form-control"
             {...register("stock", { required: true, valueAsNumber: true })}
-            placeholder="0"
+            placeholder={t("stockPlaceholder")}
           />
+          {errors.stock && (
+            <span className="text-danger">{t("stockRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
-          <label className="form-label">Modelo Compatible</label>
           <input
             id="accesorio-modelo-compatible"
             className="form-control"
             {...register("modeloCompatible", { required: true })}
-            placeholder="Modelo compatible"
+            placeholder={t("compatibleModelPlaceholder")}
           />
+          {errors.modeloCompatible && (
+            <span className="text-danger">{t("compatibleModelRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
-          <label className="form-label">Categoría</label>
           <input
             id="accesorio-categoria"
             className="form-control"
             {...register("categoria", { required: true })}
-            placeholder="Categoría"
+            placeholder={t("categoryPlaceholder")}
           />
+          {errors.categoria && (
+            <span className="text-danger">{t("categoryRequired")}</span>
+          )}
         </div>
 
-        <button disabled={isSubmitting} className="btn btn-primary">
-          Guardar cambios
-        </button>
+        {/* Botones igual que en EditarCelular */}
+        <div className="d-flex gap-2">
+          <button
+            className="btn btn-success"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {t("save")}
+          </button>
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={() => reset()}
+          >
+            {t("clean")}
+          </button>
+        </div>
       </form>
     </div>
   );

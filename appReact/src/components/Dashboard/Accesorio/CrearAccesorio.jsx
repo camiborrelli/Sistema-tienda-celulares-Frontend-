@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import api from "../../../data/api";
-import { createAccesory } from "../../../features/accesory.slice";
+import { createAccesory, list } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import "./Accesorio.css";
 
 const CrearAccesorio = () => {
   const dispatch = useDispatch();
@@ -143,11 +144,23 @@ const CrearAccesorio = () => {
             <option value="otros">otros</option>
           </select>
           {errors.categoria && (
-            <small className="text-danger">La categoría es obligatoria</small>
+            <small className="text-danger">{t("categoryRequired")}</small>
           )}
         </div>
 
-        <button className="btn btn-success">{t("create")}</button>
+        {/* Botones alineados horizontalmente como en EditarAccesorio */}
+        <div className="d-flex gap-2">
+          <button type="submit" className="btn btn-success">
+            {t("create")}
+          </button>
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={() => reset()}
+          >
+            {t("clean")}
+          </button>
+        </div>
       </form>
     </div>
   );

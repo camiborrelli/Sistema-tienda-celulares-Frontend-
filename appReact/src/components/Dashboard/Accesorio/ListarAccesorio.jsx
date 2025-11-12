@@ -9,7 +9,7 @@ import {
 } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import "./ListarAccesorio.css";
+import "./Accesorio.css";
 
 const ListarAccesorio = () => {
   const dispatch = useDispatch();
@@ -52,13 +52,13 @@ const ListarAccesorio = () => {
   return (
     <div className="col-12">
       <div className="card card-body">
-        <h5>Lista de Accesorios</h5>
+        <h5>{t("accessoryList")}</h5>
         <table className="table table-sm">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Precio</th>
-              <th>Acciones</th>
+              <th>{t("name")}</th>
+              <th>{t("price")}</th>
+              <th>{t("actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -98,7 +98,7 @@ const ListarAccesorio = () => {
             ) : (
               <tr>
                 <td colSpan={3} className="text-center text-muted">
-                  No hay accesorios
+                  {t("noAccessories")}
                 </td>
               </tr>
             )}
@@ -109,7 +109,7 @@ const ListarAccesorio = () => {
           id="btn-refresh-accesorios"
           onClick={listarAccesorios}
         >
-          Refrescar
+          {t("refresh")}
         </button>
       </div>
     </div>
