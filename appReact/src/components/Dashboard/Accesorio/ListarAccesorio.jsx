@@ -16,7 +16,8 @@ const ListarAccesorio = () => {
   const accesorios = useSelector(getAccesories) ?? [];
   const { t } = useTranslation();
   const [range, setRange] = useState("all");
-
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   async function listarAccesorios(opts = {}) {
     try {
       const params = {};
@@ -33,7 +34,6 @@ const ListarAccesorio = () => {
       toast.error("Error al listar accesorios");
     }
   }
-
   useEffect(() => {
     listarAccesorios({ range });
   }, [range]);
@@ -55,7 +55,6 @@ const ListarAccesorio = () => {
         toast.error(msg);
       });
   };
-
   return (
     <div className="col-12">
       <div className="card card-body">
@@ -72,9 +71,46 @@ const ListarAccesorio = () => {
           >
             <option value="lastWeek">{t("lastWeek") || "Última semana"}</option>
             <option value="lastMonth">{t("lastMonth") || "Último mes"}</option>
+            <option value="custom">
+              {t("customRange") || "Rango personalizado"}
+            </option>
             <option value="all">{t("all") || "Todos"}</option>
           </select>
         </div>
+        {range === "custom" && (
+          <div className="mb-3 d-flex align-items-center gap-2">
+            <label className="me-2 mb-0">{t("from") || "Desde:"}</label>
+            <input
+              type="date"
+              className="form-control form-control-sm"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            <label className="ms-2 me-2 mb-0">{t("to") || "Hasta:"}</label>
+            <input
+              type="date"
+              className="form-control form-control-sm"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+            <button
+              className="btn btn-primary btn-sm ms-2"
+              onClick={() => {
+                if (!startDate || !endDate) {
+                  toast.error(t("selectDates") || "Seleccione ambas fechas");
+                  return;
+                }
+                if (startDate > endDate) {
+                  toast.error(t("invalidRange") || "Rango inválido");
+                  return;
+                }
+                listarAccesorios({ startDate, endDate });
+              }}
+            >
+              {t("apply") || "Aplicar"}
+            </button>
+          </div>
+        )}
         <table className="table table-sm">
           <thead>
             <tr>

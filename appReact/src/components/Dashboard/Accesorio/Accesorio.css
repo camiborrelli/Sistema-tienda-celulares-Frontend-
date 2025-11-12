@@ -33,23 +33,47 @@
 }
 
 .form-select.form-select-sm {
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 0.5rem 2rem 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  color: #4a5568;
+  border: 1px solid #e6eef6;
+  border-radius: 10px;
+  padding: 0.45rem 2.25rem 0.45rem 0.9rem;
+  font-size: 0.9rem;
+  color: #2f3b46;
   background-color: #ffffff;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3e%3cpath fill='%234a5568' d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 16px 12px;
-  transition: all 0.2s ease;
-  min-width: 140px;
+  background-position: right 0.9rem center;
+  background-size: 14px 14px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease,
+    transform 0.08s ease;
+  min-width: 160px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.03);
 }
 
 .form-select.form-select-sm:focus {
-  border-color: #4299e1;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+  border-color: #66b3ff;
+  box-shadow: 0 6px 18px rgba(34, 83, 160, 0.06),
+    0 0 0 4px rgba(102, 179, 255, 0.12);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+/* Date inputs used for custom range */
+.form-control.form-control-sm[type="date"] {
+  border: 1px solid #e6eef6;
+  border-radius: 8px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.9rem;
+  color: #2f3b46;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.03);
+}
+
+.form-control.form-control-sm[type="date"]:focus {
+  border-color: #66b3ff;
+  box-shadow: 0 6px 18px rgba(34, 83, 160, 0.06);
   outline: none;
 }
 
@@ -153,6 +177,9 @@
   padding: 2rem !important;
 }
 
+/* Small adjustments to make the card sit visually under the hero */
+/* keep default spacing for card */
+
 /* Responsive */
 @media (max-width: 768px) {
   .col-12 .card-body {
@@ -179,6 +206,7 @@
   .form-select.form-select-sm {
     width: 100%;
     min-width: auto;
+    background-position: right 0.75rem center;
   }
 }
 
