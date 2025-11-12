@@ -13,6 +13,7 @@ import Accesorios from "./components/Dashboard/Accesorio/Accesorios";
 import Celulares from "./components/Dashboard/Celular/Celulares";
 import Usuarios from "./components/Dashboard/Usuario/Usuarios";
 import Perfil from "./components/Dashboard/Usuario/Perfil";
+import Informe from "./components/Dashboard/Informe/Informe";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="celulares" element={<Celulares />} />
                 <Route path="usuarios" element={<Usuarios />} />
                 <Route path="perfil" element={<Perfil />} />
+                <Route path="informe" element={<Informe />} />
               </Route>
             </Route>
           </Route>

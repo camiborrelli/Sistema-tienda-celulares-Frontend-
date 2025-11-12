@@ -81,6 +81,9 @@ const DashboardAdmin = () => {
   const isPerfilActive =
     pathname === "/dashboard/perfil" ||
     (isDashboardRoot && hash === "#section-perfil");
+  const isInformeActive =
+    pathname === "/dashboard/informe" ||
+    (isDashboardRoot && hash === "#section-informe");
 
   return (
     <div className="dashboard-layout">
@@ -117,13 +120,19 @@ const DashboardAdmin = () => {
             >
               {t("users")}
             </Link>
-          </li>
-          <li>
+
             <Link
               className={isPerfilActive ? "active" : ""}
               to="/dashboard/perfil"
             >
               {t("profile")}
+            </Link>
+
+            <Link
+              className={isInformeActive ? "active" : ""}
+              to="/dashboard/informe"
+            >
+              {t("Report")}
             </Link>
           </li>
         </ul>

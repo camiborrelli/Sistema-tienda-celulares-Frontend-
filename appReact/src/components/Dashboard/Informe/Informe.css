@@ -1,0 +1,48 @@
+h1 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.progress-bars {
+  margin-top: 20px;
+}
+
+.progress-item {
+  margin-bottom: 10px;
+}
+
+.progress-title {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 24px;
+}
+
+.progress-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  transition: width 0.3s ease;
+}
+
+.progress-bar.plus {
+  background-color: #4caf50; /* Verde para Plus */
+}
+
+.progress-bar.premium {
+  background-color: #2196f3; /* Azul para Premium */
+}
+
+.progress-label {
+  font-weight: bold;
+}
