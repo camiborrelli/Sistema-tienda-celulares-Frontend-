@@ -1,0 +1,29 @@
+.table thead th {
+  text-align: center !important;
+}
+
+/* Acciones del formulario de accesorio */
+.accesorio-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem; /* equivalente a mt-3 */
+}
+
+.accesorio-actions-inner {
+  display: flex; /* equivalente a d-flex */
+  align-items: center; /* equivalente a align-items-center */
+  gap: 0.5rem; /* equivalente a gap-2 */
+  width: 100%;
+  max-width: 420px; /* era inline style */
+}
+
+/* Botones con el mismo ancho y altura */
+.accesorio-actions-inner .btn {
+  flex: 1 1 0; /* equivalente a flex-fill */
+}
+
+@media (max-width: 480px) {
+  .accesorio-actions-inner {
+    max-width: 100%;
+  }
+}

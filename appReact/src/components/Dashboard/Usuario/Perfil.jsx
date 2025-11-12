@@ -153,7 +153,7 @@ const VerPlan = () => {
   return (
     <section id="perfil" className="mb-5">
       <div className="editar-perfil-container">
-        <h5>{t("Editar Perfil")}</h5>
+        <h5>{t("editProfile")}</h5>
         <form id="formProfile" onSubmit={handleSubmit(editarPerfil)}>
           <div className="form-group">
             <div className="input-row">
@@ -174,7 +174,7 @@ const VerPlan = () => {
                 type="text"
                 id="email"
                 {...register("email")}
-                placeholder={t("Correo electrónico")}
+                placeholder={t("emailPlaceholder")}
               />
             </div>
                </div>
@@ -197,7 +197,7 @@ const VerPlan = () => {
             className="btn btn-primary"
             disabled={isSubmitting}
           >
-            {isSubmitting ? t("Guardando...") : t("Guardar Cambios")}
+            {isSubmitting ? t("Guardando...") : t("saveChanges")}
             {!isSubmitting && <FaCheck style={{ marginLeft: "10px" }} />}
           </button>
         </form>
@@ -209,7 +209,7 @@ const VerPlan = () => {
           ) : (
             <>
               <h5 className="current-plan">
-                {t("Tu plan actual es")}{" "}
+                {t("yourPlan")}{" "}
                 <span className="plan-badge">{currentPlanLabel}</span>
               </h5>
 
@@ -219,7 +219,7 @@ const VerPlan = () => {
                   onClick={changeToPremium}
                   disabled={loading}
                 >
-                  {loading ? t("Procesando...") : t("Cambiar a Premium")}
+                  {loading ? t("Procesando...") : t("changePremium")}
                 </button>
               ) : (
                 <div className="alert alert-success">
@@ -232,38 +232,38 @@ const VerPlan = () => {
 
         <div className="benefits-container">
           <div className="plan-section plus">
-            <h6>{t("Beneficios del Plan Plus")}</h6>
+            <h6>{t("benefitsPlus")}</h6>
             <ul>
-              <li>{t("Acceso limitado a funciones básicas")}</li>
-              <li>{t("Soporte comunitario")}</li>
-              <li>{t("Actualizaciones regulares")}</li>
-              <li>{t("Maximo 10 registros de accesorios")}</li>
+              <li>{t("limitedAccess")}</li>
+              <li>{t("communitySupport")}</li>
+              <li>{t("regularUpdates")}</li>
+              <li>{t("maxRecords")}</li>
             </ul>
           </div>
 
           <div className="plan-section premium">
-            <h6>{t("Beneficios del Plan Premium")}</h6>
+            <h6>{t("benefitsPremium")}</h6>
             <ul>
-              <li>{t("Acceso ilimitado a todas las funciones")}</li>
-              <li>{t("Soporte prioritario 24/7")}</li>
-              <li>{t("Actualizaciones y novedades anticipadas")}</li>
-              <li>{t("Registros ilimitados de accesorios")}</li>
+              <li>{t("unlimitedAccess")}</li>
+              <li>{t("prioritySupport")}</li>
+              <li>{t("updatesAndNews")}</li>
+              <li>{t("infiniteRecords")}</li>
             </ul>
           </div>
         </div>
 
         {/* Sección mejorada de registros */}
         <div className="registros-section">
-          <h4>{t("Historial de registros de accesorios")}</h4>
+          <h4>{t("accesoriesRecord")}</h4>
 
           <div className="registros-info">
             <div className="registros-count">
-              {t("Has creado")} <strong>{cantidadAccesoriosCreados}</strong>{" "}
-              {t("registros de accesorios")}
+              {t("youHaveCreated")} <strong>{cantidadAccesoriosCreados}</strong>{" "}
+              {t("accessories2")}
             </div>
             {!isPremium && (
               <div className="registros-limit">
-                {t("Límite:")} {maxRegistros} {t("registros")}
+                {t("Límite:")} {maxRegistros} {t("left")}
               </div>
             )}
           </div>
