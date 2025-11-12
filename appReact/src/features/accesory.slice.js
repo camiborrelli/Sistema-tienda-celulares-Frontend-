@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const getAccesories = (state) => state.accesory.accesories;
 export const getCurrentAccesory = (state) => state.accesory.current ?? null;
+export const getCategorias = (state) => state.accesory.categorias ?? [];
 
 const accesorySlice = createSlice({
   name: "accesory",

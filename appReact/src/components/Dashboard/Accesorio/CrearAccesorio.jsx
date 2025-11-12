@@ -1,20 +1,21 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import api from "../../../data/api";
-import { createAccesory, list } from "../../../features/accesory.slice";
+import { createAccesory, list, listarCategorias } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
-
+import { useEffect, useState, useCallback } from "react";
 
 const CrearAccesorio = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [categorias, setCategorias] = useState([]); // Estado para almacenar las categorías
 
   const {
     register,
     handleSubmit,
-    formState: { errors /* isSubmitting */ },
+    formState: { errors },
     reset,
   } = useForm();
 
@@ -55,12 +56,25 @@ const CrearAccesorio = () => {
         console.error("Error al crear accesorio:", error);
         toast.error(error.response.data.error);
       });
-
-
   };
 
+  // Obtener categorías para el select
+  const obtenerCategorias = useCallback(() => {
+    api
+      .get("/accesorios/categorias")
+      .then((response) => {
+        const categorias = response.data.categorias;
+        setCategorias(categorias); // Actualizar el estado con las categorías
+        dispatch(listarCategorias(categorias));
+      })
+      .catch((error) => {
+        console.error("Error al obtener categorías:", error);
+      });
+  }, [dispatch]);
 
-
+  useEffect(() => {
+    obtenerCategorias();
+  }, [obtenerCategorias]);
 
   return (
     <div className="col-12">
@@ -70,6 +84,7 @@ const CrearAccesorio = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h5>{t("createAccessory")}</h5>
+        
         <div className="mb-2">
           <input
             id="accesorio-nombre"
@@ -81,6 +96,7 @@ const CrearAccesorio = () => {
             <small className="text-danger">{t("usernameRequired")}</small>
           )}
         </div>
+
         <div className="mb-2">
           <textarea
             id="accesorio-descripcion"
@@ -128,9 +144,7 @@ const CrearAccesorio = () => {
             placeholder={t("compatibleModelPlaceholder")}
           />
           {errors.modeloCompatible && (
-            <small className="text-danger">
-              {t("compatibleModelRequired")}
-            </small>
+            <small className="text-danger">{t("compatibleModelRequired")}</small>
           )}
         </div>
 
@@ -144,11 +158,15 @@ const CrearAccesorio = () => {
             <option value="" disabled>
               {t("selectCategoryPlaceholder")}
             </option>
-            <option value="Cargadores">Cargadores</option>
-            <option value="Fundas">Fundas</option>
-            <option value="Auriculares">Auriculares</option>
-            <option value="otros">Otros</option>
-
+            {Array.isArray(categorias) && categorias.length > 0 ? (
+              categorias.map((categoria, index) => (
+                <option key={categoria._id || index} value={categoria.nombre || categoria}>
+                  {categoria.nombre || categoria}
+                </option>
+              ))
+            ) : (
+              <option disabled>No hay categorías disponibles</option>
+            )}
           </select>
           {errors.categoria && (
             <small className="text-danger">{t("categoryRequired")}</small>
