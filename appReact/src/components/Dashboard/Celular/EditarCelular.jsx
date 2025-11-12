@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
@@ -24,13 +24,16 @@ const EditarCelular = () => {
 
   const current = useSelector(getCurrentCelular);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (current) {
+      console.log(current);
+      
       reset({
         id: current.id ?? current._id,
         nombre: current.nombre,
         marca: current.marca,
         modelo: current.modelo,
+        stock: current.stock,
         precio: current.precio,
         accesoriosCompatibles: current.accesoriosCompatibles,
       });
@@ -38,7 +41,7 @@ const EditarCelular = () => {
   }, [current, reset]);
 
   // Scroll the form into view when a current celular is selected.
-  React.useEffect(() => {
+  useEffect(() => {
     if (!current) return;
     // small timeout to ensure layout/reset has been applied
     const t = setTimeout(() => {
@@ -53,6 +56,7 @@ const EditarCelular = () => {
       nombre: data.nombre,
       marca: data.marca,
       modelo: data.modelo,
+      stock: data.stock,
       precio: data.precio,
       accesoriosCompatibles: data.accesoriosCompatibles,
     };
@@ -136,7 +140,7 @@ const EditarCelular = () => {
             <small className="text-danger">{t("modelRequired")}</small>
           )}
         </div>
-         <div className="mb-2">
+        <div className="mb-2">
           <input
             id="celular-stock"
             {...register("stock", { required: true, valueAsNumber: true })}
@@ -144,7 +148,7 @@ const EditarCelular = () => {
             className="form-control"
             placeholder={t("stock")}
           />
-          {errors.modelo && (
+          {errors.stock && (
             <small className="text-danger">{t("stockRequired")}</small>
           )}
         </div>

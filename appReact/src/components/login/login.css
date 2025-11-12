@@ -180,6 +180,22 @@ input:focus {
   margin: 8px;
 }
 
+/* Estado deshabilitado del botón de acceso: visualmente distinto y accesible */
+.btn-acceder:disabled,
+.btn-acceder[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(25%) saturate(80%);
+  background-color: #3a4f8d; /* tono más apagado */
+  box-shadow: none;
+}
+
+/* Evitar efecto de click en deshabilitado */
+.btn-acceder:disabled:active,
+.btn-acceder[disabled]:active {
+  transform: none;
+}
+
 button.btn-primary:active,
 .btn-acceder:active {
   transform: translateY(1px);

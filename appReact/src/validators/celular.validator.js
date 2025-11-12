@@ -4,8 +4,10 @@ export const altaCelularSchema = Joi.object({
   nombre: Joi.string().min(2).max(100).required(),
   marca: Joi.string().min(2).max(100).required(),
   modelo: Joi.number().min(1).required(),
+  stock: Joi.number().min(0).required(),
   precio: Joi.number().min(0).required(),
   accesoriosCompatibles: Joi.number().min(0).required(),
+  fechaCreacion: Joi.date(),
   imagen: Joi.any()
     .required()
     .custom((value, helpers) => {

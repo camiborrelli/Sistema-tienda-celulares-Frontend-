@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import { listar, getPhones, deletePhone, setCurrent } from "../../../features/phone.slice";
+import {
+  listar,
+  getPhones,
+  deletePhone,
+  setCurrent,
+} from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -47,7 +52,9 @@ const ListarCelular = () => {
   const [sortAsc, setSortAsc] = useState(true);
 
   const ordenarFechaCreacion = () => {
-    console.log("Ordenar por fecha de creacion a implementar");
+    console.log("Filtrar por ultima semana, mes, todas");
+    console.log("Hacer un grafico por la cantidad de celulares por fecha");
+    
     setSortAsc((s) => !s);
   };
 
@@ -74,21 +81,29 @@ const ListarCelular = () => {
                     <td data-label={t("brand")}>{celular.marca}</td>
                     <td data-label={t("model")}>{celular.modelo}</td>
                     <td data-label={t("price")}>{celular.precio}</td>
-                    <td data-label={t("creationDate")}>{celular.fechaCreacion}</td>
+                    <td data-label={t("creationDate")}>
+                      {new Date(celular.fechaCreacion).toLocaleDateString()}
+                    </td>
                     <td className="actions" data-label={t("actions")}>
                       <button
                         className="btn btn-sm btn-primary me-2"
                         onClick={() => {
                           dispatch(setCurrent(celular));
                           setTimeout(() => {
-                            const container = document.querySelector(".dashboard-root");
-                            const el = document.getElementById("form-celular-edit");
+                            const container =
+                              document.querySelector(".dashboard-root");
+                            const el =
+                              document.getElementById("form-celular-edit");
                             if (!el) return;
 
                             if (container) {
-                              const containerRect = container.getBoundingClientRect();
+                              const containerRect =
+                                container.getBoundingClientRect();
                               const targetRect = el.getBoundingClientRect();
-                              const top = targetRect.top - containerRect.top + container.scrollTop;
+                              const top =
+                                targetRect.top -
+                                containerRect.top +
+                                container.scrollTop;
                               // use correct scrollTo API
                               container.scrollTo({ top, behavior: "smooth" });
                             } else {
@@ -102,7 +117,10 @@ const ListarCelular = () => {
                       >
                         📝
                       </button>
-                      <button className="btn btn-sm btn-danger" onClick={() => borrarCelular(celular._id)}>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => borrarCelular(celular._id)}
+                      >
                         🗑️
                       </button>
                     </td>

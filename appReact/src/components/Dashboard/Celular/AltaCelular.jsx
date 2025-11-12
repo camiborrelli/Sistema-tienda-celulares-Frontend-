@@ -15,19 +15,16 @@ const AltaCelular = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isValid, isSubmitting },
     reset,
   } = useForm({
     resolver: joiResolver(altaCelularSchema),
+    mode: "onChange",
   });
 
   const [loading, setLoading] = useState(false);
 
   const UploadImageUrl = async (dataImg) => {
-    console.log(dataImg);
-    console.log(dataImg[0]);
-    
-
     setLoading(true);
 
     const file = dataImg[0];
@@ -56,13 +53,12 @@ const AltaCelular = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     data.imagen = await UploadImageUrl(data.imagen);
+    data.fechaCreacion = new Date().toISOString();
 
     api
       .post(`celulares/`, data)
       .then((response) => {
-        console.log(data);
         toast.success(response.data.mensaje);
         dispatch(createPhone(data));
       })
@@ -115,7 +111,7 @@ const AltaCelular = () => {
             <small className="text-danger">{t("modelRequired")}</small>
           )}
         </div>
-         <div className="mb-2">
+        <div className="mb-2">
           <input
             id="celular-stock"
             {...register("stock", { required: true, valueAsNumber: true })}
@@ -169,11 +165,7 @@ const AltaCelular = () => {
           )}
         </div>
         <div className="form-actions-centered">
-          <button
-            className="btn btn-success"
-            type="submit"
-            disabled={isSubmitting || loading}
-          >
+          <button className="btn btn-success" type="submit" disabled={!isValid || isSubmitting || loading}>
             {t("save")}
           </button>
           <button
@@ -190,12 +182,3 @@ const AltaCelular = () => {
 };
 
 export default AltaCelular;
-{
-  /*
-  <label className="form-label">Accesorios compatibles</label>
-          <select id="celular-accesorios" className="form-select" {...register("accesorios")}>
-            <option value="">Seleccione un accesorio</option>
-          </select>
-          {errors.accesorios && <small className="text-danger">Seleccione un accesorio</small>}
-  */
-}

@@ -17,8 +17,11 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors /*isSubmitting*/ },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: { username: "", password: "" },
+  });
 
   const ingresar = (data) => {
     api
@@ -92,7 +95,7 @@ const Login = () => {
             <span className="error">{t("passwordRequired")}</span>
           )}
         </div>
-        <button type="submit" className="btn-acceder">
+        <button type="submit" className="btn-acceder" disabled={!isValid}>
           <span>{t("login")}</span>
         </button>
         <p className="register-link">
