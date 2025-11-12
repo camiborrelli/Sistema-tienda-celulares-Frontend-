@@ -108,7 +108,6 @@ const VerPlan = () => {
       reset({
         username: data.username,
         email: data.email,
-        password: data.password,
       });
     } catch (error) {
       console.error("Error al editar perfil:", error);
@@ -175,19 +174,6 @@ const VerPlan = () => {
                 id="email"
                 {...register("email")}
                 placeholder={t("emailPlaceholder")}
-              />
-            </div>
-               </div>
-
-            
-          <div className="form-group">
-            <div className="input-row">
-               <FaLock className="input-icon" aria-hidden />
-              <input
-                type="password"
-                id="password"
-                {...register("password")}
-                placeholder={t("Password")}
               />
             </div>
           </div>

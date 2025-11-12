@@ -27,6 +27,9 @@ const userSlice = createSlice({
     cambiarPlan: (state, action) => {
       state.usuario = action.payload;
     },
+    eliminarUsuario: (state, action) => {
+      state.usuarios = action.payload;
+    },
     verPerfil: (state, action) => {
       state.usuario = action.payload;
     },
@@ -44,6 +47,7 @@ export const {
   cambiarPlan,
   verPerfil,
   setPerfil,
+  eliminarUsuario,
 } = userSlice.actions;
 
 export default userSlice.reducer;

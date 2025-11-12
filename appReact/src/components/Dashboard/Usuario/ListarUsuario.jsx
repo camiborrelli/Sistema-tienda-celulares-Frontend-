@@ -25,15 +25,16 @@ const ListarUsuario = () => {
 
   return (
     <div className="col-12">
-      <h2>{t("users")}</h2>
       <div className="card card-body">
+        {/* <h5>{t("Lista de Usuarios")}</h5> */}
+
         <div className="table-responsive">
           <table className="table user-table">
             <thead>
               <tr>
-                <th>{t("username")}</th>
-                <th>{t("email")}</th>
-                <th>{t("plan")}</th>
+                <th>{t("Username")}</th>
+                <th>{t("Email")}</th>
+                <th>{t("Plan")}</th>
               </tr>
             </thead>
             <tbody>

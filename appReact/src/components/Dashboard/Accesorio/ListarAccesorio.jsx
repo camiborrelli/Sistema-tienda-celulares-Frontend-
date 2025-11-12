@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   list,
   getAccesories,
@@ -15,21 +15,28 @@ const ListarAccesorio = () => {
   const dispatch = useDispatch();
   const accesorios = useSelector(getAccesories) ?? [];
   const { t } = useTranslation();
+  const [range, setRange] = useState("all");
 
-  const listarAccesorios = () => {
-    api
-      .get("/accesorios/creados")
-      .then((response) => {
-        dispatch(list(response.data.accesorios));
-      })
-      .catch((error) => {
-        console.error("Error al listar accesorios:", error);
-      });
-  };
+  async function listarAccesorios(opts = {}) {
+    try {
+      const params = {};
+      if (opts.range) params.range = opts.range; // lastWeek, lastMonth, all
+      if (opts.startDate) params.startDate = opts.startDate;
+      if (opts.endDate) params.endDate = opts.endDate;
+      if (opts.categoria) params.categoria = opts.categoria;
+
+      const res = await api.get("/accesorios", { params });
+      const payload = res.data?.accesorios ?? res.data ?? [];
+      dispatch(list(payload));
+    } catch (e) {
+      console.error(e);
+      toast.error("Error al listar accesorios");
+    }
+  }
 
   useEffect(() => {
-    listarAccesorios();
-  }, []);
+    listarAccesorios({ range });
+  }, [range]);
 
   const borrarAccesorio = (id) => {
     if (!id) return;
@@ -53,6 +60,21 @@ const ListarAccesorio = () => {
     <div className="col-12">
       <div className="card card-body">
         <h5>{t("accessoryList")}</h5>
+        <div className="mb-2 d-flex align-items-center">
+          <label className="me-2 mb-0">
+            {t("Filter by") || "Filtrar por:"}
+          </label>
+          <select
+            className="form-select form-select-sm w-auto"
+            value={range}
+            onChange={(e) => setRange(e.target.value)}
+            aria-label="Filter accesorios by period"
+          >
+            <option value="lastWeek">{t("lastWeek") || "Última semana"}</option>
+            <option value="lastMonth">{t("lastMonth") || "Último mes"}</option>
+            <option value="all">{t("all") || "Todos"}</option>
+          </select>
+        </div>
         <table className="table table-sm">
           <thead>
             <tr>
@@ -111,7 +133,7 @@ const ListarAccesorio = () => {
         <button
           className="btn btn-outline-primary mt-2"
           id="btn-refresh-accesorios"
-          onClick={listarAccesorios}
+          onClick={() => listarAccesorios({ range })}
         >
           {t("refresh")}
         </button>
