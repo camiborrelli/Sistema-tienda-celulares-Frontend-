@@ -117,7 +117,6 @@ const EditarAccesorio = () => {
           />
         </div>
         <div className="mb-2">
-          <label className="form-label">Precio</label>
           <input
             id="accesorio-precio"
             type="number"
@@ -127,7 +126,6 @@ const EditarAccesorio = () => {
           />
         </div>
         <div className="mb-2">
-          <label className="form-label">Stock</label>
           <input
             id="accesorio-stock"
             type="number"
@@ -137,7 +135,6 @@ const EditarAccesorio = () => {
           />
         </div>
         <div className="mb-2">
-          <label className="form-label">Modelo Compatible</label>
           <input
             id="accesorio-modelo-compatible"
             className="form-control"
@@ -145,14 +142,24 @@ const EditarAccesorio = () => {
             placeholder="Modelo compatible"
           />
         </div>
-        <div className="mb-2">
-          <label className="form-label">Categoría</label>
-          <input
+          <div className="mb-2">
+          <select
             id="accesorio-categoria"
-            className="form-control"
+            className="form-select"
             {...register("categoria", { required: true })}
-            placeholder="Categoría"
-          />
+            defaultValue=""
+          >
+            <option value="" disabled>
+              {t("selectCategoryPlaceholder")}
+            </option>
+            <option value="cargador">cargador</option>
+            <option value="funda">funda</option>
+            <option value="audifonos">audífonos</option>
+            <option value="otros">otros</option>
+          </select>
+          {errors.categoria && (
+            <small className="text-danger">La categoría es obligatoria</small>
+          )}
         </div>
 
         <button disabled={isSubmitting} className="btn btn-primary">

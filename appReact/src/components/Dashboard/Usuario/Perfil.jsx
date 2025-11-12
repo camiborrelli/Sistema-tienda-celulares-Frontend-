@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import "./Perfil.css";
 import { useForm } from "react-hook-form";
-import { FaUser, FaEnvelope, FaCheck } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaCheck, FaLock } from "react-icons/fa";
 
 const VerPlan = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const VerPlan = () => {
   const usuario = useSelector((state) => state.user.usuario);
   const currentPlanLabel = usuario?.plan || "No se encontró el plan";
   const isPremium = currentPlanLabel?.toLowerCase() === "premium";
-  const isPlus = currentPlanLabel?.toLowerCase() === "plus";
+  // const isPlus = currentPlanLabel?.toLowerCase() === "plus";
 
   const getPlan = async () => {
     try {
@@ -76,7 +76,18 @@ const VerPlan = () => {
           ? accesorios.length
           : null;
         const countFromField = response?.data?.count ?? null;
-        const count = cantAccesorios ?? Number(countFromField) ?? 0;
+
+        // Resolve count with explicit null checks to avoid chained ?? issues
+        let count;
+        if (cantAccesorios != null) {
+          count = cantAccesorios;
+        } else if (countFromField != null) {
+          const parsed = Number(countFromField);
+          count = Number.isFinite(parsed) ? parsed : 0;
+        } else {
+          count = 0;
+        }
+
         setCantidadAccesoriosCreados(count);
       })
       .catch((err) => {
@@ -97,7 +108,7 @@ const VerPlan = () => {
       reset({
         username: data.username,
         email: data.email,
-        password: "",
+        password: data.password,
       });
     } catch (error) {
       console.error("Error al editar perfil:", error);
@@ -164,6 +175,19 @@ const VerPlan = () => {
                 id="email"
                 {...register("email")}
                 placeholder={t("Correo electrónico")}
+              />
+            </div>
+               </div>
+
+            
+          <div className="form-group">
+            <div className="input-row">
+               <FaLock className="input-icon" aria-hidden />
+              <input
+                type="password"
+                id="password"
+                {...register("password")}
+                placeholder={t("Password")}
               />
             </div>
           </div>

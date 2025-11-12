@@ -11,7 +11,7 @@ import { loguear } from "../../features/user.slice";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const {
     register,
