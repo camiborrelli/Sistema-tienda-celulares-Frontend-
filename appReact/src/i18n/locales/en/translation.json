@@ -56,5 +56,8 @@
   "accessoryCreatedSuccess": "Accessory created successfully",
   "cellphoneCreatedSuccess": "Cell Phone created successfully",
   "cellphoneUpdatedSuccess": "Cell Phone updated successfully",
-  "editAccessory": "Edit Accessory"
+  "editAccessory": "Edit Accessory",
+  "profile": "Profile",
+  "editProfile": "Edit Profile",
+  "email": "Email"
 }

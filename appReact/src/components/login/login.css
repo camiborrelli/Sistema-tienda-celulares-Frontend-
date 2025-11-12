@@ -145,6 +145,28 @@ input:focus {
   background: rgba(0, 0, 0, 0.55);
 }
 
+/* Fix visibilidad del texto al tipear en los inputs del login
+   (forzamos color y fondo con alta especificidad y compatibilidad autofill) */
+.login-container input {
+  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.55) !important;
+  caret-color: #ffffff;
+}
+
+.login-container input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Autofill (Chrome/Edge) */
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover,
+.login-container input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 9999s ease-in-out 0s;
+  box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.55) inset;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.55) inset;
+}
+
 .btn-acceder {
   width: 100%;
   padding: 12px 4px;
