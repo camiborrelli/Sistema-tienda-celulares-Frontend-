@@ -4,6 +4,9 @@ import { useDispatch } from "react-redux";
 import api from "../../../data/api";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { altaCelularSchema } from "../../../validators/celular.validator";
 
 const AltaCelular = () => {
   const dispatch = useDispatch();
@@ -14,9 +17,48 @@ const AltaCelular = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm();
+  } = useForm({
+    resolver: joiResolver(altaCelularSchema),
+  });
 
-  const onSumbit = (data) => {
+  const [loading, setLoading] = useState(false);
+
+  const UploadImageUrl = async (dataImg) => {
+    console.log(dataImg);
+    console.log(dataImg[0]);
+    
+
+    setLoading(true);
+
+    const file = dataImg[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "class-preset"); // preset unsigned
+    formData.append("cloud_name", "di6mcaunn"); // cloud name
+    //Cloud name en la URL
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/di6mcaunn/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const uploaded = await res.json();
+      reset();
+
+      return uploaded.secure_url;
+    } catch (err) {
+      console.error("Error al subir imagen:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    data.imagen = await UploadImageUrl(data.imagen);
+
     api
       .post(`celulares/`, data)
       .then((response) => {
@@ -35,7 +77,7 @@ const AltaCelular = () => {
       <form
         id="form-celular-create"
         className="card card-body mb-3 form-offset-top"
-        onSubmit={handleSubmit(onSumbit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <h5>{t("create")}</h5>
         <input type="hidden" id="celular-id" />
@@ -115,11 +157,22 @@ const AltaCelular = () => {
             <small className="text-danger">{t("accesoryNumberRequired")}</small>
           )}
         </div>
+        <div className="mb-2">
+          <input
+            type="file"
+            {...register("imagen")}
+            className="form-control"
+            placeholder={t("image")}
+          />
+          {errors.imagen && (
+            <small className="text-danger">{t("imageRequired")}</small>
+          )}
+        </div>
         <div className="form-actions-centered">
           <button
             className="btn btn-success"
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading}
           >
             {t("save")}
           </button>
