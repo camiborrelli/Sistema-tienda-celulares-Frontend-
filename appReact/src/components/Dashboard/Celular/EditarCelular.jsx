@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import "./celular.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
@@ -27,7 +28,7 @@ const EditarCelular = () => {
   useEffect(() => {
     if (current) {
       console.log(current);
-      
+
       reset({
         id: current.id ?? current._id,
         nombre: current.nombre,
@@ -193,7 +194,18 @@ const EditarCelular = () => {
           <button
             className="btn btn-secondary"
             type="button"
-            onClick={() => reset()}
+            onClick={() => {
+              reset({
+                id: null,
+                nombre: "",
+                marca: "",
+                modelo: "",
+                stock: "",
+                precio: "",
+                accesoriosCompatibles: "",
+              });
+              dispatch(setCurrent(null));
+            }}
           >
             {t("clean")}
           </button>

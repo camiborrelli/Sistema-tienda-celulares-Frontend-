@@ -7,7 +7,10 @@ import {
   setCurrent,
 } from "../../../features/accesory.slice";
 import api from "../../../data/api";
-import { updateAccesory, listarCategorias } from "../../../features/accesory.slice";
+import {
+  updateAccesory,
+  listarCategorias,
+} from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
@@ -17,7 +20,7 @@ import { useState } from "react";
 const EditarAccesorio = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-    const [categorias, setCategorias] = useState([]); 
+  const [categorias, setCategorias] = useState([]);
 
   const {
     register,
@@ -179,7 +182,7 @@ const EditarAccesorio = () => {
             <span className="text-danger">{t("compatibleModelRequired")}</span>
           )}
         </div>
-           <div className="mb-2">
+        <div className="mb-2">
           <select
             id="accesorio-categoria"
             className="form-select"
@@ -191,7 +194,10 @@ const EditarAccesorio = () => {
             </option>
             {Array.isArray(categorias) && categorias.length > 0 ? (
               categorias.map((categoria, index) => (
-                <option key={categoria._id || index} value={categoria.nombre || categoria}>
+                <option
+                  key={categoria._id || index}
+                  value={categoria.nombre || categoria}
+                >
                   {categoria.nombre || categoria}
                 </option>
               ))
@@ -216,7 +222,18 @@ const EditarAccesorio = () => {
           <button
             className="btn btn-secondary"
             type="button"
-            onClick={() => reset()}
+            onClick={() => {
+              reset({
+                id: null,
+                nombre: "",
+                descripcion: "",
+                precio: "",
+                stock: "",
+                modeloCompatible: "",
+                categoria: "",
+              });
+              dispatch(setCurrent(null));
+            }}
           >
             {t("clean")}
           </button>

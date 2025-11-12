@@ -283,10 +283,10 @@ body {
 /* Cards mejoradas */
 .form-card,
 .list-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
+  background: #eaf1f6; /* darker for stronger contrast */
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
   transition: all 0.2s ease;
   overflow: hidden;
 }
@@ -371,6 +371,17 @@ body {
 
 .form-control::placeholder {
   color: var(--text-light);
+}
+
+.dashboard-root input::placeholder,
+.dashboard-root textarea::placeholder,
+.forms-column input::placeholder,
+.forms-column textarea::placeholder,
+.form-card input::placeholder,
+.form-card textarea::placeholder,
+.list-card input::placeholder,
+.list-card textarea::placeholder {
+  color: var(--text-light) !important;
 }
 
 .form-control:focus,
@@ -730,7 +741,7 @@ body {
   left: -100%;
   width: var(--sidebar-width);
   height: 100vh;
-  background: var(--bg-sidebar);
+  background-color: rgb(227, 171, 93);
   color: var(--text-inverse);
   z-index: 1001;
   transition: left 0.28s ease;
@@ -896,11 +907,11 @@ body {
 
 /* Mejoras visuales para una mejor experiencia */
 .form-card {
-  background: var(--bg-secondary);
+  background: #f4f7fb; /* slightly darker than pure white for contrast */
 }
 
 .list-card {
-  background: var(--bg-secondary);
+  background: #f4f7fb; /* slightly darker than pure white for contrast */
 }
 
 /* Aseguramos contraste adecuado */

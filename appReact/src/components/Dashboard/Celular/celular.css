@@ -1,0 +1,82 @@
+/* Styles for Alta/Editar Celular to match login/register color palette */
+.celular-card,
+#form-celular-create,
+#form-celular {
+  /* slightly darker background for better contrast */
+  background: linear-gradient(
+    135deg,
+    rgba(38, 72, 146, 0.14),
+    rgba(240, 169, 90, 0.08)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(66, 66, 66, 0.1);
+  box-shadow: 0 18px 48px rgba(11, 18, 32, 0.1),
+    0 6px 12px rgba(38, 72, 146, 0.08);
+  padding: 1.25rem;
+}
+
+.celular-card h5,
+#form-celular-create h5,
+#form-celular h5 {
+  /* Ensure headings are clearly visible */
+  color: #0b1220 !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Inputs: lighter, subtle tinted background to match login inputs */
+#form-celular-create .form-control,
+#form-celular .form-control {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(66, 66, 66, 0.08);
+  color: #0b1220;
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+
+#form-celular-create .form-control::placeholder,
+#form-celular .form-control::placeholder {
+  color: rgba(11, 18, 32, 0.45) !important;
+}
+
+/* File input: look more like the login style */
+#form-celular-create input[type="file"],
+#form-celular input[type="file"] {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Buttons: accent similar to register/login gradients */
+#form-celular-create .btn-success,
+#form-celular .btn-success {
+  background: linear-gradient(135deg, #f0a95a, #d8893a);
+  border: none;
+  color: #10203a;
+  box-shadow: 0 8px 20px rgba(208, 140, 66, 0.18);
+}
+
+#form-celular-create .btn-secondary,
+#form-celular .btn-secondary {
+  background: linear-gradient(135deg, #a0aec0, #718096);
+  border: none;
+  color: #fff;
+}
+
+/* Center action buttons with good spacing */
+.form-actions-centered {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  padding-top: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .celular-card,
+  #form-celular-create,
+  #form-celular {
+    padding: 1rem;
+  }
+}

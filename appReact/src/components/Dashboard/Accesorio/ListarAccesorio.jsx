@@ -114,6 +114,7 @@ const ListarAccesorio = () => {
         <table className="table table-sm">
           <thead>
             <tr>
+              <th></th>
               <th>{t("name")}</th>
               <th>{t("price")}</th>
               <th>{t("stock")}</th>
@@ -125,6 +126,17 @@ const ListarAccesorio = () => {
             {accesorios.length > 0 ? (
               accesorios.map((accesorio) => (
                 <tr key={accesorio._id || accesorio.id || accesorio.nombre}>
+                  <td>
+                    {accesorio.imagen ? (
+                      <img
+                        src={accesorio.imagen}
+                        alt={accesorio.nombre}
+                        className="list-thumb"
+                      />
+                    ) : (
+                      <div className="list-thumb placeholder" />
+                    )}
+                  </td>
                   <td>{accesorio.nombre || accesorio.name}</td>
                   <td>{accesorio.precio || accesorio.price}</td>
                   <td>{accesorio.stock || accesorio.stock}</td>
@@ -159,7 +171,7 @@ const ListarAccesorio = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={3} className="text-center text-muted">
+                <td colSpan={6} className="text-center text-muted">
                   {t("noAccessories")}
                 </td>
               </tr>

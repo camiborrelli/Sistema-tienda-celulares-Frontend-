@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import "./celular.css";
 import { createPhone } from "../../../features/phone.slice";
 import { useDispatch } from "react-redux";
 import api from "../../../data/api";
@@ -11,7 +12,7 @@ import { altaCelularSchema } from "../../../validators/celular.validator";
 const AltaCelular = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  // Suponiendo que esta función obtiene las categorías disponibles 
+  // Suponiendo que esta función obtiene las categorías disponibles
 
   const {
     register,
@@ -166,7 +167,11 @@ const AltaCelular = () => {
           )}
         </div>
         <div className="form-actions-centered">
-          <button className="btn btn-success" type="submit" disabled={!isValid || isSubmitting || loading}>
+          <button
+            className="btn btn-success"
+            type="submit"
+            disabled={!isValid || isSubmitting || loading}
+          >
             {t("save")}
           </button>
           <button

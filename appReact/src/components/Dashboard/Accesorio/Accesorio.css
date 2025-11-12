@@ -6,6 +6,31 @@
   overflow: hidden;
 }
 
+/* Colored form styles for create/edit accesorio to match login/register */
+#form-accesorio,
+#form-accesorio-editar {
+  /* slightly darker gradient for improved contrast */
+  background: linear-gradient(
+    135deg,
+    rgba(38, 72, 146, 0.14),
+    rgba(240, 169, 90, 0.08)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(66, 66, 66, 0.1);
+  box-shadow: 0 18px 48px rgba(11, 18, 32, 0.1),
+    0 6px 12px rgba(38, 72, 146, 0.08);
+  padding: 1.25rem;
+}
+
+#form-accesorio h5,
+#form-accesorio-editar h5,
+.col-12 h5 {
+  color: #0b1220 !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
 .col-12 .card-body {
   padding: 1.5rem;
 }
@@ -50,6 +75,41 @@
   -moz-appearance: none;
   appearance: none;
   box-shadow: 0 1px 3px rgba(16, 24, 40, 0.03);
+}
+
+/* Inputs inside accessory forms: make them light and readable */
+#form-accesorio .form-control,
+#form-accesorio-editar .form-control,
+#form-accesorio textarea.form-control,
+#form-accesorio-editar textarea.form-control {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(66, 66, 66, 0.08);
+  color: #0b1220;
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+
+#form-accesorio .form-control::placeholder,
+#form-accesorio-editar .form-control::placeholder,
+#form-accesorio textarea::placeholder,
+#form-accesorio-editar textarea::placeholder {
+  color: rgba(11, 18, 32, 0.45) !important;
+}
+
+/* Buttons with gradient accents */
+#form-accesorio .btn-success,
+#form-accesorio-editar .btn-success {
+  background: linear-gradient(135deg, #f0a95a, #d8893a);
+  border: none;
+  color: #10203a;
+  box-shadow: 0 8px 20px rgba(208, 140, 66, 0.18);
+}
+
+#form-accesorio .btn-secondary,
+#form-accesorio-editar .btn-secondary {
+  background: linear-gradient(135deg, #a0aec0, #718096);
+  border: none;
+  color: #fff;
 }
 
 .form-select.form-select-sm:focus {
@@ -107,6 +167,33 @@
 
 .table tbody tr:hover {
   background-color: #f8fafc;
+}
+
+/* Improved list visuals: thumbnails, zebra, actions */
+.list-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: inline-block;
+}
+.list-thumb.placeholder {
+  background: linear-gradient(
+    135deg,
+    rgba(66, 66, 66, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px dashed rgba(66, 66, 66, 0.06);
+}
+.table tbody tr:nth-child(odd) {
+  background: rgba(240, 246, 252, 0.6);
+}
+.table thead th {
+  background: #f1f5f9;
+  color: #1f2937;
+}
+.table td.actions .btn {
+  margin-right: 6px;
 }
 
 /* Centrar contenido de las celdas */
