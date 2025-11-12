@@ -58,6 +58,8 @@ const ListarAccesorio = () => {
             <tr>
               <th>{t("name")}</th>
               <th>{t("price")}</th>
+              <th>{t("stock")}</th>
+              <th>{t("category")}</th>
               <th>{t("actions")}</th>
             </tr>
           </thead>
@@ -67,6 +69,8 @@ const ListarAccesorio = () => {
                 <tr key={accesorio._id || accesorio.id || accesorio.nombre}>
                   <td>{accesorio.nombre || accesorio.name}</td>
                   <td>{accesorio.precio || accesorio.price}</td>
+                  <td>{accesorio.stock || accesorio.stock}</td>
+                  <td>{accesorio.categoria || accesorio.category}</td>
                   <td>
                     <button
                       className="btn btn-sm btn-primary me-2"

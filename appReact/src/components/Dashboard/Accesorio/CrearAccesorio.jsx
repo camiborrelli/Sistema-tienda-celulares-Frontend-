@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
 
+
 const CrearAccesorio = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -54,7 +55,12 @@ const CrearAccesorio = () => {
         console.error("Error al crear accesorio:", error);
         toast.error(error.response.data.error);
       });
+
+
   };
+
+
+
 
   return (
     <div className="col-12">
@@ -138,10 +144,11 @@ const CrearAccesorio = () => {
             <option value="" disabled>
               {t("selectCategoryPlaceholder")}
             </option>
-            <option value="cargador">cargador</option>
-            <option value="funda">funda</option>
-            <option value="audifonos">audífonos</option>
-            <option value="otros">otros</option>
+            <option value="Cargadores">Cargadores</option>
+            <option value="Fundas">Fundas</option>
+            <option value="Auriculares">Auriculares</option>
+            <option value="otros">Otros</option>
+
           </select>
           {errors.categoria && (
             <small className="text-danger">{t("categoryRequired")}</small>

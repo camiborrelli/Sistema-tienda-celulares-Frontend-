@@ -8,6 +8,7 @@ const accesorySlice = createSlice({
   initialState: {
     accesories: [],
     current: null,
+    categorias: [],
   },
   reducers: {
     createAccesory(state, action) {
@@ -15,6 +16,9 @@ const accesorySlice = createSlice({
     },
     list(state, action) {
       state.accesories = action.payload;
+    },
+    listarCategorias(state, action) {
+      state.categorias = action.payload;
     },
     deleteAccesorio(state, action) {
       const idToRemove = action.payload;
@@ -36,7 +40,7 @@ const accesorySlice = createSlice({
   },
 });
 
-export const { createAccesory, list, deleteAccesorio, updateAccesory, setCurrent } =
+export const { createAccesory, list, deleteAccesorio, updateAccesory, setCurrent, listarCategorias } =
   accesorySlice.actions;
 
 export default accesorySlice.reducer;
