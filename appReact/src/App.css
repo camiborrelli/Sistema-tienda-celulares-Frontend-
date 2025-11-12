@@ -104,8 +104,6 @@
   border-radius: 6px;
 }
 
-/* ensure the main page content doesn't sit under the fixed header by default
-   Individual pages/components can use --app-header-height for finer control */
 body {
   padding-top: var(--app-header-height);
 }

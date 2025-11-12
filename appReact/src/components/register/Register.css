@@ -130,6 +130,14 @@ button.btn-primary:active,
   transform: translateY(1px);
 }
 
+.login-link {
+  display: block;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
 .footer-small {
   margin-top: 12px;
   font-size: 12px;

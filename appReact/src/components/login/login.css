@@ -2,10 +2,12 @@
 :root {
   --bg-1: #0b1220; /* deep navy */
   --bg-2: #0f172b; /* darker blue */
-  --accent-pink: #ff4d6d;
-  --card-bg: rgba(255, 255, 255, 0.06);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --muted: rgba(255, 255, 255, 0.65);
+  --accent-orange: #f0a95a;
+  --accent-blue: #264892;
+  --accent-dark-blue: #1a365d;
+  --card-bg: rgba(23, 25, 35, 0.85);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(255, 255, 255, 0.7);
 }
 
 html,
@@ -15,9 +17,9 @@ body {
 
 /* clase aplicada dinámicamente por el componente Login para forzar fondo oscuro */
 body.login-dark {
-  /* planets image from public folder — use !important to override global body styles */
-  background: linear-gradient(rgba(6, 6, 10, 0.46), rgba(6, 6, 10, 0.46)),
-    url("/fondo2.jpg") !important;
+  /* laptop image from public folder */
+  background: linear-gradient(rgba(11, 18, 32, 0.85), rgba(11, 18, 32, 0.9)),
+    url("/public/computadora.jpg") !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
@@ -34,18 +36,6 @@ body.login-dark {
 body {
   margin: 0;
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-  /* dark diagonal gradient with subtle glow */
-  background: radial-gradient(
-      800px 400px at 10% 20%,
-      rgba(255, 77, 109, 0.06),
-      transparent 10%
-    ),
-    radial-gradient(
-      600px 300px at 90% 80%,
-      rgba(45, 55, 72, 0.06),
-      transparent 15%
-    ),
-    linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,183 +48,279 @@ body {
   width: 420px;
   max-width: 92%;
   height: auto;
-  /* slightly stronger card so inputs are readable */
+  /* Glass morphism effect that matches the laptop screen */
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.096)
+    135deg,
+    rgba(38, 72, 146, 0.15) 0%,
+    rgba(240, 169, 90, 0.1) 100%
   );
-  border-radius: 14px;
-  /* softer shadow for less heavy floating */
-  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.02);
-  padding: 34px 36px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(6px) saturate(120%);
-  text-align: center; /* center labels and heading like mock */
+  border-radius: 16px;
+  /* Glow effect that matches laptop colors */
+  box-shadow: 0 20px 60px rgba(11, 18, 32, 0.8),
+    0 0 0 1px rgba(240, 169, 90, 0.1), 0 0 30px rgba(38, 72, 146, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 36px 38px;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(12px) saturate(180%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle gradient overlay */
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(38, 72, 146, 0.05) 0%,
+    rgba(240, 169, 90, 0.03) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
 }
 
 .login-container h2,
 .login-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0 0 8px 0;
-  color: #f8fafc;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: #ffffff;
   font-family: poppins, sans-serif;
-}
-.login-sub {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 18px;
-}
-.form-group {
-  margin-bottom: 14px;
-  text-align: left;
-}
-label {
-  display: block;
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 4px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+.login-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Input styles with orange-blue theme */
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  /* dark input background with good contrast for white text */
-  background: rgba(0, 0, 0, 0.45);
-  color: #ffffff;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(11, 18, 32, 0.6);
+  color: #ffffff !important;
   box-sizing: border-box;
-  margin: 6px;
-}
-/* better placeholder contrast */
-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-input:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-input::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-/* better placeholder contrast */
-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-input:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-input::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  margin: 6px 0;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
-input {
-  outline: none;
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.03);
-  background: rgba(0, 0, 0, 0.55);
+/* Placeholder styling */
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
 }
-/* focus - slightly lighten border and add subtle glow */
+
+/* Focus state with orange-blue glow */
 input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.03);
-  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(240, 169, 90, 0.4);
+  box-shadow: 0 0 0 3px rgba(240, 169, 90, 0.15),
+    0 0 20px rgba(38, 72, 146, 0.2);
+  background: rgba(11, 18, 32, 0.8);
+  transform: translateY(-1px);
 }
 
-/* Fix visibilidad del texto al tipear en los inputs del login
-   (forzamos color y fondo con alta especificidad y compatibilidad autofill) */
+/* Fix for text visibility */
 .login-container input {
   color: #ffffff !important;
-  background: rgba(0, 0, 0, 0.55) !important;
-  caret-color: #ffffff;
+  background: rgba(11, 18, 32, 0.6) !important;
+  caret-color: #f0a95a;
 }
 
-.login-container input::placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-/* Autofill (Chrome/Edge) */
+/* Autofill styles */
 .login-container input:-webkit-autofill,
 .login-container input:-webkit-autofill:hover,
 .login-container input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #ffffff;
-  transition: background-color 9999s ease-in-out 0s;
-  box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.55) inset;
-  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.55) inset;
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(11, 18, 32, 0.6) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+/* Button with orange-blue gradient */
 .btn-acceder {
   width: 100%;
-  padding: 12px 4px;
-  border-radius: 10px;
-  border: linear-gradient(90deg, #f0a95a, #d8893a); /* softer warm gradient */
-  color: white;
-  background-color: #264892;
+  padding: 14px 4px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-orange), #d8893a);
+  color: #1a365d;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 26px rgba(216, 137, 58, 0.16);
-  margin: 8px;
+  box-shadow: 0 8px 25px rgba(240, 169, 90, 0.3),
+    0 0 0 1px rgba(240, 169, 90, 0.1);
+  margin: 12px 0;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Estado deshabilitado del botón de acceso: visualmente distinto y accesible */
+.btn-acceder::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.btn-acceder:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(240, 169, 90, 0.4),
+    0 0 0 1px rgba(240, 169, 90, 0.2);
+  background: linear-gradient(135deg, #f2b366, #da8f42);
+}
+
+.btn-acceder:hover::before {
+  left: 100%;
+}
+
+.btn-acceder:active {
+  transform: translateY(0);
+}
+
+/* Disabled state */
 .btn-acceder:disabled,
 .btn-acceder[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
-  filter: grayscale(25%) saturate(80%);
-  background-color: #3a4f8d; /* tono más apagado */
+  background: linear-gradient(135deg, #a0aec0, #718096);
   box-shadow: none;
-}
-
-/* Evitar efecto de click en deshabilitado */
-.btn-acceder:disabled:active,
-.btn-acceder[disabled]:active {
   transform: none;
 }
 
-button.btn-primary:active,
-.btn-acceder:active {
-  transform: translateY(1px);
+.btn-acceder:disabled:hover,
+.btn-acceder[disabled]:hover {
+  transform: none;
+  box-shadow: none;
 }
 
-/* input with icon */
+/* Input with icon - icons on the right */
 .input-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  position: relative;
 }
+
 .input-icon {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.1rem;
+  position: absolute;
+  right: 16px;
+  color: rgba(240, 169, 90, 0.8);
+  font-size: 1.2rem;
+  z-index: 2;
 }
+
 .input-row input {
   flex: 1;
+  padding-right: 50px;
 }
 
 .footer-small {
-  margin-top: 12px;
-  font-size: 12px;
+  margin-top: 16px;
+  font-size: 13px;
   color: var(--muted);
   text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Mensajes */
+/* Messages */
 #mensaje-global .mensaje {
   min-width: 200px;
 }
 
+/* Links */
+a {
+  color: var(--accent-orange);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #f2b366;
+  text-decoration: underline;
+}
+
 @media (max-width: 420px) {
   .login-container {
-    padding: 18px;
+    padding: 24px 20px;
     width: 92%;
+    border-radius: 14px;
+  }
+
+  .login-container h2,
+  .login-title {
+    font-size: 22px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .btn-acceder {
+    padding: 12px 4px;
+    font-size: 14px;
   }
 }
 
-a {
-  color: white;
-  text-decoration: none;
+.register-link {
+  color: rgb(212, 186, 148);
+}
+
+/* Add subtle animation to the card */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-container {
+  animation: fadeInUp 0.6s ease-out;
 }

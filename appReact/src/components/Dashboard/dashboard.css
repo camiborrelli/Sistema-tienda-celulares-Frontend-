@@ -60,7 +60,7 @@ body {
   top: 0;
   z-index: 1000;
   border-right: 1px solid #4a5568;
-  overflow: hidden;           /* el scroll queda en .sidebar-nav */
+  overflow: hidden; /* el scroll queda en .sidebar-nav */
 }
 
 .sidebar-brand {
@@ -77,9 +77,9 @@ body {
   gap: 0.5rem;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #4a5568;
-  position: sticky;           /* se pega arriba dentro del sidebar */
+  position: sticky; /* se pega arriba dentro del sidebar */
   top: 0;
-  z-index: 5;                 /* sobre los links */
+  z-index: 5; /* sobre los links */
   background: var(--bg-sidebar);
 }
 
@@ -89,7 +89,7 @@ body {
   padding: 1rem 0; /* elimina indentación por defecto en UL */
   margin: 0;
   list-style: none;
-  overflow-y: auto;            /* scroll solo en la navegación */
+  overflow-y: auto; /* scroll solo en la navegación */
   -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
 }
 
@@ -138,7 +138,8 @@ body {
   font-size: 0.875rem;
   line-height: 1.2;
   outline: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -393,16 +394,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;            /* espacios más chicos entre botones */
-  margin-top: 0.5rem;     /* aún más compacto */
-  padding-top: 0.25rem;   /* separación más sutil */
+  gap: 0.5rem; /* espacios más chicos entre botones */
+  margin-top: 0.5rem; /* aún más compacto */
+  padding-top: 0.25rem; /* separación más sutil */
   /* border-top eliminado a pedido del usuario */
 }
 
 /* Ajuste de títulos de formularios (h5) para que no queden muy abajo */
 .card.card-body > h5 {
-  margin-top: -0.5rem;     /* súbelo un poco más respecto al borde del card */
-  margin-bottom: 0.5rem;   /* compacto respecto a los campos */
+  margin-top: -0.5rem; /* súbelo un poco más respecto al borde del card */
+  margin-bottom: 0.5rem; /* compacto respecto a los campos */
   line-height: 1.25;
 }
 
@@ -428,7 +429,7 @@ body {
   border-bottom: 2px solid var(--border-light);
   position: sticky;
   top: 0;
-  text-align: left !important;       /* alinear consistente y vencer estilos de framework */
+  text-align: left !important; /* alinear consistente y vencer estilos de framework */
 }
 
 .table td {
