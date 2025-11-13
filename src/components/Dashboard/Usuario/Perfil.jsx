@@ -23,7 +23,8 @@ const VerPlan = () => {
     try {
       setFetchingPlan(true);
       const response = await api.get("/usuarios/plan");
-      const payload = response?.data?.usuario ?? response?.data?.user ?? response?.data;
+      const payload =
+        response?.data?.usuario ?? response?.data?.user ?? response?.data;
       if (payload) {
         dispatch(verPlan(payload));
       }
@@ -68,7 +69,9 @@ const VerPlan = () => {
       .get("/accesorios/creados")
       .then((response) => {
         const accesorios = response?.data?.accesorios;
-        const cantAccesorios = Array.isArray(accesorios) ? accesorios.length : null;
+        const cantAccesorios = Array.isArray(accesorios)
+          ? accesorios.length
+          : null;
         const countFromField = response?.data?.count ?? null;
 
         // Resolve count with explicit null checks to avoid chained ?? issues
@@ -91,9 +94,11 @@ const VerPlan = () => {
   }, []);
 
   const editarPerfil = async (data) => {
-    const response = await api.patch("/usuarios/modificar", data).catch((err) => {
-      toast.error(err.response.data.error);
-    });
+    const response = await api
+      .patch("/usuarios/modificar", data)
+      .catch((err) => {
+        toast.error(err.response.data.error);
+      });
 
     if (response) {
       toast.success(response.data.message);
@@ -122,8 +127,16 @@ const VerPlan = () => {
   }, []);
 
   const maxRegistros = isPremium ? null : 10;
-  const porcentaje = isPremium ? 100 : Math.min((cantidadAccesoriosCreados / 10) * 100, 100);
-  const progresoClase = isPremium ? "full" : porcentaje >= 90 ? "danger" : porcentaje >= 70 ? "warning" : "";
+  const porcentaje = isPremium
+    ? 100
+    : Math.min((cantidadAccesoriosCreados / 10) * 100, 100);
+  const progresoClase = isPremium
+    ? "full"
+    : porcentaje >= 90
+    ? "danger"
+    : porcentaje >= 70
+    ? "warning"
+    : "";
 
   return (
     <section id="perfil" className="mb-5">
@@ -133,18 +146,32 @@ const VerPlan = () => {
           <div className="form-group">
             <div className="input-row">
               <FaUser className="input-icon" aria-hidden />
-              <input type="text" id="username" {...register("username")} disabled={true} />
+              <input
+                type="text"
+                id="username"
+                {...register("username")}
+                disabled={true}
+              />
             </div>
           </div>
 
           <div className="form-group">
             <div className="input-row">
               <FaEnvelope className="input-icon" aria-hidden />
-              <input type="text" id="email" {...register("email")} placeholder={t("emailPlaceholder")} />
+              <input
+                type="text"
+                id="email"
+                {...register("email")}
+                placeholder={t("emailPlaceholder")}
+              />
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? t("Guardando...") : t("saveChanges")}
             {!isSubmitting && <FaCheck style={{ marginLeft: "10px" }} />}
           </button>
@@ -157,15 +184,22 @@ const VerPlan = () => {
           ) : (
             <>
               <h5 className="current-plan">
-                {t("yourPlan")} <span className="plan-badge">{currentPlanLabel}</span>
+                {t("yourPlan")}{" "}
+                <span className="plan-badge">{currentPlanLabel}</span>
               </h5>
 
               {!isPremium ? (
-                <button className="btn btn-premium" onClick={changeToPremium} disabled={loading}>
+                <button
+                  className="btn btn-premium"
+                  onClick={changeToPremium}
+                  disabled={loading}
+                >
                   {loading ? t("Procesando...") : t("changePremium")}
                 </button>
               ) : (
-                <div className="alert alert-success">{t("Ya estás en el plan Premium 🎉")}</div>
+                <div className="alert alert-success">
+                  {t("Ya estás en el plan Premium 🎉")}
+                </div>
               )}
             </>
           )}
@@ -199,7 +233,8 @@ const VerPlan = () => {
 
           <div className="registros-info">
             <div className="registros-count">
-              {t("youHaveCreated")} <strong>{cantidadAccesoriosCreados}</strong> {t("accessories2")}
+              {t("youHaveCreated")} <strong>{cantidadAccesoriosCreados}</strong>{" "}
+              {t("accessories2")}
             </div>
             {!isPremium && (
               <div className="registros-limit">
@@ -209,17 +244,26 @@ const VerPlan = () => {
           </div>
 
           {isPremium ? (
-            <div className="unlimited-badge">{t("🎉 Registros ilimitados")}</div>
+            <div className="unlimited-badge">
+              {t("🎉 Registros ilimitados")}
+            </div>
           ) : (
             <>
               <div className="progress-container">
-                <div className={`progress-bar ${progresoClase}`} style={{ width: `${porcentaje}%` }}>
+                <div
+                  className={`progress-bar ${progresoClase}`}
+                  style={{ width: `${porcentaje}%` }}
+                >
                   {porcentaje >= 30 && `${Math.round(porcentaje)}%`}
                 </div>
               </div>
 
               {cantidadAccesoriosCreados >= 8 && (
-                <div className="limit-warning">{cantidadAccesoriosCreados >= 10 ? t("planLimit") : t("planWarning")}</div>
+                <div className="limit-warning">
+                  {cantidadAccesoriosCreados >= 10
+                    ? t("planLimit")
+                    : t("planWarning")}
+                </div>
               )}
             </>
           )}

@@ -1,7 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
 import "./celular.css";
-import { listar, getPhones, deletePhone, setCurrent } from "../../../features/phone.slice";
+import {
+  listar,
+  getPhones,
+  deletePhone,
+  setCurrent,
+} from "../../../features/phone.slice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
@@ -49,7 +54,10 @@ const ListarCelular = () => {
       })
       .catch((error) => {
         console.error("Error deleting cellphone:", error);
-        const msg = error?.response?.data?.message || error?.response?.data || "Error al borrar celular";
+        const msg =
+          error?.response?.data?.message ||
+          error?.response?.data ||
+          "Error al borrar celular";
         toast.error(msg);
       });
   };
@@ -77,7 +85,11 @@ const ListarCelular = () => {
                   <tr key={celular._id || celular.nombre}>
                     <td data-label="">
                       {celular.imagen ? (
-                        <img src={celular.imagen} alt={celular.nombre} className="list-thumb" />
+                        <img
+                          src={celular.imagen}
+                          alt={celular.nombre}
+                          className="list-thumb"
+                        />
                       ) : (
                         <div className="list-thumb placeholder" />
                       )}
@@ -86,23 +98,31 @@ const ListarCelular = () => {
                     <td data-label={t("brand")}>{celular.marca}</td>
                     <td data-label={t("model")}>{celular.modelo}</td>
                     <td data-label={t("price")}>{celular.precio}</td>
-                    <td data-label={t("creationDate")}>{new Date(celular.fechaCreacion).toLocaleDateString()}</td>
+                    <td data-label={t("creationDate")}>
+                      {new Date(celular.fechaCreacion).toLocaleDateString()}
+                    </td>
                     <td className="actions" data-label={t("actions")}>
                       <button
-                        className="btn btn-sm btn-primary icon-btn me-2"
+                        className="btn btn-sm btn-edit me-2"
                         title={t("edit")}
                         aria-label={t("edit")}
                         onClick={() => {
                           dispatch(setCurrent(celular));
                           setTimeout(() => {
-                            const container = document.querySelector(".dashboard-root");
-                            const el = document.getElementById("form-celular-edit");
+                            const container =
+                              document.querySelector(".dashboard-root");
+                            const el =
+                              document.getElementById("form-celular-edit");
                             if (!el) return;
 
                             if (container) {
-                              const containerRect = container.getBoundingClientRect();
+                              const containerRect =
+                                container.getBoundingClientRect();
                               const targetRect = el.getBoundingClientRect();
-                              const top = targetRect.top - containerRect.top + container.scrollTop;
+                              const top =
+                                targetRect.top -
+                                containerRect.top +
+                                container.scrollTop;
                               container.scrollTo({ top, behavior: "smooth" });
                             } else {
                               el.scrollIntoView({
@@ -121,15 +141,19 @@ const ListarCelular = () => {
                           xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
                         >
-                          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" fill="currentColor" />
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"
+                            fill="currentColor"
+                          />
                           <path
                             d="M20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
                             fill="currentColor"
                           />
                         </svg>
+                        <span className="btn-label">{t("edit")}</span>
                       </button>
                       <button
-                        className="btn btn-sm btn-danger icon-btn"
+                        className="btn btn-sm btn-delete"
                         title={t("delete")}
                         aria-label={t("delete")}
                         onClick={() => borrarCelular(celular._id || celular.id)}
@@ -171,6 +195,7 @@ const ListarCelular = () => {
                             strokeLinejoin="round"
                           />
                         </svg>
+                        <span className="btn-label">{t("delete")}</span>
                       </button>
                     </td>
                   </tr>

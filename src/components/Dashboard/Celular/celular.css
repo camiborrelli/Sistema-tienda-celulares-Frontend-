@@ -111,6 +111,54 @@
   border-radius: 8px;
 }
 
+/* Darker professional edit button and prominent red delete */
+.btn-edit {
+  background: linear-gradient(180deg, #2a3856, #1c2a44);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 8px 18px rgba(16, 24, 40, 0.12);
+}
+.btn-edit:hover {
+  background: linear-gradient(180deg, #212f4a, #121a33);
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background: linear-gradient(180deg, #df4a4a, #b22929);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 8px 18px rgba(217, 66, 66, 0.12);
+}
+.btn-delete:hover {
+  background: linear-gradient(180deg, #c93b3b, #941f1f);
+  transform: translateY(-1px);
+}
+
+/* Ensure icon buttons have balanced size */
+.icon-btn.btn-edit,
+.icon-btn.btn-delete {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+/* Label next to icon for readable buttons in lists */
+.btn-label {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Ensure btn-sm spacing looks slightly larger like accessories list */
+.btn-sm.btn-edit,
+.btn-sm.btn-delete {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+}
+
 /* Miniaturas de imagen en la lista */
 .list-thumb {
   width: 48px;

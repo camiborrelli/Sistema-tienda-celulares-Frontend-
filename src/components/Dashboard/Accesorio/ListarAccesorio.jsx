@@ -1,7 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
 import { useEffect, useState } from "react";
-import { listar, getAccesories, deleteAccesorio, setCurrent } from "../../../features/accesory.slice";
+import {
+  listar,
+  getAccesories,
+  deleteAccesorio,
+  setCurrent,
+} from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
@@ -43,7 +48,10 @@ const ListarAccesorio = () => {
       })
       .catch((error) => {
         console.error("Error al borrar accesorio:", error);
-        const msg = error?.response?.data?.message || error?.response?.data || "Error al borrar accesorio";
+        const msg =
+          error?.response?.data?.message ||
+          error?.response?.data ||
+          "Error al borrar accesorio";
         toast.error(msg);
       });
   };
@@ -53,7 +61,9 @@ const ListarAccesorio = () => {
       <div className="card card-body">
         <h5>{t("accessoryList")}</h5>
         <div className="mb-2 d-flex align-items-center">
-          <label className="me-2 mb-0">{t("Filter by") || "Filtrar por:"}</label>
+          <label className="me-2 mb-0">
+            {t("Filter by") || "Filtrar por:"}
+          </label>
           <select
             className="form-select form-select-sm w-auto"
             value={range}
@@ -118,7 +128,11 @@ const ListarAccesorio = () => {
                 <tr key={accesorio._id || accesorio.id || accesorio.nombre}>
                   <td>
                     {accesorio.imagen ? (
-                      <img src={accesorio.imagen} alt={accesorio.nombre} className="list-thumb" />
+                      <img
+                        src={accesorio.imagen}
+                        alt={accesorio.nombre}
+                        className="list-thumb"
+                      />
                     ) : (
                       <div className="list-thumb placeholder" />
                     )}
@@ -127,13 +141,17 @@ const ListarAccesorio = () => {
                   <td>{accesorio.precio || accesorio.price}</td>
                   <td>{accesorio.stock || accesorio.stock}</td>
                   <td>{accesorio.categoria || accesorio.category}</td>
-                  <td>{new Date(accesorio.fechaCreacion).toLocaleDateString()}</td>
+                  <td>
+                    {new Date(accesorio.fechaCreacion).toLocaleDateString()}
+                  </td>
                   <td>
                     <button
-                      className="btn btn-sm btn-primary me-2"
+                      className="btn btn-sm btn-edit me-2"
                       onClick={() => {
                         dispatch(setCurrent(accesorio));
-                        const el = document.getElementById("form-accesorio-editar");
+                        const el = document.getElementById(
+                          "form-accesorio-editar"
+                        );
                         if (el)
                           el.scrollIntoView({
                             behavior: "smooth",
@@ -141,13 +159,15 @@ const ListarAccesorio = () => {
                           });
                       }}
                     >
-                      Editar
+                      {t("edit")}
                     </button>
                     <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => borrarAccesorio(accesorio._id || accesorio.id)}
+                      className="btn btn-sm btn-delete"
+                      onClick={() =>
+                        borrarAccesorio(accesorio._id || accesorio.id)
+                      }
                     >
-                      Borrar
+                      {t("delete")}
                     </button>
                   </td>
                 </tr>
