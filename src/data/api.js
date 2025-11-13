@@ -2,7 +2,7 @@ import axios from "axios";
 
 //agregar interceptores de request
 const api = axios.create({
-  baseURL: "http://localhost:3000/v1/",
+  baseURL: "https://obligatorio-fs.vercel.app/v1/",
 });
 
 api.interceptors.request.use((config) => {
