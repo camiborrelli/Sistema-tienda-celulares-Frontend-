@@ -3,7 +3,12 @@ import "./celular.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../data/api";
-import { listar, updatePhone, setCurrent, getCurrentCelular } from "../../../features/phone.slice";
+import {
+  listar,
+  updatePhone,
+  setCurrent,
+  getCurrentCelular,
+} from "../../../features/phone.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
@@ -98,7 +103,9 @@ const EditarCelular = () => {
             className="form-control"
             placeholder={t("name")}
           />
-          {errors.nombre && <small className="text-danger">{t("nameRequired")}</small>}
+          {errors.nombre && (
+            <small className="text-danger">{t("nameRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -107,7 +114,9 @@ const EditarCelular = () => {
             className="form-control"
             placeholder={t("brand")}
           />
-          {errors.marca && <small className="text-danger">{t("brandRequired")}</small>}
+          {errors.marca && (
+            <small className="text-danger">{t("brandRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -117,7 +126,9 @@ const EditarCelular = () => {
             className="form-control"
             placeholder={t("model")}
           />
-          {errors.modelo && <small className="text-danger">{t("modelRequired")}</small>}
+          {errors.modelo && (
+            <small className="text-danger">{t("modelRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -127,7 +138,9 @@ const EditarCelular = () => {
             className="form-control"
             placeholder={t("stock")}
           />
-          {errors.stock && <small className="text-danger">{t("stockRequired")}</small>}
+          {errors.stock && (
+            <small className="text-danger">{t("stockRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -140,7 +153,9 @@ const EditarCelular = () => {
             className="form-control"
             placeholder={t("price")}
           />
-          {errors.precio && <small className="text-danger">{t("priceRequired")}</small>}
+          {errors.precio && (
+            <small className="text-danger">{t("priceRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -153,7 +168,9 @@ const EditarCelular = () => {
             className="form-control"
             placeholder={t("accesoryNumber")}
           />
-          {errors.accesoriosCompatibles && <small className="text-danger">{t("accesoryNumberRequired")}</small>}
+          {errors.accesoriosCompatibles && (
+            <small className="text-danger">{t("accesoryNumberRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -164,10 +181,19 @@ const EditarCelular = () => {
           />
         </div>
         <div className="mb-2">
-          <input id="celular-imagen" {...register("imagen", { required: true })} className="form-control" type="hidden" />
+          <input
+            id="celular-imagen"
+            {...register("imagen", { required: true })}
+            className="form-control"
+            type="hidden"
+          />
         </div>
-        <div className="d-flex gap-2">
-          <button className="btn btn-success" type="submit" disabled={isSubmitting}>
+        <div className="form-actions-centered">
+          <button
+            className="btn btn-success"
+            type="submit"
+            disabled={isSubmitting}
+          >
             {t("save")}
           </button>
           <button

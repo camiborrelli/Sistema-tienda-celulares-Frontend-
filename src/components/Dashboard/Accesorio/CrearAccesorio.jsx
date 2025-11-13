@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import api from "../../../data/api";
-import { createAccesory, listarCategorias } from "../../../features/accesory.slice";
+import {
+  createAccesory,
+  listarCategorias,
+} from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
@@ -60,7 +63,11 @@ const CrearAccesorio = () => {
 
   return (
     <div className="col-12">
-      <form id="form-accesorio" className="card card-body mb-3" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        id="form-accesorio"
+        className="card card-body mb-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h5>{t("createAccessory")}</h5>
 
         <div className="mb-2">
@@ -70,7 +77,9 @@ const CrearAccesorio = () => {
             placeholder={t("namePlaceholder")}
             {...register("nombre", { required: true })}
           />
-          {errors.nombre && <small className="text-danger">{t("usernameRequired")}</small>}
+          {errors.nombre && (
+            <small className="text-danger">{t("usernameRequired")}</small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -81,7 +90,9 @@ const CrearAccesorio = () => {
             {...register("descripcion", { required: true })}
             placeholder={t("descriptionPlaceholder")}
           />
-          {errors.descripcion && <small className="text-danger">{t("descriptionRequired")}</small>}
+          {errors.descripcion && (
+            <small className="text-danger">{t("descriptionRequired")}</small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -92,7 +103,9 @@ const CrearAccesorio = () => {
             {...register("precio", { required: true, valueAsNumber: true })}
             placeholder={t("pricePlaceholder")}
           />
-          {errors.precio && <small className="text-danger">{t("priceRequired")}</small>}
+          {errors.precio && (
+            <small className="text-danger">{t("priceRequired")}</small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -103,7 +116,9 @@ const CrearAccesorio = () => {
             {...register("stock", { required: true, valueAsNumber: true })}
             placeholder={t("stockPlaceholder")}
           />
-          {errors.stock && <small className="text-danger">{t("stockRequired")}</small>}
+          {errors.stock && (
+            <small className="text-danger">{t("stockRequired")}</small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -113,7 +128,11 @@ const CrearAccesorio = () => {
             {...register("modeloCompatible", { required: true })}
             placeholder={t("compatibleModelPlaceholder")}
           />
-          {errors.modeloCompatible && <small className="text-danger">{t("compatibleModelRequired")}</small>}
+          {errors.modeloCompatible && (
+            <small className="text-danger">
+              {t("compatibleModelRequired")}
+            </small>
+          )}
         </div>
 
         <div className="mb-2">
@@ -128,7 +147,10 @@ const CrearAccesorio = () => {
             </option>
             {Array.isArray(categorias) && categorias.length > 0 ? (
               categorias.map((categoria, index) => (
-                <option key={categoria._id || index} value={categoria.nombre || categoria}>
+                <option
+                  key={categoria._id || index}
+                  value={categoria.nombre || categoria}
+                >
                   {categoria.nombre || categoria}
                 </option>
               ))
@@ -136,16 +158,28 @@ const CrearAccesorio = () => {
               <option disabled>{t("noCategoriesAvailable")}</option>
             )}
           </select>
-          {errors.categoria && <small className="text-danger">{t("categoryRequired")}</small>}
+          {errors.categoria && (
+            <small className="text-danger">{t("categoryRequired")}</small>
+          )}
         </div>
 
-        <div className="d-flex gap-2">
-          <button type="submit" className="btn btn-success" disabled={!isValid}>
-            {t("create")}
-          </button>
-          <button className="btn btn-secondary" type="button" onClick={() => reset()}>
-            {t("clean")}
-          </button>
+        <div className="accesorio-actions">
+          <div className="accesorio-actions-inner">
+            <button
+              type="submit"
+              className="btn btn-success"
+              disabled={!isValid}
+            >
+              {t("create")}
+            </button>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={() => reset()}
+            >
+              {t("clean")}
+            </button>
+          </div>
         </div>
       </form>
     </div>

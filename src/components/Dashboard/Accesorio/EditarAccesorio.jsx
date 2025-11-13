@@ -1,9 +1,16 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentAccesory, listar, setCurrent } from "../../../features/accesory.slice";
+import {
+  getCurrentAccesory,
+  listar,
+  setCurrent,
+} from "../../../features/accesory.slice";
 import api from "../../../data/api";
-import { updateAccesory, listarCategorias } from "../../../features/accesory.slice";
+import {
+  updateAccesory,
+  listarCategorias,
+} from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
@@ -94,7 +101,11 @@ const EditarAccesorio = () => {
 
   return (
     <div className="col-12">
-      <form id="form-accesorio-editar" className="card card-body mb-3" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        id="form-accesorio-editar"
+        className="card card-body mb-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h5>{t("editAccessory")}</h5>
         <input type="hidden" id="accesorio-id" {...register("id")} />
         <div className="mb-2">
@@ -104,7 +115,9 @@ const EditarAccesorio = () => {
             placeholder={t("namePlaceholder")}
             {...register("nombre", { required: true })}
           />
-          {errors.nombre && <span className="text-danger">{t("nameRequired")}</span>}
+          {errors.nombre && (
+            <span className="text-danger">{t("nameRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
           <textarea
@@ -114,7 +127,9 @@ const EditarAccesorio = () => {
             {...register("descripcion", { required: true })}
             placeholder={t("descriptionPlaceholder")}
           />
-          {errors.descripcion && <span className="text-danger">{t("descriptionRequired")}</span>}
+          {errors.descripcion && (
+            <span className="text-danger">{t("descriptionRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -124,7 +139,9 @@ const EditarAccesorio = () => {
             {...register("precio", { required: true, valueAsNumber: true })}
             placeholder={t("pricePlaceholder")}
           />
-          {errors.precio && <span className="text-danger">{t("priceRequired")}</span>}
+          {errors.precio && (
+            <span className="text-danger">{t("priceRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -134,7 +151,9 @@ const EditarAccesorio = () => {
             {...register("stock", { required: true, valueAsNumber: true })}
             placeholder={t("stockPlaceholder")}
           />
-          {errors.stock && <span className="text-danger">{t("stockRequired")}</span>}
+          {errors.stock && (
+            <span className="text-danger">{t("stockRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -143,7 +162,9 @@ const EditarAccesorio = () => {
             {...register("modeloCompatible", { required: true })}
             placeholder={t("compatibleModelPlaceholder")}
           />
-          {errors.modeloCompatible && <span className="text-danger">{t("compatibleModelRequired")}</span>}
+          {errors.modeloCompatible && (
+            <span className="text-danger">{t("compatibleModelRequired")}</span>
+          )}
         </div>
         <div className="mb-2">
           <select
@@ -157,7 +178,10 @@ const EditarAccesorio = () => {
             </option>
             {Array.isArray(categorias) && categorias.length > 0 ? (
               categorias.map((categoria, index) => (
-                <option key={categoria._id || index} value={categoria.nombre || categoria}>
+                <option
+                  key={categoria._id || index}
+                  value={categoria.nombre || categoria}
+                >
                   {categoria.nombre || categoria}
                 </option>
               ))
@@ -165,7 +189,9 @@ const EditarAccesorio = () => {
               <option disabled>No hay categorías disponibles</option>
             )}
           </select>
-          {errors.categoria && <small className="text-danger">{t("categoryRequired")}</small>}
+          {errors.categoria && (
+            <small className="text-danger">{t("categoryRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -175,29 +201,35 @@ const EditarAccesorio = () => {
             type="hidden"
           />
         </div>
-        {/* Botones igual que en EditarCelular */}
-        <div className="d-flex gap-2">
-          <button className="btn btn-success" type="submit" disabled={isSubmitting}>
-            {t("save")}
-          </button>
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={() => {
-              reset({
-                id: null,
-                nombre: "",
-                descripcion: "",
-                precio: "",
-                stock: "",
-                modeloCompatible: "",
-                categoria: "",
-              });
-              dispatch(setCurrent(null));
-            }}
-          >
-            {t("clean")}
-          </button>
+        {/* Botones centrados */}
+        <div className="accesorio-actions">
+          <div className="accesorio-actions-inner">
+            <button
+              className="btn btn-success"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {t("save")}
+            </button>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={() => {
+                reset({
+                  id: null,
+                  nombre: "",
+                  descripcion: "",
+                  precio: "",
+                  stock: "",
+                  modeloCompatible: "",
+                  categoria: "",
+                });
+                dispatch(setCurrent(null));
+              }}
+            >
+              {t("clean")}
+            </button>
+          </div>
         </div>
       </form>
     </div>

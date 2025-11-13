@@ -257,50 +257,6 @@
   box-shadow: 0 2px 8px rgba(66, 153, 225, 0.3);
 }
 
-/* New professional button variants */
-.btn-edit {
-  background: linear-gradient(180deg, #24324a, #1b2540);
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.12);
-}
-.btn-edit:hover {
-  background: linear-gradient(180deg, #1e2b43, #141b30);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.18);
-}
-.btn-edit:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(36, 51, 90, 0.12);
-}
-
-.btn-delete {
-  background: linear-gradient(180deg, #e05353, #b83232);
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 8px 20px rgba(229, 62, 62, 0.12);
-}
-.btn-delete:hover {
-  background: linear-gradient(180deg, #c93b3b, #9b2b2b);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 30px rgba(201, 59, 59, 0.18);
-}
-.btn-delete:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.12);
-}
-
-/* Support for icon-only buttons inside lists */
-.icon-btn.btn-edit,
-.icon-btn.btn-delete {
-  padding: 0.35rem 0.45rem;
-  width: auto;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Estado cuando no hay datos */
 .text-center.text-muted {
   color: #a0aec0 !important;
@@ -361,32 +317,38 @@
 
 /* Acciones del formulario de accesorio */
 .accesorio-actions {
+  /* center the action buttons similar to celular forms */
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+  padding-top: 0.75rem;
 }
 
 .accesorio-actions-inner {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  width: 100%;
+  gap: 0.75rem;
+  /* don't force the inner container to full width so buttons keep natural size */
+  width: auto;
   max-width: 420px;
 }
 
-/* Botones con el mismo ancho y altura */
+/* Buttons should keep natural width and not stretch to fill the row */
 .accesorio-actions-inner .btn {
-  flex: 1 1 0;
+  flex: 0 0 auto;
+  min-width: 110px;
 }
 
 @media (max-width: 480px) {
   .accesorio-actions-inner {
     max-width: 100%;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .accesorio-actions-inner .btn {
-    width: 100%;
+    width: auto;
   }
 }
 

@@ -2,10 +2,11 @@ import "./dashboard.css";
 import { useDispatch } from "react-redux";
 import { desloguear } from "../../features/user.slice";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
-import { useEffect } from "react";
+// useEffect imported above with useState
 import { toast } from "react-toastify";
 import Celulares from "./Celular/Celulares";
 
@@ -14,6 +15,14 @@ const DashboardAdmin = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const actualLenguage = localStorage.getItem("lenguage");
+  const [sidebarOpen, setSidebarOpen] = useState(() => {
+    // default open on wide screens, collapsed on small screens
+    try {
+      return window.innerWidth > 768;
+    } catch (e) {
+      return true;
+    }
+  });
 
   const cerrarSesion = () => {
     toast.success(<span>{t("logoutSuccess")}</span>);
@@ -28,12 +37,22 @@ const DashboardAdmin = () => {
 
   const location = useLocation();
 
-  // Smooth scrolling behavior for sidebar anchors — scrolls the .dashboard-root container
+  useEffect(() => {
+    try {
+      const mobile = window.innerWidth <= 768;
+      if (mobile && sidebarOpen) {
+        setSidebarOpen(false);
+      }
+    } catch (err) {}
+  }, [location.pathname, location.hash]);
+
   useEffect(() => {
     const container = document.querySelector(".dashboard-root");
     if (!container) return;
 
-    const links = Array.from(document.querySelectorAll(".sidebar-nav a[href^='#']"));
+    const links = Array.from(
+      document.querySelectorAll(".sidebar-nav a[href^='#']")
+    );
     const onClick = (e) => {
       e.preventDefault();
       const href = e.currentTarget.getAttribute("href");
@@ -67,18 +86,32 @@ const DashboardAdmin = () => {
 
   // active link helpers
   const isCelularesActive =
-    pathname === "/dashboard" || pathname === "/dashboard/celulares" || (isDashboardRoot && hash === "#section-celulares");
-  const isAccesoriosActive = pathname === "/dashboard/accesorios" || (isDashboardRoot && hash === "#section-accesorios");
-  const isUsuariosActive = pathname === "/dashboard/usuarios" || (isDashboardRoot && hash === "#section-usuarios");
-  const isPerfilActive = pathname === "/dashboard/perfil" || (isDashboardRoot && hash === "#section-perfil");
-  const isInformeActive = pathname === "/dashboard/informe" || (isDashboardRoot && hash === "#section-informe");
+    pathname === "/dashboard" ||
+    pathname === "/dashboard/celulares" ||
+    (isDashboardRoot && hash === "#section-celulares");
+  const isAccesoriosActive =
+    pathname === "/dashboard/accesorios" ||
+    (isDashboardRoot && hash === "#section-accesorios");
+  const isUsuariosActive =
+    pathname === "/dashboard/usuarios" ||
+    (isDashboardRoot && hash === "#section-usuarios");
+  const isPerfilActive =
+    pathname === "/dashboard/perfil" ||
+    (isDashboardRoot && hash === "#section-perfil");
+  const isInformeActive =
+    pathname === "/dashboard/informe" ||
+    (isDashboardRoot && hash === "#section-informe");
 
   return (
     <div className="dashboard-layout">
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`}>
         <div className="sidebar-header">
           <div className="sidebar-brand">{t("title")}</div>
-          <select onChange={changeLenguage} defaultValue={actualLenguage} className="language-select">
+          <select
+            onChange={changeLenguage}
+            defaultValue={actualLenguage}
+            className="language-select"
+          >
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>
@@ -86,21 +119,38 @@ const DashboardAdmin = () => {
 
         <ul className="sidebar-nav">
           <li>
-            <Link className={`${isCelularesActive ? "active" : ""} nav-color-cellphones`} to="/dashboard/celulares">
+            <Link
+              className={`${
+                isCelularesActive ? "active" : ""
+              } nav-color-cellphones`}
+              to="/dashboard/celulares"
+            >
               {t("cellphones")}
             </Link>
-            <Link className={`${isAccesoriosActive ? "active" : ""} nav-color-plus`} to="/dashboard/accesorios">
+            <Link
+              className={`${isAccesoriosActive ? "active" : ""} nav-color-plus`}
+              to="/dashboard/accesorios"
+            >
               {t("accessories")}
             </Link>
-            <Link className={`${isUsuariosActive ? "active" : ""}`} to="/dashboard/usuarios">
+            <Link
+              className={`${isUsuariosActive ? "active" : ""}`}
+              to="/dashboard/usuarios"
+            >
               {t("users")}
             </Link>
 
-            <Link className={`${isPerfilActive ? "active" : ""}`} to="/dashboard/perfil">
+            <Link
+              className={`${isPerfilActive ? "active" : ""}`}
+              to="/dashboard/perfil"
+            >
               {t("profile")}
             </Link>
 
-            <Link className={`${isInformeActive ? "active" : ""} nav-color-premium`} to="/dashboard/informe">
+            <Link
+              className={`${isInformeActive ? "active" : ""} nav-color-premium`}
+              to="/dashboard/informe"
+            >
               {t("reportAccessories")}
             </Link>
           </li>
@@ -111,8 +161,25 @@ const DashboardAdmin = () => {
           </button>
         </div>
       </aside>
-
       <main className="dashboard-main">
+        {/* Toggle button only visible on small screens */}
+        <button
+          className="sidebar-toggle"
+          aria-label={
+            sidebarOpen
+              ? t("close") || "Close sidebar"
+              : t("open") || "Open sidebar"
+          }
+          onClick={() => setSidebarOpen((s) => !s)}
+        >
+          <span className="hamburger" aria-hidden />
+        </button>
+        {sidebarOpen && (
+          <div
+            className="overlay-sidebar"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
         <div className="dashboard-root container mb-5">
           {isDashboardRoot ? (
             <>

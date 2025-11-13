@@ -185,3 +185,37 @@
     height: 40px;
   }
 }
+
+/* Extra mobile polish for the celulares list (matches dashboard card layout at <=640px) */
+@media (max-width: 640px) {
+  .table-container {
+    padding: 0.5rem;
+  }
+
+  /* make the thumb a little smaller and keep it neat in the card view */
+  #table-celulares .list-thumb {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 0.25rem;
+  }
+
+  /* action buttons: smaller paddings and stacked labels for better touch targets */
+  #table-celulares td.actions .btn {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  /* put the label under the icon on very small screens to avoid horizontal overflow */
+  #table-celulares td.actions .btn .btn-label {
+    display: block;
+    margin-left: 0;
+    margin-top: 0.25rem;
+    line-height: 1;
+  }
+
+  /* ensure the actions wrap nicely */
+  #table-celulares td.actions {
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
