@@ -1,6 +1,7 @@
 import ListarAccesorio from "./ListarAccesorio";
 import CrearAccesorio from "./CrearAccesorio";
 import EditarAccesorio from "./EditarAccesorio";
+import GraficaAccesorio from "./GraficaAccesorio";
 import { useTranslation } from "react-i18next";
 
 const Accesorios = () => {
@@ -18,6 +19,9 @@ const Accesorios = () => {
         </div>
         <div className="col-md-12 col-12">
           <ListarAccesorio />
+        </div>
+        <div className="col-md-12 col-12">
+          <GraficaAccesorio />
         </div>
       </div>
     </section>

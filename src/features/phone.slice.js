@@ -18,14 +18,11 @@ const phoneSlice = createSlice({
       state.phones = action.payload;
     },
     deletePhone(state, action) {
-      state.phones = state.phones.filter(
-        (phone) => phone._id !== action.payload
-      );
+      state.phones = state.phones.filter((phone) => phone._id !== action.payload);
     },
     updatePhone(state, action) {
-      const index = state.phones.findIndex(
-        (phone) => phone._id === action.payload._id
-      );
+      const idToUpdate = action.payload.id ?? action.payload._id;
+      const index = state.phones.findIndex((item) => (item.id ?? item._id) === idToUpdate);
       if (index !== -1) {
         state.phones[index] = action.payload;
       }
@@ -36,7 +33,6 @@ const phoneSlice = createSlice({
   },
 });
 
-export const { createPhone, listar, deletePhone, updatePhone, setCurrent } =
-  phoneSlice.actions;
+export const { createPhone, listar, deletePhone, updatePhone, setCurrent } = phoneSlice.actions;
 
 export default phoneSlice.reducer;
