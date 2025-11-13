@@ -7,18 +7,25 @@ import { useForm } from "react-hook-form";
 import api from "../../data/api";
 import { useDispatch } from "react-redux";
 import { loguear } from "../../features/user.slice";
+import { useTranslation } from "react-i18next";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { registerUsuarioSchema } from "../../validators/usuario.validator";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading] = useState(false);
+  const { t } = useTranslation();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     reset,
-  } = useForm();
+  } = useForm({
+    resolver: joiResolver(registerUsuarioSchema),
+    mode: "onChange",
+  });
 
   const onSubmit = (data) => {
     api
@@ -43,7 +50,7 @@ const Register = () => {
   return (
     <div className="login-container">
       <div className="brand">
-        <h2 className="login-title">Registro</h2>
+        <h2 className="login-title">{t("register")}</h2>
       </div>
       <form id="formRegistro" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
@@ -52,27 +59,18 @@ const Register = () => {
             <input
               type="text"
               id="username"
-              placeholder="Nombre"
+              placeholder={t("usernamePlaceholder")}
               {...register("username", { required: true })}
             />
           </div>
-          {errors.username && (
-            <span className="error">El username es obligatorio</span>
-          )}
+          {errors.username && <span className="error">{t("usernameRequired")}</span>}
         </div>
         <div className="form-group">
           <div className="input-row">
             <FaEnvelope className="input-icon" aria-hidden />
-            <input
-              type="email"
-              id="email"
-              placeholder="Email"
-              {...register("email", { required: true })}
-            />
+            <input type="email" id="email" placeholder={t("emailPlaceholder")} {...register("email", { required: true })} />
           </div>
-          {errors.email && (
-            <span className="error">El email es obligatorio</span>
-          )}
+          {errors.email && <span className="error">{t("emailRequired")}</span>}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -80,13 +78,11 @@ const Register = () => {
             <input
               type="password"
               id="contrasenia"
-              placeholder="Contraseña"
+              placeholder={t("passwordPlaceholder")}
               {...register("password", { required: true })}
             />
           </div>
-          {errors.password && (
-            <span className="error">La contraseña es obligatoria</span>
-          )}
+          {errors.password && <span className="error">{t("passwordRequired")}</span>}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -94,21 +90,17 @@ const Register = () => {
             <input
               type="password"
               id="confirmPassword"
-              placeholder="Confirmar Contraseña"
+              placeholder={t("confirmPasswordPlaceholder")}
               {...register("confirmPassword", { required: true })}
             />
           </div>
-          {errors.confirmPassword && (
-            <span className="error">
-              La confirmación de la contraseña es obligatoria
-            </span>
-          )}
+          {errors.confirmPassword && <span className="error">{t("confirmPasswordRequired")}</span>}
         </div>
-        <button disabled={isSubmitting || loading} className="btn-acceder">
-          {loading ? <i /> : "Registrar"}
+        <button disabled={!isValid} className="btn-acceder">
+          {loading ? <i /> : t("register")}
         </button>
         <p className="login-link">
-          ¿Ya tienes cuenta? <Link to={"/"}>Inicia sesión</Link>
+          {t("alreadyHaveAccount")} <Link to={"/"}>{t("login")}</Link>
         </p>
       </form>
     </div>

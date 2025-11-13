@@ -100,5 +100,7 @@
   "customRange": "Rango personalizado",
   "allTime": "Todo el tiempo",
   "accessoryUpdatedSuccess": "Accesorio actualizado correctamente",
-  "accessoryDeletedSuccess": "Accesorio eliminado correctamente"
+  "accessoryDeletedSuccess": "Accesorio eliminado correctamente",
+  "accessoriesCreatedLast7Days": "Accesorios creados en los últimos 7 días",
+  "accessoriesCreated": "Accesorios creados"
 }

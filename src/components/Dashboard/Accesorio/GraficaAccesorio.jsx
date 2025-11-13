@@ -40,6 +40,7 @@ const options = {
     },
   },
 };
+
 let labels = null;
 
 const GraficaAccesorio = () => {
@@ -63,7 +64,7 @@ const GraficaAccesorio = () => {
   return (
     <div className="card grafica-accesorio-card">
       <div className="card-body">
-        <h5 className="mb-3">Accesorios creados (últimos 7 días)</h5>
+        <h5 className="mb-3">{t("accessoriesCreatedLast7Days")}</h5>
         <div className="chart-container">
           <Bar
             options={options}
@@ -71,7 +72,7 @@ const GraficaAccesorio = () => {
               labels,
               datasets: [
                 {
-                  label: "Accesorios creados",
+                  label: t("accessoriesCreated"),
                   data: counts,
                   backgroundColor: "rgba(66,153,225,0.6)",
                   hoverBackgroundColor: "rgba(43,108,176,0.7)",

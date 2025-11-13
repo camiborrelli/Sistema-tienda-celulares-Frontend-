@@ -100,5 +100,13 @@
   "customRange": "Custom Range",
   "allTime": "All Time",
   "accessoryUpdatedSuccess": "Accessory updated successfully",
-  "accessoryDeletedSuccess": "Accessory deleted successfully"
+  "accessoryDeletedSuccess": "Accessory deleted successfully",
+  "accessoriesCreatedLast7Days": "Accessories created in the last 7 days",
+  "accessoriesCreated": "Accessories Created",
+  "register": "Register",
+  "alreadyHaveAccount": "Already have an account? ",
+  "confirmPasswordPlaceholder": "Confirm Password",
+  "passwordPlaceholder": "Password",
+  "usernamePlaceholder": "Username",
+  "confirmPasswordRequired": "Confirm Password is required"
 }
