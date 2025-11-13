@@ -13,6 +13,7 @@ body {
 
 body {
   margin: 0;
+
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
   /* dark diagonal gradient with subtle glow */
   background: radial-gradient(
@@ -134,7 +135,7 @@ button.btn-primary:active,
   display: block;
   margin-top: 16px;
   font-size: 13px;
-  color: var(--muted);
+  color: rgb(212, 186, 148);
   text-decoration: none;
 }
 

@@ -281,6 +281,18 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Small utility for the "¿Ya tienes cuenta?" paragraph used in Register.jsx */
+.login-link {
+  color: rgb(212, 186, 148);
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: var(--accent-orange); /* restore default link color */
+  text-decoration: none; /* keep visual consistent with other links */
+}
+
 @media (max-width: 420px) {
   .login-container {
     padding: 24px 20px;
