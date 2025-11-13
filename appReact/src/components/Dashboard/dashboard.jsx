@@ -103,41 +103,43 @@ const DashboardAdmin = () => {
         <ul className="sidebar-nav">
           <li>
             <Link
-              className={isCelularesActive ? "active" : ""}
+              className={`${
+                isCelularesActive ? "active" : ""
+              } nav-color-cellphones`}
               to="/dashboard/celulares"
             >
               {t("cellphones")}
             </Link>
             <Link
-              className={isAccesoriosActive ? "active" : ""}
+              className={`${isAccesoriosActive ? "active" : ""} nav-color-plus`}
               to="/dashboard/accesorios"
             >
               {t("accessories")}
             </Link>
             <Link
-              className={isUsuariosActive ? "active" : ""}
+              className={`${isUsuariosActive ? "active" : ""}`}
               to="/dashboard/usuarios"
             >
               {t("users")}
             </Link>
 
             <Link
-              className={isPerfilActive ? "active" : ""}
+              className={`${isPerfilActive ? "active" : ""}`}
               to="/dashboard/perfil"
             >
               {t("profile")}
             </Link>
 
             <Link
-              className={isInformeActive ? "active" : ""}
+              className={`${isInformeActive ? "active" : ""} nav-color-premium`}
               to="/dashboard/informe"
             >
-              {t("Report")}
+              {t("reportAccessories")}
             </Link>
           </li>
         </ul>
         <div className="sidebar-footer">
-          <button className="btn btn-danger btn-sm" onClick={cerrarSesion}>
+          <button className="btn-logout" onClick={cerrarSesion}>
             {t("logout")}
           </button>
         </div>
