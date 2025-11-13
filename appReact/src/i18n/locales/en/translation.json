@@ -22,7 +22,7 @@
   "user": "User",
   "users": "Users",
   "logout": "Log out",
-  "logoutSuccess": "Loged out successfully",
+  "logoutSuccess": "Logged out successfully",
   "usernameRequired": "Username is required",
   "passwordRequired": "Password is required",
   "brandRequired": "Brand is required",
@@ -91,5 +91,14 @@
   "premium": "Premium",
   "totalCellphones": "Total cell phones",
   "loading": "Loading...",
-  "percentage": "%"
+  "percentage": "%",
+  "loginSuccess": "Logged in successfully",
+  "errorListingAccessories": "Error listing accessories",
+  "cellphoneList": "Cell Phone List",
+  "lastWeek": "Last Week",
+  "lastMonth": "Last Month",
+  "customRange": "Custom Range",
+  "allTime": "All Time",
+  "accessoryUpdatedSuccess": "Accessory updated successfully",
+  "accessoryDeletedSuccess": "Accessory deleted successfully"
 }

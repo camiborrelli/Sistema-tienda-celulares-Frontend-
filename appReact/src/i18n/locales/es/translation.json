@@ -91,5 +91,14 @@
   "premium": "Premium",
   "totalCellphones": "Total celulares",
   "loading": "Cargando...",
-  "percentage": "%"
+  "percentage": "%",
+  "loginSuccess": "Inicio de sesión exitoso",
+  "errorListingAccessories": "Error al listar accesorios",
+  "cellphoneList": "Lista de celulares",
+  "lastWeek": "Última semana",
+  "lastMonth": "Último mes",
+  "customRange": "Rango personalizado",
+  "allTime": "Todo el tiempo",
+  "accessoryUpdatedSuccess": "Accesorio actualizado correctamente",
+  "accessoryDeletedSuccess": "Accesorio eliminado correctamente"
 }

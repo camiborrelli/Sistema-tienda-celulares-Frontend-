@@ -1,16 +1,9 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCurrentAccesory,
-  list,
-  setCurrent,
-} from "../../../features/accesory.slice";
+import { getCurrentAccesory, listar, setCurrent } from "../../../features/accesory.slice";
 import api from "../../../data/api";
-import {
-  updateAccesory,
-  listarCategorias,
-} from "../../../features/accesory.slice";
+import { updateAccesory, listarCategorias } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
@@ -41,59 +34,43 @@ const EditarAccesorio = () => {
         stock: current.stock,
         modeloCompatible: current.modeloCompatible,
         categoria: current.categoria,
+        fechaCreacion: current.fechaCreacion,
       });
     }
   }, [current, reset]);
 
   const onSubmit = (data) => {
-    const payload = {
-      nombre: data.nombre,
-      descripcion: data.descripcion || "",
-      precio: Number(data.precio) || 0,
-      stock: Number(data.stock) || 0,
-      modeloCompatible: data.modeloCompatible || "",
-      categoria: data.categoria || "",
-    };
     if (data == null) {
       toast.error("No hay datos para actualizar.");
       return;
     }
-    const id = data.id ?? data._id;
-    if (!id) {
-      console.error("EditarAccesorio: id faltante en datos del form", data);
-      toast.error(
-        "Id de accesorio faltante. Seleccione el accesorio a editar desde la lista."
-      );
-      return;
-    }
-    api
-      .patch(`accesorios/${id}`, payload)
-      .then((response) => {
-        const updated = response.data?.accesorio ?? response.data;
-        dispatch(updateAccesory(updated));
-        dispatch(setCurrent(null));
-        toast.success(response.data?.mensaje || "Accesorio actualizado");
-        api
-          .get("/accesorios")
-          .then((response) => {
-            dispatch(list(response.data.accesorios));
-          })
-          .catch((error) => {
-            console.error("Error al listar accesorios:", error);
-          });
 
-        reset();
+    api
+      .patch(`accesorios/${data.id}`, {
+        nombre: data.nombre,
+        descripcion: data.descripcion,
+        precio: data.precio,
+        stock: data.stock,
+        modeloCompatible: data.modeloCompatible,
+        categoria: data.categoria,
+      })
+      .then((response) => {
+        dispatch(updateAccesory(data));
+        toast.success(t("accessoryUpdatedSuccess"));
+        dispatch(setCurrent(null));
+        reset({
+          id: null,
+          nombre: "",
+          descripcion: "",
+          precio: "",
+          stock: "",
+          modeloCompatible: "",
+          categoria: "",
+          fechaCreacion: "",
+        });
       })
       .catch((error) => {
-        console.error("Error al actualizar accesorio:", error);
-        const serverData = error?.response?.data;
-        const msg =
-          serverData?.message ||
-          (typeof serverData === "string"
-            ? serverData
-            : JSON.stringify(serverData)) ||
-          error.message;
-        toast.error(msg);
+        toast.error(error.response.data.error);
       });
   };
 
@@ -117,11 +94,7 @@ const EditarAccesorio = () => {
 
   return (
     <div className="col-12">
-      <form
-        id="form-accesorio-editar"
-        className="card card-body mb-3"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form id="form-accesorio-editar" className="card card-body mb-3" onSubmit={handleSubmit(onSubmit)}>
         <h5>{t("editAccessory")}</h5>
         <input type="hidden" id="accesorio-id" {...register("id")} />
         <div className="mb-2">
@@ -131,9 +104,7 @@ const EditarAccesorio = () => {
             placeholder={t("namePlaceholder")}
             {...register("nombre", { required: true })}
           />
-          {errors.nombre && (
-            <span className="text-danger">{t("nameRequired")}</span>
-          )}
+          {errors.nombre && <span className="text-danger">{t("nameRequired")}</span>}
         </div>
         <div className="mb-2">
           <textarea
@@ -143,9 +114,7 @@ const EditarAccesorio = () => {
             {...register("descripcion", { required: true })}
             placeholder={t("descriptionPlaceholder")}
           />
-          {errors.descripcion && (
-            <span className="text-danger">{t("descriptionRequired")}</span>
-          )}
+          {errors.descripcion && <span className="text-danger">{t("descriptionRequired")}</span>}
         </div>
         <div className="mb-2">
           <input
@@ -155,9 +124,7 @@ const EditarAccesorio = () => {
             {...register("precio", { required: true, valueAsNumber: true })}
             placeholder={t("pricePlaceholder")}
           />
-          {errors.precio && (
-            <span className="text-danger">{t("priceRequired")}</span>
-          )}
+          {errors.precio && <span className="text-danger">{t("priceRequired")}</span>}
         </div>
         <div className="mb-2">
           <input
@@ -167,9 +134,7 @@ const EditarAccesorio = () => {
             {...register("stock", { required: true, valueAsNumber: true })}
             placeholder={t("stockPlaceholder")}
           />
-          {errors.stock && (
-            <span className="text-danger">{t("stockRequired")}</span>
-          )}
+          {errors.stock && <span className="text-danger">{t("stockRequired")}</span>}
         </div>
         <div className="mb-2">
           <input
@@ -178,9 +143,7 @@ const EditarAccesorio = () => {
             {...register("modeloCompatible", { required: true })}
             placeholder={t("compatibleModelPlaceholder")}
           />
-          {errors.modeloCompatible && (
-            <span className="text-danger">{t("compatibleModelRequired")}</span>
-          )}
+          {errors.modeloCompatible && <span className="text-danger">{t("compatibleModelRequired")}</span>}
         </div>
         <div className="mb-2">
           <select
@@ -194,10 +157,7 @@ const EditarAccesorio = () => {
             </option>
             {Array.isArray(categorias) && categorias.length > 0 ? (
               categorias.map((categoria, index) => (
-                <option
-                  key={categoria._id || index}
-                  value={categoria.nombre || categoria}
-                >
+                <option key={categoria._id || index} value={categoria.nombre || categoria}>
                   {categoria.nombre || categoria}
                 </option>
               ))
@@ -205,18 +165,19 @@ const EditarAccesorio = () => {
               <option disabled>No hay categorías disponibles</option>
             )}
           </select>
-          {errors.categoria && (
-            <small className="text-danger">{t("categoryRequired")}</small>
-          )}
+          {errors.categoria && <small className="text-danger">{t("categoryRequired")}</small>}
         </div>
-
+        <div className="mb-2">
+          <input
+            id="accesorio-fecha-creacion"
+            className="form-control"
+            {...register("fechaCreacion", { required: true })}
+            type="hidden"
+          />
+        </div>
         {/* Botones igual que en EditarCelular */}
         <div className="d-flex gap-2">
-          <button
-            className="btn btn-success"
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <button className="btn btn-success" type="submit" disabled={isSubmitting}>
             {t("save")}
           </button>
           <button

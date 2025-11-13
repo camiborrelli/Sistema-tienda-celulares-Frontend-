@@ -28,7 +28,7 @@ const Login = () => {
       .post("usuarios/login", data, { skipAuth: true })
       .then((response) => {
         dispatch(loguear(response.data.token));
-        toast.success(response.data.message, { autoClose: 2000 });
+        toast.success(t("loginSuccess"), { autoClose: 2000 });
         navigate("/dashboard");
       })
       .catch((error) => {

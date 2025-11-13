@@ -15,7 +15,7 @@ const accesorySlice = createSlice({
     createAccesory(state, action) {
       state.accesories.push(action.payload);
     },
-    list(state, action) {
+    listar(state, action) {
       state.accesories = action.payload;
     },
     listarCategorias(state, action) {
@@ -41,7 +41,7 @@ const accesorySlice = createSlice({
   },
 });
 
-export const { createAccesory, list, deleteAccesorio, updateAccesory, setCurrent, listarCategorias } =
+export const { createAccesory, listar, deleteAccesorio, updateAccesory, setCurrent, listarCategorias } =
   accesorySlice.actions;
 
 export default accesorySlice.reducer;

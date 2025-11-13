@@ -80,3 +80,60 @@
     padding: 1rem;
   }
 }
+
+/* ===== Listado de Celulares (ListarCelular.jsx) ===== */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+#table-celulares {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#table-celulares th,
+#table-celulares td {
+  vertical-align: middle;
+}
+
+#table-celulares .actions {
+  white-space: nowrap;
+}
+
+/* Botones con ícono compactos */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  border-radius: 8px;
+}
+
+/* Miniaturas de imagen en la lista */
+.list-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f6f7f9;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.list-thumb.placeholder {
+  background: repeating-linear-gradient(
+    45deg,
+    #eef1f6,
+    #eef1f6 6px,
+    #e3e7ef 6px,
+    #e3e7ef 12px
+  );
+}
+
+@media (max-width: 768px) {
+  .list-thumb {
+    width: 40px;
+    height: 40px;
+  }
+}
