@@ -1,48 +1,213 @@
-h1 {
-  color: #333;
-  font-size: 2rem;
+/* Informe.css */
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #2c3e50;
+  font-weight: 300;
+  font-size: 2.2rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.info-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.accessories-card::before {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.cellphones-card::before {
+  background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+}
+
+.card-icon {
+  font-size: 4rem;
   margin-bottom: 1rem;
 }
 
-.progress-bars {
-  margin-top: 20px;
+.info-card h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-.progress-item {
-  margin-bottom: 10px;
+.total-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1;
+  margin: 1rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.progress-title {
-  font-size: 14px;
-  margin-bottom: 5px;
+.card-subtitle {
+  color: #7f8c8d;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-.progress-bar-container {
-  width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-  height: 24px;
+.distribution {
+  margin-top: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.progress-bar {
-  height: 100%;
+.dist-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.dist-label {
+  width: 80px;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.dist-bar-container {
+  flex: 1;
+  height: 32px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dist-bar {
+  height: 100%;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 15px;
+  position: relative;
+}
+
+.plus-bar {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.premium-bar {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+.dist-percentage {
   color: white;
-  font-size: 12px;
-  transition: width 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.progress-bar.plus {
-  background-color: #4caf50; /* Verde para Plus */
+.dist-count {
+  width: 50px;
+  text-align: right;
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1rem;
 }
 
-.progress-bar.premium {
-  background-color: #2196f3; /* Azul para Premium */
+.loading-state {
+  color: #7f8c8d;
+  font-style: italic;
+  padding: 2rem 0;
+  font-size: 1.1rem;
 }
 
-.progress-label {
-  font-weight: bold;
+/* Responsive */
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  .info-card {
+    padding: 2.5rem 2rem;
+    min-height: 380px;
+  }
+
+  .total-number {
+    font-size: 3.5rem;
+  }
+
+  .card-icon {
+    font-size: 3.5rem;
+  }
+
+  .dist-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .dist-label {
+    width: auto;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .dist-count {
+    width: auto;
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .dist-bar-container {
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .total-number {
+    font-size: 3rem;
+  }
+
+  .card-icon {
+    font-size: 3rem;
+  }
 }

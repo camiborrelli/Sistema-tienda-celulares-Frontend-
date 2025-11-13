@@ -40,13 +40,25 @@ const ListarCelular = () => {
   }, [phones]);
 
   const borrarCelular = (id) => {
+    if (!id) {
+      toast.error(t("ID de celular inválido") || "Invalid cellphone id");
+      return;
+    }
+
     api
       .delete(`celulares/${id}`)
       .then((response) => {
         dispatch(deletePhone(id));
         toast.success(response.data.mensaje);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.error("Error deleting cellphone:", error);
+        const msg =
+          error?.response?.data?.message ||
+          error?.response?.data ||
+          "Error al borrar celular";
+        toast.error(msg);
+      });
   };
 
   const [sortAsc, setSortAsc] = useState(true);
@@ -150,7 +162,7 @@ const ListarCelular = () => {
                         className="btn btn-sm btn-danger icon-btn"
                         title={t("delete")}
                         aria-label={t("delete")}
-                        onClick={() => borrarCelular(celular._id)}
+                        onClick={() => borrarCelular(celular._id || celular.id)}
                       >
                         <svg
                           width="16"

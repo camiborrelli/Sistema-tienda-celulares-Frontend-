@@ -63,6 +63,7 @@ const AltaCelular = () => {
       .then((response) => {
         toast.success(response.data.mensaje);
         dispatch(createPhone(data));
+        console.log("Celular creado:", response.data);
       })
       .catch((error) => {
         toast.error(error.response.data.error);
