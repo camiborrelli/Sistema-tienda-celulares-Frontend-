@@ -108,5 +108,11 @@
   "confirmPasswordPlaceholder": "Confirm Password",
   "passwordPlaceholder": "Password",
   "usernamePlaceholder": "Username",
-  "confirmPasswordRequired": "Confirm Password is required"
+  "confirmPasswordRequired": "Confirm Password is required",
+  "plan": "Plan",
+  "userList": "User List",
+  "noUsersFound": "No users found",
+  "planLimit": "⚠️ You have reached the accessory limit for your plan. Please upgrade to Premium for unlimited access.",
+  "planWarning": "⚠️ You are on the Standard plan. Consider upgrading to Premium for more benefits.",
+  "noCategoriesAvailable": "No categories available"
 }

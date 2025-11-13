@@ -23,15 +23,12 @@ const VerPlan = () => {
     try {
       setFetchingPlan(true);
       const response = await api.get("/usuarios/plan");
-      console.debug("/usuarios/plan response:", response?.data);
-      const payload =
-        response?.data?.usuario ?? response?.data?.user ?? response?.data;
+      const payload = response?.data?.usuario ?? response?.data?.user ?? response?.data;
       if (payload) {
         dispatch(verPlan(payload));
       }
     } catch (error) {
-      console.error("Error fetching plan:", error);
-      toast.error(error?.response?.data?.error || "No se pudo obtener el plan");
+      toast.error(error.response.data.error);
     } finally {
       setFetchingPlan(false);
     }
@@ -47,7 +44,7 @@ const VerPlan = () => {
 
   const changeToPremium = async (e) => {
     e.preventDefault();
-    if (!confirm("¿Deseas cambiar tu plan a Premium?")) return;
+    if (!confirm(t("changePremium"))) return;
 
     setLoading(true);
     try {
@@ -58,7 +55,6 @@ const VerPlan = () => {
         verPlan(response.data.usuario);
       }
     } catch (error) {
-      console.error(error);
       toast.error(error?.response?.data?.error || "No se pudo cambiar el plan");
     } finally {
       setLoading(false);
@@ -72,9 +68,7 @@ const VerPlan = () => {
       .get("/accesorios/creados")
       .then((response) => {
         const accesorios = response?.data?.accesorios;
-        const cantAccesorios = Array.isArray(accesorios)
-          ? accesorios.length
-          : null;
+        const cantAccesorios = Array.isArray(accesorios) ? accesorios.length : null;
         const countFromField = response?.data?.count ?? null;
 
         // Resolve count with explicit null checks to avoid chained ?? issues
@@ -91,29 +85,19 @@ const VerPlan = () => {
         setCantidadAccesoriosCreados(count);
       })
       .catch((err) => {
-        console.error("Error al obtener accesorios creados:", err);
+        toast.error(err.response.data.error);
         setCantidadAccesoriosCreados(0);
       });
   }, []);
 
   const editarPerfil = async (data) => {
-    try {
-      const response = await api.patch("/usuarios/modificar", data);
-      toast.success(
-        response.data.mensaje || "Perfil actualizado correctamente"
-      );
-      if (response?.data?.usuario) {
-        dispatch(setPerfil(response.data.usuario));
-      }
-      reset({
-        username: data.username,
-        email: data.email,
-      });
-    } catch (error) {
-      console.error("Error al editar perfil:", error);
-      toast.error(
-        error?.response?.data?.error || "No se pudo editar el perfil"
-      );
+    const response = await api.patch("/usuarios/modificar", data).catch((err) => {
+      toast.error(err.response.data.error);
+    });
+
+    if (response) {
+      toast.success(response.data.message);
+      dispatch(setPerfil(response.data.usuario));
     }
   };
 
@@ -127,7 +111,7 @@ const VerPlan = () => {
         setValue("email", payload.email ?? "");
       }
     } catch (err) {
-      console.error("Error obteniendo perfil:", err);
+      toast.error("Error obteniendo perfil:", err);
       toast.error("No se pudo cargar el perfil del usuario");
     }
   };
@@ -138,16 +122,8 @@ const VerPlan = () => {
   }, []);
 
   const maxRegistros = isPremium ? null : 10;
-  const porcentaje = isPremium
-    ? 100
-    : Math.min((cantidadAccesoriosCreados / 10) * 100, 100);
-  const progresoClase = isPremium
-    ? "full"
-    : porcentaje >= 90
-    ? "danger"
-    : porcentaje >= 70
-    ? "warning"
-    : "";
+  const porcentaje = isPremium ? 100 : Math.min((cantidadAccesoriosCreados / 10) * 100, 100);
+  const progresoClase = isPremium ? "full" : porcentaje >= 90 ? "danger" : porcentaje >= 70 ? "warning" : "";
 
   return (
     <section id="perfil" className="mb-5">
@@ -157,32 +133,18 @@ const VerPlan = () => {
           <div className="form-group">
             <div className="input-row">
               <FaUser className="input-icon" aria-hidden />
-              <input
-                type="text"
-                id="username"
-                {...register("username")}
-                disabled={true}
-              />
+              <input type="text" id="username" {...register("username")} disabled={true} />
             </div>
           </div>
 
           <div className="form-group">
             <div className="input-row">
               <FaEnvelope className="input-icon" aria-hidden />
-              <input
-                type="text"
-                id="email"
-                {...register("email")}
-                placeholder={t("emailPlaceholder")}
-              />
+              <input type="text" id="email" {...register("email")} placeholder={t("emailPlaceholder")} />
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={isSubmitting}
-          >
+          <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
             {isSubmitting ? t("Guardando...") : t("saveChanges")}
             {!isSubmitting && <FaCheck style={{ marginLeft: "10px" }} />}
           </button>
@@ -195,22 +157,15 @@ const VerPlan = () => {
           ) : (
             <>
               <h5 className="current-plan">
-                {t("yourPlan")}{" "}
-                <span className="plan-badge">{currentPlanLabel}</span>
+                {t("yourPlan")} <span className="plan-badge">{currentPlanLabel}</span>
               </h5>
 
               {!isPremium ? (
-                <button
-                  className="btn btn-premium"
-                  onClick={changeToPremium}
-                  disabled={loading}
-                >
+                <button className="btn btn-premium" onClick={changeToPremium} disabled={loading}>
                   {loading ? t("Procesando...") : t("changePremium")}
                 </button>
               ) : (
-                <div className="alert alert-success">
-                  {t("Ya estás en el plan Premium 🎉")}
-                </div>
+                <div className="alert alert-success">{t("Ya estás en el plan Premium 🎉")}</div>
               )}
             </>
           )}
@@ -244,8 +199,7 @@ const VerPlan = () => {
 
           <div className="registros-info">
             <div className="registros-count">
-              {t("youHaveCreated")} <strong>{cantidadAccesoriosCreados}</strong>{" "}
-              {t("accessories2")}
+              {t("youHaveCreated")} <strong>{cantidadAccesoriosCreados}</strong> {t("accessories2")}
             </div>
             {!isPremium && (
               <div className="registros-limit">
@@ -255,30 +209,17 @@ const VerPlan = () => {
           </div>
 
           {isPremium ? (
-            <div className="unlimited-badge">
-              {t("🎉 Registros ilimitados")}
-            </div>
+            <div className="unlimited-badge">{t("🎉 Registros ilimitados")}</div>
           ) : (
             <>
               <div className="progress-container">
-                <div
-                  className={`progress-bar ${progresoClase}`}
-                  style={{ width: `${porcentaje}%` }}
-                >
+                <div className={`progress-bar ${progresoClase}`} style={{ width: `${porcentaje}%` }}>
                   {porcentaje >= 30 && `${Math.round(porcentaje)}%`}
                 </div>
               </div>
 
               {cantidadAccesoriosCreados >= 8 && (
-                <div className="limit-warning">
-                  {cantidadAccesoriosCreados >= 10
-                    ? t(
-                        "⚠️ Has alcanzado el límite máximo de registros. Actualiza a Premium para crear más."
-                      )
-                    : t(
-                        "⚠️ Estás cerca del límite máximo. Considera actualizar a Premium para registros ilimitados."
-                      )}
-                </div>
+                <div className="limit-warning">{cantidadAccesoriosCreados >= 10 ? t("planLimit") : t("planWarning")}</div>
               )}
             </>
           )}

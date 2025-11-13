@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import api from "../../data/api";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { loginUsuarioSchema } from "../../validators/usuario.validator";
+import { joiResolver } from "@hookform/resolvers/joi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
+    resolver: joiResolver(loginUsuarioSchema),
     mode: "onChange",
     defaultValues: { username: "", password: "" },
   });
@@ -76,9 +79,7 @@ const Login = () => {
             />
             <FaUser className="input-icon" aria-hidden />
           </div>
-          {errors.username && (
-            <span className="error">{t("usernameRequired")}</span>
-          )}
+          {errors.username && <span className="error">{t("usernameRequired")}</span>}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -91,9 +92,7 @@ const Login = () => {
             />
             <FaLock className="input-icon" aria-hidden />
           </div>
-          {errors.password && (
-            <span className="error">{t("passwordRequired")}</span>
-          )}
+          {errors.password && <span className="error">{t("passwordRequired")}</span>}
         </div>
         <button type="submit" className="btn-acceder" disabled={!isValid}>
           <span>{t("login")}</span>

@@ -24,3 +24,39 @@ export const registerUsuarioSchema = Joi.object({
     "string.empty": "Confirm Password is required",
   }),
 });
+
+export const loginUsuarioSchema = Joi.object({
+  username: Joi.string().min(3).max(30).required().messages({
+    "string.base": "El nombre de usuario debe ser texto",
+    "string.min": "El nombre de usuario debe tener al menos 3 caracteres",
+    "string.max": "El nombre de usuario no debe exceder los 30 caracteres",
+    "any.required": "El nombre de usuario es requerido",
+  }),
+  password: Joi.string().min(6).required().messages({
+    "string.base": "La contraseña debe ser texto",
+    "string.min": "La contraseña debe tener al menos 6 caracteres",
+    "any.required": "La contraseña es requerida",
+  }),
+});
+
+export const modificarUsuarioSchema = Joi.object({
+  username: Joi.string().min(3).max(30).messages({
+    "string.base": "El nombre de usuario debe ser texto",
+    "string.min": "El nombre de usuario debe tener al menos 3 caracteres",
+    "string.max": "El nombre de usuario no debe exceder los 30 caracteres",
+    "any.required": "El nombre de usuario es requerido",
+    "string.empty": "El nombre de usuario no puede estar vacío",
+  }),
+  email: Joi.string().email().messages({
+    "string.base": "El email debe ser texto",
+    "string.email": "El email debe tener un formato válido",
+    "string.empty": "El email no puede estar vacío",
+  }),
+  plan: Joi.string().valid("Plus", "Premium").messages({
+    "any.only": "El plan debe ser uno de los siguientes: Plus, Premium",
+  }),
+  password: Joi.string().min(6).messages({
+    "string.base": "La contraseña debe ser texto",
+    "string.min": "La contraseña debe tener al menos 6 caracteres",
+  }),
+});

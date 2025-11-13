@@ -18,10 +18,10 @@ const Accesorios = () => {
           <EditarAccesorio />
         </div>
         <div className="col-md-12 col-12">
-          <ListarAccesorio />
+          <GraficaAccesorio />
         </div>
         <div className="col-md-12 col-12">
-          <GraficaAccesorio />
+          <ListarAccesorio />
         </div>
       </div>
     </section>

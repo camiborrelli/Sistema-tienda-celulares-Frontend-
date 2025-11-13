@@ -16,7 +16,7 @@ const ListarUsuario = () => {
       .then((response) => {
         dispatch(listarUsuarios(response.data.usuarios));
       })
-      .catch((error) => console.error("Error al listar usuarios:", error));
+      .catch((error) => toast.error(error.response.data.error));
   };
 
   useEffect(() => {
@@ -25,23 +25,22 @@ const ListarUsuario = () => {
 
   return (
     <div className="col-12">
+      <h3>{t("userList")}</h3>
       <div className="card card-body">
-        <h5>{t("Lista de Usuarios")}</h5>
-
         <div className="table-responsive">
           <table className="table user-table">
             <thead>
               <tr>
-                <th>{t("Username")}</th>
-                <th>{t("Email")}</th>
-                <th>{t("Plan")}</th>
+                <th>{t("username")}</th>
+                <th>{t("email")}</th>
+                <th>{t("plan")}</th>
               </tr>
             </thead>
             <tbody>
               {usuarios.length === 0 ? (
                 <tr>
                   <td colSpan={3} className="text-muted text-center py-4">
-                    {t("No users found")}
+                    {t("noUsersFound")}
                   </td>
                 </tr>
               ) : (
@@ -50,29 +49,13 @@ const ListarUsuario = () => {
                     <td>{usuario.username}</td>
                     <td>{usuario.email}</td>
                     <td>
-                      <span
-                        className={`plan-badge ${(
-                          usuario.plan || ""
-                        ).toLowerCase()}`}
-                      >
-                        {usuario.plan || "-"}
-                      </span>
+                      <span className={`plan-badge ${(usuario.plan || "").toLowerCase()}`}>{usuario.plan || "-"}</span>
                     </td>
                   </tr>
                 ))
               )}
             </tbody>
           </table>
-        </div>
-
-        <div className="d-flex justify-content-end mt-2">
-          <button
-            className="btn btn-outline-primary"
-            id="btn-refresh-usuarios"
-            onClick={fetchUsuarios}
-          >
-            {t("refresh") || "Refrescar"}
-          </button>
         </div>
       </div>
     </div>

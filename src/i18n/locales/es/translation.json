@@ -102,5 +102,17 @@
   "accessoryUpdatedSuccess": "Accesorio actualizado correctamente",
   "accessoryDeletedSuccess": "Accesorio eliminado correctamente",
   "accessoriesCreatedLast7Days": "Accesorios creados en los últimos 7 días",
-  "accessoriesCreated": "Accesorios creados"
+  "accessoriesCreated": "Accesorios creados",
+  "register": "Registrarse",
+  "alreadyHaveAccount": "¿Ya tienes una cuenta? ",
+  "confirmPasswordPlaceholder": "Confirmar contraseña",
+  "passwordPlaceholder": "Contraseña",
+  "usernamePlaceholder": "Nombre de usuario",
+  "confirmPasswordRequired": "Confirmar contraseña es obligatorio",
+  "plan": "Plan",
+  "noUsersFound": "No se encontraron usuarios",
+  "userList": "Lista de usuarios",
+  "planLimit": "⚠️ Has alcanzado el límite máximo de registros. Actualiza a Premium para crear más.",
+  "planWarning": "⚠️ Estás cerca del límite máximo. Considera actualizar a Premium para registros ilimitados.",
+  "noCategoriesAvailable": "No hay categorías disponibles"
 }

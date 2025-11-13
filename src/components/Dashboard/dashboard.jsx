@@ -33,9 +33,7 @@ const DashboardAdmin = () => {
     const container = document.querySelector(".dashboard-root");
     if (!container) return;
 
-    const links = Array.from(
-      document.querySelectorAll(".sidebar-nav a[href^='#']")
-    );
+    const links = Array.from(document.querySelectorAll(".sidebar-nav a[href^='#']"));
     const onClick = (e) => {
       e.preventDefault();
       const href = e.currentTarget.getAttribute("href");
@@ -53,7 +51,7 @@ const DashboardAdmin = () => {
       try {
         history.replaceState(null, "", `#${id}`);
       } catch (err) {
-        console.log(err);
+        toast.error(`Error updating URL hash: ${err}`);
         /* ignore */
       }
     };
@@ -69,32 +67,18 @@ const DashboardAdmin = () => {
 
   // active link helpers
   const isCelularesActive =
-    pathname === "/dashboard" ||
-    pathname === "/dashboard/celulares" ||
-    (isDashboardRoot && hash === "#section-celulares");
-  const isAccesoriosActive =
-    pathname === "/dashboard/accesorios" ||
-    (isDashboardRoot && hash === "#section-accesorios");
-  const isUsuariosActive =
-    pathname === "/dashboard/usuarios" ||
-    (isDashboardRoot && hash === "#section-usuarios");
-  const isPerfilActive =
-    pathname === "/dashboard/perfil" ||
-    (isDashboardRoot && hash === "#section-perfil");
-  const isInformeActive =
-    pathname === "/dashboard/informe" ||
-    (isDashboardRoot && hash === "#section-informe");
+    pathname === "/dashboard" || pathname === "/dashboard/celulares" || (isDashboardRoot && hash === "#section-celulares");
+  const isAccesoriosActive = pathname === "/dashboard/accesorios" || (isDashboardRoot && hash === "#section-accesorios");
+  const isUsuariosActive = pathname === "/dashboard/usuarios" || (isDashboardRoot && hash === "#section-usuarios");
+  const isPerfilActive = pathname === "/dashboard/perfil" || (isDashboardRoot && hash === "#section-perfil");
+  const isInformeActive = pathname === "/dashboard/informe" || (isDashboardRoot && hash === "#section-informe");
 
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
         <div className="sidebar-header">
           <div className="sidebar-brand">{t("title")}</div>
-          <select
-            onChange={changeLenguage}
-            defaultValue={actualLenguage}
-            className="language-select"
-          >
+          <select onChange={changeLenguage} defaultValue={actualLenguage} className="language-select">
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>
@@ -102,38 +86,21 @@ const DashboardAdmin = () => {
 
         <ul className="sidebar-nav">
           <li>
-            <Link
-              className={`${
-                isCelularesActive ? "active" : ""
-              } nav-color-cellphones`}
-              to="/dashboard/celulares"
-            >
+            <Link className={`${isCelularesActive ? "active" : ""} nav-color-cellphones`} to="/dashboard/celulares">
               {t("cellphones")}
             </Link>
-            <Link
-              className={`${isAccesoriosActive ? "active" : ""} nav-color-plus`}
-              to="/dashboard/accesorios"
-            >
+            <Link className={`${isAccesoriosActive ? "active" : ""} nav-color-plus`} to="/dashboard/accesorios">
               {t("accessories")}
             </Link>
-            <Link
-              className={`${isUsuariosActive ? "active" : ""}`}
-              to="/dashboard/usuarios"
-            >
+            <Link className={`${isUsuariosActive ? "active" : ""}`} to="/dashboard/usuarios">
               {t("users")}
             </Link>
 
-            <Link
-              className={`${isPerfilActive ? "active" : ""}`}
-              to="/dashboard/perfil"
-            >
+            <Link className={`${isPerfilActive ? "active" : ""}`} to="/dashboard/perfil">
               {t("profile")}
             </Link>
 
-            <Link
-              className={`${isInformeActive ? "active" : ""} nav-color-premium`}
-              to="/dashboard/informe"
-            >
+            <Link className={`${isInformeActive ? "active" : ""} nav-color-premium`} to="/dashboard/informe">
               {t("reportAccessories")}
             </Link>
           </li>

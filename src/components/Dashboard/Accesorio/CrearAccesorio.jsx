@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import api from "../../../data/api";
-import { createAccesory, listar, listarCategorias } from "../../../features/accesory.slice";
+import { createAccesory, listarCategorias } from "../../../features/accesory.slice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import "./Accesorio.css";
 import { useEffect, useState, useCallback } from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { agregarAccesorioSchema } from "../../../validators/accesorio.validator";
 
 const CrearAccesorio = () => {
   const dispatch = useDispatch();
@@ -15,9 +17,12 @@ const CrearAccesorio = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
-  } = useForm();
+  } = useForm({
+    resolver: joiResolver(agregarAccesorioSchema),
+    mode: "onChange",
+  });
 
   const onSubmit = (data) => {
     data.fechaCreacion = new Date().toISOString();
@@ -31,6 +36,7 @@ const CrearAccesorio = () => {
       })
       .catch((error) => {
         toast.error(error.response.data.error);
+        reset();
       });
   };
 
@@ -127,15 +133,14 @@ const CrearAccesorio = () => {
                 </option>
               ))
             ) : (
-              <option disabled>No hay categorías disponibles</option>
+              <option disabled>{t("noCategoriesAvailable")}</option>
             )}
           </select>
           {errors.categoria && <small className="text-danger">{t("categoryRequired")}</small>}
         </div>
 
-        {/* Botones alineados horizontalmente como en EditarAccesorio */}
         <div className="d-flex gap-2">
-          <button type="submit" className="btn btn-success">
+          <button type="submit" className="btn btn-success" disabled={!isValid}>
             {t("create")}
           </button>
           <button className="btn btn-secondary" type="button" onClick={() => reset()}>
