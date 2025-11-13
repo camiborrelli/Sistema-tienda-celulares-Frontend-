@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "./Login.css";
+import "./login.css";
 import { useNavigate, NavLink, Link } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -79,7 +79,9 @@ const Login = () => {
             />
             <FaUser className="input-icon" aria-hidden />
           </div>
-          {errors.username && <span className="error">{t("usernameRequired")}</span>}
+          {errors.username && (
+            <span className="error">{t("usernameRequired")}</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -92,7 +94,9 @@ const Login = () => {
             />
             <FaLock className="input-icon" aria-hidden />
           </div>
-          {errors.password && <span className="error">{t("passwordRequired")}</span>}
+          {errors.password && (
+            <span className="error">{t("passwordRequired")}</span>
+          )}
         </div>
         <button type="submit" className="btn-acceder" disabled={!isValid}>
           <span>{t("login")}</span>
