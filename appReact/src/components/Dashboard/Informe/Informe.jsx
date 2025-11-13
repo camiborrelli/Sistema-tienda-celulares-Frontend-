@@ -70,22 +70,20 @@ const Informe = () => {
 
   return (
     <section id="informe" className="mb-5">
-      <h2 className="section-title">
-        {t("Dashboard Informes") || "Dashboard Reports"}
-      </h2>
+      <h2 className="section-title">{t("reportAccessories")}</h2>
 
       <div className="cards-container">
         {/* Card de Accesorios */}
         <div className="info-card accessories-card">
           <div className="card-icon">📱</div>
-          <h3>{t("Accesorios") || "Accessories"}</h3>
+          <h3>{t("accessories")}</h3>
           <div className="total-number">{count.total}</div>
-          <p className="card-subtitle">Total creados</p>
+          <p className="card-subtitle">{t("totalAccessoriesCreated")}</p>
 
           {count.total > 0 ? (
             <div className="distribution">
               <div className="dist-item">
-                <span className="dist-label">Plus</span>
+                <span className="dist-label">{t("plus")}</span>
                 <div className="dist-bar-container">
                   <div
                     className="dist-bar plus-bar"
@@ -99,7 +97,7 @@ const Informe = () => {
                 <span className="dist-count">{count.plus}</span>
               </div>
               <div className="dist-item">
-                <span className="dist-label">Premium</span>
+                <span className="dist-label">{t("premium")}</span>
                 <div className="dist-bar-container">
                   <div
                     className="dist-bar premium-bar"
@@ -114,21 +112,21 @@ const Informe = () => {
               </div>
             </div>
           ) : (
-            <div className="loading-state">Cargando...</div>
+            <div className="loading-state">{t("loading")}</div>
           )}
         </div>
 
         {/* Card de Celulares */}
         <div className="info-card cellphones-card">
           <div className="card-icon">📞</div>
-          <h3>{t("Celulares") || "Cellphones"}</h3>
+          <h3>{t("cellphones")}</h3>
           <div className="total-number">{cellphoneCount.total}</div>
-          <p className="card-subtitle">Total creados</p>
+          <p className="card-subtitle">{t("totalCellphones")}</p>
 
           {cellphoneCount.total > 0 ? (
             <div className="distribution">
               <div className="dist-item">
-                <span className="dist-label">Plus</span>
+                <span className="dist-label">{t("plus")}</span>
                 <div className="dist-bar-container">
                   <div
                     className="dist-bar plus-bar"
@@ -142,7 +140,7 @@ const Informe = () => {
                 <span className="dist-count">{cellphoneCount.plus}</span>
               </div>
               <div className="dist-item">
-                <span className="dist-label">Premium</span>
+                <span className="dist-label">{t("premium")}</span>
                 <div className="dist-bar-container">
                   <div
                     className="dist-bar premium-bar"
@@ -157,7 +155,7 @@ const Informe = () => {
               </div>
             </div>
           ) : (
-            <div className="loading-state">Cargando...</div>
+            <div className="loading-state">{t("loading")}</div>
           )}
         </div>
       </div>

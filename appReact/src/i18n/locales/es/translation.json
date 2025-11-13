@@ -83,5 +83,13 @@
   "left": "restantes",
   "categoryPlaceholder": "Ingresa la categoría, p. ej., Cargadores",
   "accessoryList": "Lista de accesorios",
-  "noAccessories": "No hay accesorios disponibles"
+  "noAccessories": "No hay accesorios disponibles",
+  "reportAccessories": "Informe de accesorios",
+  "totalAccessories": "Total accesorios",
+  "totalAccessoriesCreated": "Total de accesorios creados",
+  "plus": "Plus",
+  "premium": "Premium",
+  "totalCellphones": "Total celulares",
+  "loading": "Cargando...",
+  "percentage": "%"
 }
