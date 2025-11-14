@@ -219,3 +219,42 @@
     align-items: center;
   }
 }
+
+/* Make the cellphone thumbnail larger and centered on small devices */
+@media (max-width: 640px) {
+  /* center the first cell (thumbnail) and increase its size */
+  /* ensure the thumbnail cell is centered even if global rules try to left-align */
+  #table-celulares td:first-child {
+    text-align: center !important;
+    padding-bottom: 0.5rem;
+  }
+
+  #table-celulares td:first-child .list-thumb {
+    width: 130px;
+    height: 200px;
+    margin: 0 auto 0.75rem;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block; /* block so margin:auto centers reliably */
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+  }
+
+  /* Slightly larger text for the primary fields and more breathing room */
+  #table-celulares td {
+    font-size: 1rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  /* Give the name a bit more prominence (use nth-child to be language-agnostic) */
+  #table-celulares td:nth-child(2) {
+    font-size: 1.12rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  /* More spacing inside each card so the bigger thumbnail doesn't feel cramped */
+  #table-celulares tr {
+    padding: 0.75rem 0.75rem 1rem;
+  }
+}

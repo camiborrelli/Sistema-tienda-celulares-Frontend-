@@ -36,10 +36,13 @@ const AltaCelular = () => {
     formData.append("cloud_name", "di6mcaunn"); // cloud name
     //Cloud name en la URL
     try {
-      const res = await fetch(`https://api.cloudinary.com/v1_1/di6mcaunn/image/upload`, {
-        method: "POST",
-        body: formData,
-      });
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/di6mcaunn/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const uploaded = await res.json();
       reset();
 
@@ -69,7 +72,11 @@ const AltaCelular = () => {
 
   return (
     <div className="col-12">
-      <form id="form-celular-create" className="card card-body mb-3 form-offset-top" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        id="form-celular-create"
+        className="card card-body mb-3 form-offset-top"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h5>{t("create")}</h5>
         <input type="hidden" id="celular-id" />
         <div className="mb-2">
@@ -79,7 +86,9 @@ const AltaCelular = () => {
             className="form-control"
             placeholder={t("name")}
           />
-          {errors.nombre && <small className="text-danger">{t("usernameRequired")}</small>}
+          {errors.nombre && (
+            <small className="text-danger">{t("usernameRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -88,7 +97,9 @@ const AltaCelular = () => {
             className="form-control"
             placeholder={t("brand")}
           />
-          {errors.marca && <small className="text-danger">{t("brandRequired")}</small>}
+          {errors.marca && (
+            <small className="text-danger">{t("brandRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -98,7 +109,9 @@ const AltaCelular = () => {
             className="form-control"
             placeholder={t("model")}
           />
-          {errors.modelo && <small className="text-danger">{t("modelRequired")}</small>}
+          {errors.modelo && (
+            <small className="text-danger">{t("modelRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -108,7 +121,9 @@ const AltaCelular = () => {
             className="form-control"
             placeholder={t("stock")}
           />
-          {errors.modelo && <small className="text-danger">{t("stockRequired")}</small>}
+          {errors.modelo && (
+            <small className="text-danger">{t("stockRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -121,7 +136,9 @@ const AltaCelular = () => {
             className="form-control"
             placeholder={t("price")}
           />
-          {errors.precio && <small className="text-danger">{t("priceRequired")}</small>}
+          {errors.precio && (
+            <small className="text-danger">{t("priceRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
           <input
@@ -134,17 +151,34 @@ const AltaCelular = () => {
             className="form-control"
             placeholder={t("accesoryNumber")}
           />
-          {errors.accesoriosCompatibles && <small className="text-danger">{t("accesoryNumberRequired")}</small>}
+          {errors.accesoriosCompatibles && (
+            <small className="text-danger">{t("accesoryNumberRequired")}</small>
+          )}
         </div>
         <div className="mb-2">
-          <input type="file" {...register("imagen")} className="form-control" placeholder={t("image")} />
-          {errors.imagen && <small className="text-danger">{t("imageRequired")}</small>}
+          <input
+            type="file"
+            {...register("imagen")}
+            className="form-control"
+            placeholder={t("image")}
+          />
+          {errors.imagen && (
+            <small className="text-danger">{t("imageRequired")}</small>
+          )}
         </div>
         <div className="form-actions-centered">
-          <button className="btn btn-success" type="submit" disabled={!isValid || isSubmitting || loading}>
+          <button
+            className="btn btn-success"
+            type="submit"
+            disabled={!isValid || isSubmitting || loading}
+          >
             {t("save")}
           </button>
-          <button className="btn btn-secondary" type="button" onClick={() => reset()}>
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={() => reset()}
+          >
             {t("clean")}
           </button>
         </div>
