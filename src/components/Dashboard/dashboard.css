@@ -192,6 +192,12 @@ body {
   background-size: 12px 12px;
 }
 
+/* ensure the select widget appears above the mobile toggle button */
+.language-select {
+  position: relative;
+  z-index: 1400;
+}
+
 .language-select option {
   background: #2d3748; /* mismo color base del sidebar */
   color: var(--text-inverse);
@@ -235,6 +241,7 @@ body {
     font-size: 0.85rem;
     padding: 0.5rem 2rem 0.5rem 0.6rem;
     order: -1; /* mover el select arriba del título cuando la pantalla es angosta */
+    margin-left: 0; /* ensure no offset on very small screens */
   }
   .sidebar-nav a {
     padding: 0.75rem 1rem;
@@ -288,6 +295,11 @@ body {
     box-shadow: 0 6px 18px rgba(2, 6, 23, 0.12);
   }
 
+  /* push the language select right so it doesn't sit under the toggle on small screens */
+  .language-select {
+    margin-left: 56px; /* toggle left 12px + width 44px -> 56px to add small gap */
+  }
+
   .sidebar-toggle .hamburger {
     width: 20px;
     height: 2px;
@@ -318,6 +330,15 @@ body {
     inset: 0;
     background: rgba(0, 0, 0, 0.35);
     z-index: 1100;
+  }
+
+  /* On mobile, place the language select next to the toggle and align vertically */
+  .language-select {
+    position: fixed;
+    left: calc(12px + 44px + 8px); /* toggle left + toggle width + gap */
+    top: 12px;
+    z-index: 1400;
+    max-width: calc(100% - 96px);
   }
 }
 

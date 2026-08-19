@@ -28,6 +28,32 @@ const Register = () => {
   });
 
   const onSubmit = (data) => {
+    if (data.password !== data.confirmPassword) {
+      toast.error(t("passwordsDoNotMatch"));
+      return;
+    }
+    if (data.password.length < 6) {
+      toast.error(t("passwordTooShort"));
+      return;
+    }
+
+    if (/\s/.test(data.password)) {
+      toast.error(t("passwordCannotContainSpaces"));
+      return;
+    }
+
+    // Al menos una letra mayúscula
+    if (!/[A-Z]/.test(data.password)) {
+      toast.error(t("passwordMustContainUppercase"));
+      return;
+    }
+
+    // Al menos un carácter especial
+    if (!/[!@#$%^&*(),.?":{}|<>_\-\\[\]/+=;'`~]/.test(data.password)) {
+      toast.error(t("passwordMustContainSpecial"));
+      return;
+    }
+
     api
       .post(`/usuarios/register`, data, { skipAuth: true })
       .then((response) => {
@@ -63,12 +89,19 @@ const Register = () => {
               {...register("username", { required: true })}
             />
           </div>
-          {errors.username && <span className="error">{t("usernameRequired")}</span>}
+          {errors.username && (
+            <span className="error">{t("usernameRequired")}</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
             <FaEnvelope className="input-icon" aria-hidden />
-            <input type="email" id="email" placeholder={t("emailPlaceholder")} {...register("email", { required: true })} />
+            <input
+              type="email"
+              id="email"
+              placeholder={t("emailPlaceholder")}
+              {...register("email", { required: true })}
+            />
           </div>
           {errors.email && <span className="error">{t("emailRequired")}</span>}
         </div>
@@ -79,10 +112,12 @@ const Register = () => {
               type="password"
               id="contrasenia"
               placeholder={t("passwordPlaceholder")}
-              {...register("password", { required: true })}
+              {...register("password", { required: true, minLength: 6 })}
             />
           </div>
-          {errors.password && <span className="error">{t("passwordRequired")}</span>}
+          {errors.password && (
+            <span className="error">{t("passwordRequired")}</span>
+          )}
         </div>
         <div className="form-group">
           <div className="input-row">
@@ -94,7 +129,9 @@ const Register = () => {
               {...register("confirmPassword", { required: true })}
             />
           </div>
-          {errors.confirmPassword && <span className="error">{t("confirmPasswordRequired")}</span>}
+          {errors.confirmPassword && (
+            <span className="error">{t("confirmPasswordRequired")}</span>
+          )}
         </div>
         <button disabled={!isValid} className="btn-acceder">
           {loading ? <i /> : t("register")}

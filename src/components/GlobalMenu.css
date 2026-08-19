@@ -1,0 +1,21 @@
+.global-menu {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px 16px;
+}
+.global-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.global-menu a {
+  color: #111827;
+  text-decoration: none;
+  font-weight: 600;
+}
+.global-menu a.active {
+  color: #2563eb;
+}
